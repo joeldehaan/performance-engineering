@@ -1,18 +1,31 @@
 #include <iostream>
+#include <chrono>
 #include "matrix.hh"
+
+using namespace std::chrono;
 
 int main()
 {
-    Matrix<int> mat1(4, 3);
-    //    std::cout << mat1 << '\n';
+    size_t test = 1;
+    while (true)
+    {
+        Matrix mat1(test);
+        Matrix mat2(test);
 
-    Matrix<int> mat2(3, 2);
-    //    std::cout << mat2 << '\n';
+        system_clock::time_point start = system_clock::now();
+        auto finmat = mat1 * mat2;
+        auto elapsed = system_clock::now() - start;
+
+        std::cout << test << ',' << elapsed << "\b\b\n";
 
 
-    auto finmat = mat1 * mat2;
-    
-    
-    std::cout << finmat;
-
+        if (test < 300)
+            ++test;
+        else if (test < 700)
+            test += 10;
+        else if (test < 2000)
+            test += 100;
+        else 
+            return 0;
+    }
 }

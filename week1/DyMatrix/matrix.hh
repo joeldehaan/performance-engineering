@@ -14,8 +14,9 @@ class Matrix
 
 public:
     Matrix(size_t rows, size_t cols);
-    void fill();    //initialises with random numbers
-    void clear();   //zeros all values
+    Matrix(size_t size);    //for square matrices
+    void fill();            //initialises with random numbers
+    void clear();           //zeros all values
 
     [[gnu::always_inline]] inline data_t &operator[](size_t row, size_t col);
     [[gnu::always_inline]] inline data_t operator[](size_t row, size_t col) const;

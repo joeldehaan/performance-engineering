@@ -4,3 +4,4 @@ Matrix<data_t>::~Matrix()
 {
     delete[] d_matrix;
 }
+
