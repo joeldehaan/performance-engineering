@@ -16,15 +16,15 @@ int main()
         auto finmat = mat1 * mat2;
         auto elapsed = system_clock::now() - start;
 
-        std::cout << test << ',' << elapsed << "\b\b\n";
+        std::cout << test << ',' << elapsed << "\n";
 
 
         if (test < 300)
             ++test;
         else if (test < 700)
             test += 10;
-        else if (test < 2000)
-            test += 100;
+        //  else if (test < 2000)
+        //      test += 100;
         else 
             return 0;
     }

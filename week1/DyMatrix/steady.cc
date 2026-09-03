@@ -16,7 +16,7 @@ int main()
         auto finmat = mat1 * mat2;
         auto elapsed = steady_clock::now() - start;
 
-        std::cout << test << ',' << elapsed << "\b\b\n";
+        std::cout << test << ',' << elapsed << "\n";
 
 
         if (test < 300)
