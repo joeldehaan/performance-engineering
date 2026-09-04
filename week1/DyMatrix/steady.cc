@@ -12,12 +12,17 @@ int main()
         Matrix mat1(test);
         Matrix mat2(test);
 
-        steady_clock::time_point start = steady_clock::now();
-        auto finmat = mat1 * mat2;
-        auto elapsed = steady_clock::now() - start;
+        std::cout << test;
+        for (size_t repeat = 0; repeat != 5; ++repeat)
+        {
+            steady_clock::time_point start = steady_clock::now();
+            auto finmat = mat1 * mat2;
+            auto elapsed = steady_clock::now() - start;
 
-        std::cout << test << ',' << elapsed << "\n";
+            std::cout << ',' << elapsed.count();
+        }
 
+        std::cout << "\n";
 
         if (test < 300)
             ++test;
