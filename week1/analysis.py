@@ -33,7 +33,7 @@ data_per_x = [row for row in runs]  # list of 5-value arrays, one per x
 bp = ax.boxplot(
     data_per_x,
     positions=x,
-    widths=(x.max() - x.min()) * 0.02,  # scale width to your x spacing
+    widths=(x * 0.1,
     manage_ticks=False,
     patch_artist=True,
 )
@@ -44,7 +44,7 @@ for patch in bp['boxes']:
 fig, ax = plt.subplots(figsize=(7, 5))
 ax.scatter(x, y, s=5, color="black", label="Data")
 ax.plot(x_fit, y_fit, color="crimson", lw=2, label="Fit")
-ax.set_xlabel("matrix rank")
+ax.set_xlabel("matrix rank (dimensionless)")
 ax.set_ylabel("latency (ns)")
 
 plt.xscale("log")
@@ -54,8 +54,7 @@ ax.legend()
 
 ax.set_title("test")
 fig.tight_layout()
-plt.savefig("boxplot.png", dpi=200)
-plt.show()
+plt.savefig("boxplot.svg")
 
 
 '''
