@@ -4,18 +4,33 @@ from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
 
 # --- Load data ---
-df = pd.read_csv("system.csv")
+df = pd.read_csv("steady_O2.csv")
 x = df.iloc[:, 0].to_numpy()
 runs = df.iloc[:, 1:6].to_numpy()  # shape (n_x, 5)
 
-def model(x, a, p, c):
-    return a * x**p + c
+def model(x, a, c):
+    return a*x**2 + c
+
+'''
+
+def model(logx, a, b, c):
+    x = np.exp(logx)
+    return np.log(a*x**3 + b*x**2 + c)
+'''
+
 
 # --- Fit curve ---
-y = np.median(runs, axis=1)
-popt, pcov = curve_fit(model, x, y, sigma=y,
+y_median = np.median(runs, axis=1)
+# popt, pcov = curve_fit(model, x[70:], y_median[70:], sigma=y_median[70:],
+popt, pcov = curve_fit(model, x[:40], y_median[:40], sigma=y_median[:40],
     absolute_sigma=False,
-    maxfev=10000)
+    maxfev=10000,
+    bounds=(
+        [0, 0],
+        [np.inf, np.inf]
+    ),
+)
+
 perr = np.sqrt(np.diag(pcov))  # parameter uncertainties
 
 print("Fitted parameters:", popt)
@@ -30,20 +45,13 @@ fig, ax = plt.subplots(figsize=(9, 5))
 
 data_per_x = [row for row in runs]  # list of 5-value arrays, one per x
 
-bp = ax.boxplot(
-    data_per_x,
-    positions=x,
-    widths=(x * 0.1,
-    manage_ticks=False,
-    patch_artist=True,
-)
 
-for patch in bp['boxes']:
-    patch.set_facecolor("lightblue")
 
-fig, ax = plt.subplots(figsize=(7, 5))
-ax.scatter(x, y, s=5, color="black", label="Data")
-ax.plot(x_fit, y_fit, color="crimson", lw=2, label="Fit")
+ax.plot(x_fit, y_fit, color="crimson", lw=2)
+
+for n, y in enumerate(runs.T):
+    ax.scatter(x, y, s=.25, label=f"iteration #{n+1}")
+
 ax.set_xlabel("matrix rank (dimensionless)")
 ax.set_ylabel("latency (ns)")
 
@@ -53,16 +61,7 @@ plt.yscale("log")
 ax.legend()
 
 ax.set_title("test")
-fig.tight_layout()
+# fig.tight_layout()
 plt.savefig("boxplot.svg")
 
 
-'''
-# strip non-num chars
-df["run1"] = df["run1"].str.replace(r"[^\d.]+$", "", regex=True).astype(float)
-df["run2"] = df["run1"].str.replace(r"[^\d.]+$", "", regex=True).astype(float)
-df["run2"] = df["run1"].str.replace(r"[^\d.]+$", "", regex=True).astype(float)
-df["run1"] = df["run1"].str.replace(r"[^\d.]+$", "", regex=True).astype(float)
-df["run1"] = df["run1"].str.replace(r"[^\d.]+$", "", regex=True).astype(float)
-
-'''
