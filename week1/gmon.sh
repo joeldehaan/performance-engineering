@@ -42,7 +42,7 @@ for n in 1 2 3; do
     fi
 
     LINE_NUM=$(nm -C "$BIN" | grep -n "Matrix<double> operator\*<double>(Matrix<double> const&, Matrix<double> const&)" | cut -d: -f1)
-    FUNCTION=$(nm "$BIN" | sed -n "${LINE_NUM}p" | awk '{print $3}')
+    FUNCTION="Matrix<double> operator*<double>(Matrix<double> const&, Matrix<double> const&)"
 
     echo "# Matrix multiplication benchmark"
     echo "# Function: $FUNCTION"
@@ -81,7 +81,7 @@ for n in 1 2 3; do
             #
             # Therefore $3 is self seconds.
             TIME=$(gprof "$BIN" gmon.out | \
-                awk -v func="$FUNCTION" '$0 ~ func {
+                awk -v fn="$FUNCTION" '$0 ~ fn {
                     print $3
                     exit
                 }')
