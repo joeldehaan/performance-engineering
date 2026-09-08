@@ -1,5 +1,29 @@
+# all files without extensions
+*
+!*.*
+!*/
+
+# temporary files
 *.tmp
 
+# images
+*.svg
+
+# data
+*.csv
+
+# python
 .venv/
 __pycache__/
 *.pyc
+
+# C/C++
+*.a
+*.o
+*.out
+*.lib
+*.so
+*.so.*
+*.gch
+*.pch
+
