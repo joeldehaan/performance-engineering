@@ -19,11 +19,7 @@ if [[ ! -f "$SRC" ]]; then
 fi
 
 for n in 0 1 2 3; do
-    echo "Compiling with -O${n}..."
     "$CXX" -O"${n}" ${EXTRA_FLAGS} -o "$BIN" "$SRC"
-
-    echo "Running -O${n} on CPU ${CPU} -> steady-O${n}.csv"
     taskset -c "$CPU" "$BIN" > "steady-O${n}.csv.tmp"
 done
 
-echo "Done. Generated: steady-O0.csv steady-O1.csv steady-O2.csv steady-O3.csv"

@@ -1,27 +1,21 @@
 #include <iostream>
 #include <chrono>
-#include "DyMatrix/perfmatrix.hh"
+
+#include "DyMatrix/matrix.hh"
 
 using namespace std::chrono;
 
+using namespace std;
+
+size_t const MAX_RANK = 300;
+
 int main()
 {
-    size_t test = 1;
-    while (true)
+    for (size_t rank = 1; rank != MAX_RANK; ++rank)
     {
-        Matrix mat1(test);
-        Matrix mat2(test);
+        Matrix mat1(rank);
+        Matrix mat2(rank);
 
-        std::cout << test;
-        auto finmat = mat1 * mat2;
-
-        if (test < 300)
-            ++test;
-        else if (test < 700)
-            test += 10;
-        else if (test < 2000)
-            test += 100;
-        else 
-            return 0;
+        [[maybe_unused]] auto volatile finmat = mat1 * mat2;
     }
 }
