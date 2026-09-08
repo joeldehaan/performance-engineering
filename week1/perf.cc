@@ -11,6 +11,8 @@ int main()
     {
         Matrix mat1(test);
         Matrix mat2(test);
+        mat1.fill();
+        mat2.fill();
 
         std::cout << test;
         auto finmat = mat1 * mat2;

@@ -6,7 +6,7 @@ Matrix<data_t>::Matrix(size_t rows, size_t cols)
     nCols(cols),
     d_matrix(new data_t[rows * cols])
 {
-    fill();
+    //fill();
 }
 
 template <typename data_t>

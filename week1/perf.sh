@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Compile with flags to prevent inlining
+# Compile different optimisation flags
 for n in 1, 2, 3; do
 
     g++ -O"${n}" -std=c++26 "$@" -g -o matmul_debug perf.cc
