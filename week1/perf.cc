@@ -1,6 +1,6 @@
 #include <iostream>
 #include <chrono>
-#include "matrix.hh"
+#include "DyMatrix/matrix.hh"
 
 using namespace std::chrono;
 
@@ -13,16 +13,7 @@ int main()
         Matrix mat2(test);
 
         std::cout << test;
-        for (size_t repeat = 0; repeat != 5; ++repeat)
-        {
-            steady_clock::time_point start = steady_clock::now();
-            auto finmat = mat1 * mat2;
-            auto elapsed = steady_clock::now() - start;
-
-            std::cout << ',' << elapsed.count();
-        }
-
-        std::cout << "\n";
+        auto finmat = mat1 * mat2;
 
         if (test < 300)
             ++test;
