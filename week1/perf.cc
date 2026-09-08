@@ -15,6 +15,8 @@ int main()
     {
         Matrix mat1(rank);
         Matrix mat2(rank);
+        mat1.fill();
+        mat2.fill();
 
         [[maybe_unused]] auto volatile finmat = mat1 * mat2;
     }
