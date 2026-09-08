@@ -1,6 +1,6 @@
 #include <iostream>
 #include <chrono>
-#include "DyMatrix/matrix.hh"
+#include "DyMatrix/perfmatrix.hh"
 
 using namespace std::chrono;
 
