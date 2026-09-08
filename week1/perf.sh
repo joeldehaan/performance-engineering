@@ -1,14 +1,16 @@
 #!/bin/bash
 
 # Compile with flags to prevent inlining
-g++ "$@" -g  -o matmul_debug perf.cc
+for n in 1, 2, 3; do
 
-# Function name to trace - CHANGE THIS
-FUNCTION_NAME="your_function_name"  # CHANGE THIS
+    g++ -O"${n}" -std=c++26 "$@" -g -o matmul_debug perf.cc
 
-echo "Running perf ftrace with 10 repetitions..."
-echo "Function: $FUNCTION_NAME"
-echo ""
+    # Function name to trace - CHANGE THIS
+    FUNCTION_NAME=
 
-# Run perf ftrace with repeat option
-perf ftrace -r 10 -T "$FUNCTION_NAME" ./matmul_debug 2>&1 | tee ftrace_output.txt
+    echo "Running perf ftrace with 10 repetitions..."
+    echo "Function: $FUNCTION_NAME"
+
+    # Run perf ftrace with repeat option
+    perf ftrace -r 10 -T "$FUNCTION_NAME" ./matmul_debug 2>&1 | tee ftrace_output_O"${n}".txt
+done
