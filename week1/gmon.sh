@@ -27,11 +27,6 @@ if [ -z "$SOURCE" ]; then
     exit 1
 fi
 
-LINE_NUM=$(nm -C "$BIN" | grep -n "Matrix<double> operator\*<double>(Matrix<double> const&, Matrix<double> const&)" | cut -d: -f1)
-FUNCTION=$(nm "$BIN" | sed -n "${LINE_NUM}p" | awk '{print $3}')
-
-
-EXEC="./matrix_benchmark"
 # FUNCTION="matrix_multiply"
 TRIALS=10
 
@@ -45,6 +40,9 @@ for n in 1 2 3; do
         echo "Compilation failed."
         exit 1
     fi
+
+    LINE_NUM=$(nm -C "$BIN" | grep -n "Matrix<double> operator\*<double>(Matrix<double> const&, Matrix<double> const&)" | cut -d: -f1)
+    FUNCTION=$(nm "$BIN" | sed -n "${LINE_NUM}p" | awk '{print $3}')
 
     echo "# Matrix multiplication benchmark"
     echo "# Function: $FUNCTION"
@@ -67,7 +65,7 @@ for n in 1 2 3; do
             rm -f gmon.out
 
             # Run the program.
-            "$EXEC" "$test" > /dev/null
+            "$BIN" "$test" > /dev/null
 
             if [ ! -f gmon.out ]; then
                 echo "ERROR: gmon.out was not generated for N=$test trial=$trial" >&2
@@ -82,7 +80,7 @@ for n in 1 2 3; do
             #         seconds     seconds calls ms/call ms/call name
             #
             # Therefore $3 is self seconds.
-            TIME=$(gprof "$EXEC" gmon.out | \
+            TIME=$(gprof "$BIN" gmon.out | \
                 awk -v func="$FUNCTION" '$0 ~ func {
                     print $3
                     exit
@@ -94,20 +92,15 @@ for n in 1 2 3; do
             fi
 
             printf "%d %d %s\n" "$test" "$trial" "$TIME"
-        done
-
-        # N progression:
-        #
-        # N < 300   -> N + 1
-        # N < 700   -> N + 10
-        # N < 2000  -> N + 100
-        #
+	
+	done
         if [ "$test" -lt 300 ]; then
             ((test++))
+	fi
         
     done
 
     echo
     echo "# Benchmark complete"
-    ```
+
 done

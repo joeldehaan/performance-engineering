@@ -6,12 +6,14 @@
 
 using namespace std::chrono;
 
-int main(int argc; char **argv)
-{
-    size_t size = stoul(argv[1]);
+using namespace std;
 
-    Matrix mat1(test);
-    Matrix mat2(test);
+int main(int argc, char **argv)
+{
+    size_t const rank = stoul(argv[1]);
+
+    Matrix mat1(rank);
+    Matrix mat2(rank);
     mat1.fill();
     mat2.fill();
 
