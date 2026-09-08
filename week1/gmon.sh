@@ -1,5 +1,15 @@
-```bash
 #!/bin/bash
+
+#!/usr/bin/env bash
+set -euo pipefail
+
+# --- hardcoded input ---
+SRC="./gmon.cc"          # <-- edit this to the actual path of your .cc file
+BIN="/tmp/gmon_bin"      # scratch location for the compiled binary
+CXX="${CXX:-g++}"          # override with CXX=clang++ ./run_steady.sh if you want
+CPU="0"                    # <-- CPU core to pin the run to (taskset -c argument)
+EXTRA_FLAGS="-std=c++26 -pg"  # <-- additional compiler flags, applied at every -O level
+
 
 # Usage:
 #   ./benchmark.sh matrix.cpp [starting_N]
@@ -17,15 +27,19 @@ if [ -z "$SOURCE" ]; then
     exit 1
 fi
 
+LINE_NUM=$(nm -C "$BIN" | grep -n "Matrix<double> operator\*<double>(Matrix<double> const&, Matrix<double> const&)" | cut -d: -f1)
+FUNCTION=$(nm "$BIN" | sed -n "${LINE_NUM}p" | awk '{print $3}')
+
+
 EXEC="./matrix_benchmark"
-FUNCTION="matrix_multiply"
+# FUNCTION="matrix_multiply"
 TRIALS=10
 
 # Compile with profiling enabled.
 # -O0 prevents the compiler from optimizing/inlining the
 # matrix multiplication function away.
 for n in 1 2 3; do
-    g++ -O"${n}" -pg -o "$EXEC" "$SOURCE"
+    "$CXX" -O"${n}" ${EXTRA_FLAGS} -o "$BIN" "$SRC"
 
     if [ $? -ne 0 ]; then
         echo "Compilation failed."
@@ -90,13 +104,7 @@ for n in 1 2 3; do
         #
         if [ "$test" -lt 300 ]; then
             ((test++))
-        elif [ "$test" -lt 700 ]; then
-            ((test+=10))
-        elif [ "$test" -lt 2000 ]; then
-            ((test+=100))
-        else
-            break
-        fi
+        
     done
 
     echo
