@@ -1,23 +1,21 @@
 #include <iostream>
 #include <chrono>
+#include <string>
 
-#include "DyMatrix/matrix.hh"
+#include "DyMat17/mat.hh"
 
 using namespace std::chrono;
 
 using namespace std;
 
-size_t const MAX_RANK = 300;
-
-int main()
+int main(int argc, char **argv)
 {
-    for (size_t rank = 1; rank != MAX_RANK; ++rank)
-    {
-        Matrix mat1(rank);
-        Matrix mat2(rank);
+    size_t const rank = std::stoul(argv[1]);
+
+        Matrix<double> mat1(rank);
+        Matrix<double> mat2(rank);
         mat1.fill();
         mat2.fill();
 
         [[maybe_unused]] auto volatile finmat = mat1 * mat2;
-    }
 }
