@@ -23,6 +23,4 @@ for n in 0 1 2 3; do
     taskset -c "$CPU" "$BIN" > "steady-O${n}.csv"
 done
 
-source ../.venv/bin/activate
-./analysis.py
 

@@ -4,7 +4,15 @@
 \usepackage{amsfonts}
 \usepackage{listings}
 
-\title{Performance Lab 1}
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  frame=single,
+  captionpos=t,
+  breaklines=true,
+  caption={\texttt{\lstname}},
+}
+
+\title{Performance Lab 1 - Group 8}
 \author{Hans Bouwman, Joel de Haan}
 
 \begin{document}
@@ -26,6 +34,15 @@ In a given computer, the clock speed can vary. This happens because of power (if
 
 \section{Matrix-Multiply}
 \subsection{Code:}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{steady-O0.pdf}
+    \caption{Latency of matrix multiplication as a function their rank; executable compiled with \texttt{-O0}.}
+    \label{fig:steady0}
+\end{figure}
+
 - Document and return the code as part of your
 assignment.
 
@@ -105,6 +122,14 @@ To determine the complete accuracy of the model and the claims, one should:
 \subsection{LLM Disclosure}
 Claude Sonnet 5 (medium reasoning) was used to write some standard boilerplate for the data analysis in Python (reading CSV into a pandas dataframe, scipy curvfit, matplotlib). As well as explaining some commonly used python library functions that might otherwise require looking up documentation manually.
 ChatGPT suggested the effect of the L1d cache size as the reason for the fluctuation in the region around $N\sim 40,50$
+
+\subsection{Code}
+
+\lstinputlisting{steady.cc}
+\lstinputlisting{perf.cc}
+\lstinputlisting{gmon.cc}
+
+% TODO: DyMatrix class
 
 \end{document}
 

@@ -62,7 +62,7 @@ def create_plot(olevel):
     
     ax.set_title(f"O{olevel}")
     
-    plt.savefig(f"steady-O{olevel}.svg")
+    plt.savefig(f"steady-O{olevel}.pdf")
 
 if __name__ == "__main__":
     main()
