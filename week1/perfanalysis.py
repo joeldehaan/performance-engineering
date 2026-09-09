@@ -30,7 +30,7 @@ def format_val_err(val, err, sig_figs_err=1):
 def create_plot(olevel):
 
     
-    NR_ITERS = 15
+    NR_ITERS = 5
 
     # --- Load data ---
     df = pd.read_csv(f"results_O{olevel}.csv")
@@ -44,13 +44,14 @@ def create_plot(olevel):
     # --- Fit curve ---
     y_median = np.median(runs, axis=1)
 
-    mask = y_median > 0
+    mask = (y_median > 0) & (x > 10)
     x_clean = x[mask]
     y_clean = y_median[mask]
 
 
-    popt, pcov = curve_fit(model, x_clean, y_clean, sigma=y_clean,
-        absolute_sigma=False,
+    popt, pcov = curve_fit(model, x_clean, y_clean, p0=(5, 30), 
+                           sigma=y_clean, absolute_sigma=False,
+        bounds=([1e-12, 1e-12], [np.inf, np.inf]),
         maxfev=10000
     )
     
@@ -64,7 +65,7 @@ def create_plot(olevel):
         row[name] = format_val_err(val, err)
     
     # --- Plot ---
-    x_fit = np.linspace(10, x.max(), 300)
+    x_fit = np.linspace(x.min(), x.max(), 300)
     y_fit = model(x_fit, *popt)
     
     # --- Build boxplot ---

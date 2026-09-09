@@ -48,6 +48,9 @@ We designed a C++ DyMatrix class that allocates a contiguous piece of memory (fo
 In order to measure latency, we firstly used a provided clocks in the \texttt{std::chrono} library; namely \texttt{steady\_clock}. 
 We chose this over \texttt{system\_clock}, as the former is more precise, whereas the latter is more accurate. Accuracy of timepoints is not important since we are measuring a duration: a precise but constant error cancels out.
 
+Then we tested using statistical sampling at 10000Hz using \texttt{perf record -e cpu-clock:u --call-graph}. This gives the percentage of cpu cycles spent on a given function,
+then perf stat was used to estimate how long was spent on a cpu cycle. Whith this, we get measurements of the time spent in the function. This is only as precise as the sampling rate. 
+
 \input{hardware-info.tex}
 
 % These tests were performed on WSL2, on the following system hardware: 
