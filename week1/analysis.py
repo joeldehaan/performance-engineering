@@ -38,7 +38,7 @@ def create_plot(olevel):
     runs = df.iloc[:, 1:1+NR_ITERS].to_numpy()  # shape (n_x, 5)
     
     def model(x, a, c):
-        return a*(2*x**3 + c)
+        return a*2*x**3 + c
     
     
     # --- Fit curve ---
@@ -53,8 +53,8 @@ def create_plot(olevel):
     print("Fitted parameters:", popt)
     print("Parameter errors:  ", perr)
 
-    row = {"Dataset": olevel}
-    for name, val, err in zip(["a", "c"], popt, perr):
+    row = {"O-level": olevel}
+    for name, val, err in zip(["a (ns/FLOP)", "c (ns)"], popt, perr):
         row[name] = format_val_err(val, err)
     
     # --- Plot ---
