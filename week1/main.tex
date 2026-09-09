@@ -1,0 +1,109 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{listings}
+
+\title{Performance Lab 1}
+\author{Hans Bouwman, Joel de Haan}
+
+\begin{document}
+
+\maketitle
+
+\section{Start up latency vs Latency}
+Latency measures the total time for a given operation, starting from when the instruction is issued and ending when it is completed. It could be a single instruction or a whole operation (e.g. writing to a file).\\
+
+Some operations (e.g. writing to a file) may not be able to execute immediately when issued. In the case of writing to a file, the program changes to user space, reads the memory, transfers it to the I/O bus and then it is mapped to disk.
+
+This means there is a lot of time elapsed before the actual writing to disk is performed. This time, is called the start up latency, and is the time before the actual writing is performed.
+
+\section{Time Measurements}
+In a given computer, the clock speed can vary. This happens because of power (if a processor is too warm, it may reduce its clock speed) or (in multi-core/multi-threaded systems) there are different cores that, because of different power requirements also run at different speeds. 
+
+
+
+
+\section{Matrix-Multiply}
+\subsection{Code:}
+- Document and return the code as part of your
+assignment.
+
+The following implementation is in C++. A matrix class was designed where the size is determined at runtime and the matrix is stored as a singular array ie:
+$$\begin{bmatrix}
+    R_1, R_2, \cdots
+\end{bmatrix} \text{    rather than    } \begin{bmatrix}
+    R_1\\
+    R_2\\
+    \vdots
+\end{bmatrix}
+$$
+Where $R_i$ are the rows of the matrix. This was done to preserve cache coherence.
+
+\subsection{Latency \& tested architecture}
+- Measure the latency of the operation as a function of N
+In order to do this, we used 2 provided clocks in the \texttt{std::chrono} library; namely \texttt{steady\_clock} and \texttt{system\_clock}.
+We expect the former to do better as we measure a time difference. 
+These tests were performed on WSL2, on the following system hardware: 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{hardware.png}
+    \caption{x86-64 hardware with 8 cores, 16 processing units. L1 and L2 is shared with 2 PU and L3 shared across all cores. There is one NUMA mode.}
+    \label{fig:lstopo}
+\end{figure}
+
+Due to the virtualisation, it is not possible to pin processes to individual cores. Instead the experiment was run relying on the completely fair scheduler (CFS) and microsoft Hyper-V. This hinders system calls, but not so much the FLOPS.
+
+- You are free to choose the tools, but use more than one tool (such as?)
+- document system (hardware?)
+- Check for consistency of the results (multiple runs? model?)
+
+
+
+\subsection{Model}
+
+\[\Delta t(N)= \begin{cases}
+    N^2+c_0\quad\text{for }N<N_c\\
+    N^3+c_1\quad\text{for }N\geq N_c
+\end{cases}\]
+
+Given an $N\times N$ matrix, performing a multiplication requires storing a matrix of size $N^2$ and performing $N^3 - N^2$ FLOPs. For small $N$ we expect the former to have a large influence, as memory - even cached memory - can be orders of magnitude slower than performing single floating-point operations. 
+
+\{this model is simplified, it takes into acount memory storage, not accesses, and treats the cache influence as one singular breakpoint, independent of L2, L3.\}
+
+\subsection{Results}
+Please put the pretty graphs here
+
+\subsection{}
+- Translate the measurements into throughput of floating-point operations. (how? flops/time)
+- Test the impact of compiler optimizations. (O-levels, but fastmath is also interesting)
+- Try to explain the results and list possible performance limitations (fitting happens here I think, possible limitation: bad cache coherence, lack of simd, lack of FMA)
+\subsection{Discussion}
+From observing the assembly 2 important details are noted:
+\begin{itemize}
+    \item The call to the matrix multiplication is inlined.
+    \item There are no SIMD instructions used.
+    \item There is no FMA instruction.
+\end{itemize} 
+
+The inlining makes it harder for other tools to measure performance (e.g.: it is not possible for statistical sampling of the stack frame, as there is no separate stack frame.)
+No vectorisation is unfortunate for performance reasons however it partially explains the appropriateness of the model.
+
+Overall, the expected model provided a good fit. The region where the cubic order of the FLOPs is estimated around $N_c\approx40-50$. 
+
+Given that the $L1d$ cache is 48 kB, it can store $(48\times 1024 )/8 = 6144$ doubles. As we require 3 matrices, it can store a matrices of 2048 doubles. this corresponds to square matrices of size $\sim 45$. This could explain the location of the peak. The variability therefore comes from other data potentially in cache. This however would not explain the relative speedup observed after this, or the very large variability around it. 
+
+\subsection{Further experiments}
+To determine the complete accuracy of the model and the claims, one should:
+\begin{itemize}
+    \item Force a function call to the matrix method and use statistical sampling of the stack frame to independently verify the time spent.
+    \item Pin the process to a core (and in this case disable the sister core) to make sure the cache is fully owned by the process.
+    \item Use cache simulator (like valgrind) or different architectures to test different L1d cache sizes to observe if the fluctuation region moves accordingly.
+\end{itemize}
+
+\subsection{LLM Disclosure}
+Claude Sonnet 5 (medium reasoning) was used to write some standard boilerplate for the data analysis in Python (reading CSV into a pandas dataframe, scipy curvfit, matplotlib). As well as explaining some commonly used python library functions that might otherwise require looking up documentation manually.
+ChatGPT suggested the effect of the L1d cache size as the reason for the fluctuation in the region around $N\sim 40,50$
+
+\end{document}
+
