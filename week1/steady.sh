@@ -3,7 +3,7 @@ set -euo pipefail
 
 # --- hardcoded input ---
 SRC="./steady.cc"          # <-- edit this to the actual path of your .cc file
-BIN="/tmp/steady_bin"      # scratch location for the compiled binary
+BIN="/tmp/steady-bin"      # scratch location for the compiled binary
 CXX="${CXX:-g++}"          # override with CXX=clang++ ./run_steady.sh if you want
 CPU="0"                    # <-- CPU core to pin the run to (taskset -c argument)
 EXTRA_FLAGS="-std=c++26"  # <-- additional compiler flags, applied at every -O level

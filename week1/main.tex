@@ -20,7 +20,10 @@
 
 \maketitle
 
-\section{Start up latency vs Latency}
+\tableofcontents
+
+
+\section{Start-up Latency vs. Latency}
 Latency measures the total time for a given operation, starting from when the instruction is issued and ending when it is completed. It could be a single instruction or a whole operation (e.g. writing to a file).\\
 
 Some operations (e.g. writing to a file) may not be able to execute immediately when issued. In the case of writing to a file, the program changes to user space, reads the memory, transfers it to the I/O bus and then it is mapped to disk.
@@ -38,41 +41,27 @@ In a given computer, the clock speed can vary. This happens because of power (if
 
 
 
+We designed a C++ DyMatrix class that allocates a contiguous piece of memory (for the sake of cahce coherence and reproducability) depending on a matrix size given a runtime. We implemented matrix multiplication through an overloaded multiplication operator. All code is listed at the end of this document.
 
+\subsection{Latency \& Tested Architecture}
+In order to measure latency, we firstly used a provided clocks in the \texttt{std::chrono} library; namely \texttt{steady\_clock}. 
+We chose this over \texttt{system\_clock}, as the former is more precise, whereas the latter is more accurate. Accuracy of timepoints is not important since we are measuring a duration: a precise but constant error cancels out.
 
+\input{hardware-info.tex}
 
-- Document and return the code as part of your
-assignment.
-
-The following implementation is in C++. A matrix class was designed where the size is determined at runtime and the matrix is stored as a singular array ie:
-$$\begin{bmatrix}
-    R_1, R_2, \cdots
-\end{bmatrix} \text{    rather than    } \begin{bmatrix}
-    R_1\\
-    R_2\\
-    \vdots
-\end{bmatrix}
-$$
-Where $R_i$ are the rows of the matrix. This was done to preserve cache coherence.
-
-\subsection{Latency \& tested architecture}
-- Measure the latency of the operation as a function of N
-In order to do this, we used 2 provided clocks in the \texttt{std::chrono} library; namely \texttt{steady\_clock} and \texttt{system\_clock}.
-We expect the former to do better as we measure a time difference. 
-These tests were performed on WSL2, on the following system hardware: 
-
+% These tests were performed on WSL2, on the following system hardware: 
 % \begin{figure}
 %     \centering
 %     \includegraphics[width=0.75\linewidth]{hardware.png}
 %     \caption{x86-64 hardware with 8 cores, 16 processing units. L1 and L2 is shared with 2 PU and L3 shared across all cores. There is one NUMA mode.}
 %     \label{fig:lstopo}
 % \end{figure}
-
-Due to the virtualisation, it is not possible to pin processes to individual cores. Instead the experiment was run relying on the completely fair scheduler (CFS) and microsoft Hyper-V. This hinders system calls, but not so much the FLOPS.
-
-- You are free to choose the tools, but use more than one tool (such as?)
-- document system (hardware?)
-- Check for consistency of the results (multiple runs? model?)
+% 
+% Due to the virtualisation, it is not possible to pin processes to individual cores. Instead the experiment was run relying on the completely fair scheduler (CFS) and microsoft Hyper-V. This hinders system calls, but not so much the FLOPS.
+% 
+% - You are free to choose the tools, but use more than one tool (such as?)
+% - document system (hardware?)
+% - Check for consistency of the results (multiple runs? model?)
 
 
 
@@ -83,17 +72,18 @@ Due to the virtualisation, it is not possible to pin processes to individual cor
 %     a_1 N^3+c\quad\text{for }N\geq N_c
 % \end{cases}\]
 
-Given two $N\times N$ matrices and their product, storing them requires a total of three $3N^2$ double precision floating point values, and performing the multiplication requires a total of $2N^3$ FLOPs.
+Given two $N\times N$ matrices and their product, storing them requires a total of three $3N^2$ double precision floating point values, and performing the multiplication requires a total of $2N^3$ FLOPs (note: the factor 2 disappears if FMA is used).
 
 As such, we decide to model the throughput $\Delta t$ of the number of floating point operations as function of the matrix rank $N$ using the following model:
 
-\[\Delta t(N)=aN^p+c\]
+\[\Delta t(N)=\frac{2N^3}{a}+c\]
 
-We expect that fitting the data yields a $p$ around the theoretical value 3. The proportionality constant $a$ exists to capture the conversion factor between the number of operations and the time they take, while the constant $c$ exists to capture any constant overhead such a operations related to the code surrounding the matrix multiplication.
+% We expect that fitting the data yields a $p$ around the theoretical value 3. 
+The proportionality constant $a$ exists to capture the conversion factor between the number of operations and the time they take, while the constant $c$ exists to capture any constant overhead such a operations related to the code surrounding the matrix multiplication.
 
-For small $N$ we expect the former to have a large influence, as memory - even cached memory - can be orders of magnitude slower than performing single floating-point operations. 
+For small $N$ we expect the sqaure law to have a large influence, as memory - even cached memory - can be orders of magnitude slower than performing single floating-point operations. However, preliminary trials showed that incorporating a square in addition to a cubic term in the model caused the fit to stop converging, hence we only use the simplified model above.
 
-\{this model is simplified, it takes into acount memory storage, not accesses, and treats the cache influence as one singular breakpoint, independent of L2, L3.\}
+% \{this model is simplified, it takes into acount memory storage, not accesses, and treats the cache influence as one singular breakpoint, independent of L2, L3.\}
 
 \subsection{Results}
 \begin{figure}
@@ -130,9 +120,7 @@ For small $N$ we expect the former to have a large influence, as memory - even c
 \input{fit-results.tex}
 
 \subsection{}
-- Translate the measurements into throughput of floating-point operations. (how? flops/time)
-- Test the impact of compiler optimizations. (O-levels, but fastmath is also interesting)
-- Try to explain the results and list possible performance limitations (fitting happens here I think, possible limitation: bad cache coherence, lack of simd, lack of FMA)
+
 \subsection{Discussion}
 From observing the assembly 2 important details are noted:
 \begin{itemize}
@@ -177,6 +165,16 @@ ChatGPT suggested the effect of the L1d cache size as the reason for the fluctua
 \lstinputlisting{DyMatrix/idx.tcc}
 \lstinputlisting{DyMatrix/multopt.tcc}
 \lstinputlisting{DyMatrix/print.tcc}
+
+\subsubsection{Utility Scripts}
+\lstinputlisting{build.sh}
+\lstinputlisting{hardware-info.sh}
+\lstinputlisting{steady.sh}
+\lstinputlisting{perf.sh}
+\lstinputlisting{gmon.sh}
+
+\subsubsection{Data Analysis Code}
+\lstinputlisting{analysis.py}
 
 
 \end{document}

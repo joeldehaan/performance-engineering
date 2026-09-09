@@ -2,6 +2,7 @@
 
 # exec > build.log 2>&1
 
+./hardware-info.sh > hardware-info.tex
 ./steady.sh
 
 source ../.venv/bin/activate

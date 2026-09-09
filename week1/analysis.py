@@ -38,7 +38,7 @@ def create_plot(olevel):
     runs = df.iloc[:, 1:1+NR_ITERS].to_numpy()  # shape (n_x, 5)
     
     def model(x, a, c):
-        return a*2*x**3 + c
+        return 2*x**3/a + c
     
     
     # --- Fit curve ---
@@ -54,7 +54,7 @@ def create_plot(olevel):
     print("Parameter errors:  ", perr)
 
     row = {"O-level": olevel}
-    for name, val, err in zip(["a (ns/FLOP)", "c (ns)"], popt, perr):
+    for name, val, err in zip(["$a$ (GFLOP/s)", "$c$ (ns)"], popt, perr):
         row[name] = format_val_err(val, err)
     
     # --- Plot ---
@@ -71,7 +71,7 @@ def create_plot(olevel):
     ax.plot(x_fit, y_fit, color="crimson", lw=2)
     
     for n, y in enumerate(runs.T):
-        ax.scatter(x, y, s=.25, label=f"iteration #{n+1}")
+        ax.scatter(x, y, s=.25, c='k') #, label=f"iteration #{n+1}")
     
     ax.set_xlabel("matrix rank (dimensionless)")
     ax.set_ylabel("latency (ns)")
@@ -81,7 +81,6 @@ def create_plot(olevel):
 
     ax.set_ylim(1e3, 1e8)
     
-    ax.legend()
     
     ax.set_title(f"O{olevel}")
     
