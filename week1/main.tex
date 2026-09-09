@@ -152,7 +152,7 @@ The proportionality constant $a$ exists to capture the conversion factor between
 \input{fit-results-perf.tex}
 
 \subsection{Discussion}
-From observing the assembly 2 important details are noted:
+From observing the assembly 3 important details are noted:
 \begin{itemize}
     \item The call to the matrix multiplication is inlined.
     \item There are no SIMD instructions used.
@@ -160,6 +160,7 @@ From observing the assembly 2 important details are noted:
 \end{itemize} 
 
 The inlining makes it harder for other tools to measure performance (e.g.: it is not possible for statistical sampling of the stack frame, as there is no separate stack frame.)
+As this was necessary for the perf measuremetns, \textt{[[gnu::noinline]]} was used.
 No vectorisation is unfortunate for performance reasons however it partially explains the appropriateness of the model.
 
 The measured GFLOP/s is significantly lower than the theoretical maximum cpu capability. This is not surprising; no concurrency, cache tuning, vectorisation and force uninling 
@@ -176,6 +177,7 @@ To use perf, we used perf record -e cpu-clock:u -F 10000 --call-graph fp. A care
 but not too high that information has to be deleted. in this case we chose 10000Hz. This ended up being too low, so the results are, not only worse in general, 
 but also, many of the initial results were 0, even at O0 level. For this reason, the steady clock method is significantly more representative of the acutal results.
 
+Also due to the low sampling, and the fact that most results were very scattered, the error in this method is much larger. This is also observed in the graphs.
 
 \subsection{Further experiments}
 To determine the complete accuracy of the model and the claims, one should:

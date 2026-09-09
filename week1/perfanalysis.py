@@ -43,7 +43,14 @@ def create_plot(olevel):
     
     # --- Fit curve ---
     y_median = np.median(runs, axis=1)
-    popt, pcov = curve_fit(model, x, y_median,
+
+    mask = y_median > 0
+    x_clean = x[mask]
+    y_clean = y_median[mask]
+
+
+    popt, pcov = curve_fit(model, x_clean, y_clean, sigma=y_clean,
+        absolute_sigma=False,
         maxfev=10000
     )
     
