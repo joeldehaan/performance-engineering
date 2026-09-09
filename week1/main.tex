@@ -3,6 +3,7 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{listings}
+\usepackage{booktabs}
 
 \lstset{
   basicstyle=\ttfamily\footnotesize,
@@ -33,15 +34,12 @@ In a given computer, the clock speed can vary. This happens because of power (if
 
 
 \section{Matrix-Multiply}
-\subsection{Code:}
 
 
-\begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{steady-O0.pdf}
-    \caption{Latency of matrix multiplication as a function their rank; executable compiled with \texttt{-O0}.}
-    \label{fig:steady0}
-\end{figure}
+
+
+
+
 
 - Document and return the code as part of your
 assignment.
@@ -80,17 +78,56 @@ Due to the virtualisation, it is not possible to pin processes to individual cor
 
 \subsection{Model}
 
-\[\Delta t(N)= \begin{cases}
-    N^2+c_0\quad\text{for }N<N_c\\
-    N^3+c_1\quad\text{for }N\geq N_c
-\end{cases}\]
+% \[\Delta t(N)= \begin{cases}
+%     a_0 N^2+c\quad\text{for }N<N_c\\
+%     a_1 N^3+c\quad\text{for }N\geq N_c
+% \end{cases}\]
 
-Given an $N\times N$ matrix, performing a multiplication requires storing a matrix of size $N^2$ and performing $N^3 - N^2$ FLOPs. For small $N$ we expect the former to have a large influence, as memory - even cached memory - can be orders of magnitude slower than performing single floating-point operations. 
+Given two $N\times N$ matrices and their product, storing them requires a total of three $3N^2$ double precision floating point values, and performing the multiplication requires a total of $2N^3$ FLOPs.
+
+As such, we decide to model the throughput $\Delta t$ of the number of floating point operations as function of the matrix rank $N$ using the following model:
+
+\[\Delta t(N)=aN^p+c\]
+
+We expect that fitting the data yields a $p$ around the theoretical value 3. The proportionality constant $a$ exists to capture the conversion factor between the number of operations and the time they take, while the constant $c$ exists to capture any constant overhead such a operations related to the code surrounding the matrix multiplication.
+
+For small $N$ we expect the former to have a large influence, as memory - even cached memory - can be orders of magnitude slower than performing single floating-point operations. 
 
 \{this model is simplified, it takes into acount memory storage, not accesses, and treats the cache influence as one singular breakpoint, independent of L2, L3.\}
 
 \subsection{Results}
-Please put the pretty graphs here
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{steady-O0.pdf}
+    \caption{Latency of matrix multiplication as a function their rank; executable compiled with \texttt{-O0}.}
+    \label{fig:steady0}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{steady-O1.pdf}
+    \caption{Latency of matrix multiplication as a function their rank; executable compiled with \texttt{-O1}.}
+    \label{fig:steady1}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{steady-O2.pdf}
+    \caption{Latency of matrix multiplication as a function their rank; executable compiled with \texttt{-O2}.}
+    \label{fig:steady2}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{steady-O3.pdf}
+    \caption{Latency of matrix multiplication as a function their rank; executable compiled with \texttt{-O3}.}
+    \label{fig:steady3}
+\end{figure}
+
+\input{fit-results.tex}
 
 \subsection{}
 - Translate the measurements into throughput of floating-point operations. (how? flops/time)
@@ -120,16 +157,27 @@ To determine the complete accuracy of the model and the claims, one should:
 \end{itemize}
 
 \subsection{LLM Disclosure}
-Claude Sonnet 5 (medium reasoning) was used to write some standard boilerplate for the data analysis in Python (reading CSV into a pandas dataframe, scipy curvfit, matplotlib). As well as explaining some commonly used python library functions that might otherwise require looking up documentation manually.
+Claude Sonnet 5 (medium reasoning) was used to write some standard boilerplate for the data analysis in Python (reading CSV into a pandas dataframe, scipy curvfit, matplotlib). As well as explaining some commonly used python library functions that might otherwise require looking up documentation manually. It as also used for writing shell scripts that automate data collection, generating graphs and compiling the \LaTeX.
 ChatGPT suggested the effect of the L1d cache size as the reason for the fluctuation in the region around $N\sim 40,50$
 
 \subsection{Code}
 
+\subsubsection{main source files}
 \lstinputlisting{steady.cc}
 \lstinputlisting{perf.cc}
 \lstinputlisting{gmon.cc}
 
-% TODO: DyMatrix class
+\subsubsection{Class DyMatrix}
+\lstinputlisting{DyMatrix/matrix.hh}
+\lstinputlisting{DyMatrix/perfmatrix.hh}
+\lstinputlisting{DyMatrix/clear.tcc}
+\lstinputlisting{DyMatrix/ctor.tcc}
+\lstinputlisting{DyMatrix/dtor.tcc}
+\lstinputlisting{DyMatrix/fill.tcc}
+\lstinputlisting{DyMatrix/idx.tcc}
+\lstinputlisting{DyMatrix/multopt.tcc}
+\lstinputlisting{DyMatrix/print.tcc}
+
 
 \end{document}
 

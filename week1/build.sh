@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-exec > build.log 2>&1
+# exec > build.log 2>&1
 
 ./steady.sh
 

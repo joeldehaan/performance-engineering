@@ -6,10 +6,29 @@ from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
 
 def main():
+    results = []
+
     for olevel in range(4):
-        create_plot(olevel)
+        results.append(create_plot(olevel))
+    
+    df = pd.DataFrame(results)
+    with open("fit-results.tex", "w") as f:
+        f.write(df.to_latex(index=False, escape=False))
+
+def format_val_err(val, err, sig_figs_err=1):
+    if err == 0 or np.isnan(err):
+        return f"{val:.3g}"
+    # Find the order of magnitude of the error
+    exponent = int(np.floor(np.log10(abs(err))))
+    # Round error to sig_figs_err significant figures
+    decimal_places = -exponent + (sig_figs_err - 1)
+    decimal_places = max(decimal_places, 0)
+    val_rounded = round(val, decimal_places)
+    err_rounded = round(err, decimal_places)
+    return f"${val_rounded:.{decimal_places}f} \\pm {err_rounded:.{decimal_places}f}$"
 
 def create_plot(olevel):
+
     
     NR_ITERS = 15
 
@@ -19,7 +38,7 @@ def create_plot(olevel):
     runs = df.iloc[:, 1:1+NR_ITERS].to_numpy()  # shape (n_x, 5)
     
     def model(x, a, c):
-        return a*x**3 + c
+        return a*(2*x**3 + c)
     
     
     # --- Fit curve ---
@@ -33,6 +52,10 @@ def create_plot(olevel):
     
     print("Fitted parameters:", popt)
     print("Parameter errors:  ", perr)
+
+    row = {"Dataset": olevel}
+    for name, val, err in zip(["a", "c"], popt, perr):
+        row[name] = format_val_err(val, err)
     
     # --- Plot ---
     x_fit = np.linspace(x.min(), x.max(), 300)
@@ -63,6 +86,8 @@ def create_plot(olevel):
     ax.set_title(f"O{olevel}")
     
     plt.savefig(f"steady-O{olevel}.pdf")
+
+    return row
 
 if __name__ == "__main__":
     main()

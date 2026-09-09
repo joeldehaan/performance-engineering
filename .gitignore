@@ -36,3 +36,5 @@ __pycache__/
 *.log
 *.fdb_latexmk
 
+# project specific:
+fit-results.tex
