@@ -82,7 +82,7 @@ def create_plot(olevel):
     ax.set_ylim(1e3, 1e8)
     
     
-    ax.set_title(f"O{olevel}")
+    ax.set_title(f"Steady clock at O{olevel}")
     
     plt.savefig(f"steady-O{olevel}.pdf")
 

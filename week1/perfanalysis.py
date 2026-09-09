@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 def main():
     results = []
 
-    for olevel in 0, 1, 2, 3:
+    for olevel in range(4):
         results.append(create_plot(olevel))
     
     df = pd.DataFrame(results)
@@ -57,7 +57,7 @@ def create_plot(olevel):
         row[name] = format_val_err(val, err)
     
     # --- Plot ---
-    x_fit = np.linspace(x.min(), x.max(), 300)
+    x_fit = np.linspace(10, x.max(), 300)
     y_fit = model(x_fit, *popt)
     
     # --- Build boxplot ---
@@ -78,10 +78,10 @@ def create_plot(olevel):
     ax.set_xscale("log")
     ax.set_yscale("log")
 
-    ax.set_ylim(1e3, 1e8)
+    ax.set_ylim(1e6, 1e10)
     
     
-    ax.set_title(f"O{olevel}")
+    ax.set_title(f"Perf at O{olevel}")
     
     plt.savefig(f"perf-O{olevel}.pdf")
 

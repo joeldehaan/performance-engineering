@@ -81,13 +81,11 @@ As such, we decide to model the throughput $\Delta t$ of the number of floating 
 % We expect that fitting the data yields a $p$ around the theoretical value 3. 
 The proportionality constant $a$ exists to capture the conversion factor between the number of operations and the time they take, while the constant $c$ exists to capture any constant overhead such a operations related to the code surrounding the matrix multiplication.
 
-For small $N$ we expect the sqaure law to have a large influence, as memory - even cached memory - can be orders of magnitude slower than performing single floating-point operations. However, preliminary trials showed that incorporating a square in addition to a cubic term in the model caused the fit to stop converging, hence we only use the simplified model above.
-
 % \{this model is simplified, it takes into acount memory storage, not accesses, and treats the cache influence as one singular breakpoint, independent of L2, L3.\}
 
 \subsection{Results}
 \subsubsection{Using steady clock}
-\begin{figure}
+\begin{figure}[!h]
     \centering
     \includegraphics[width=\linewidth]{steady-O0.pdf}
     \caption{Latency of matrix multiplication as a function their rank; executable compiled with \texttt{-O0}.}
@@ -95,7 +93,7 @@ For small $N$ we expect the sqaure law to have a large influence, as memory - ev
 \end{figure}
 
 
-\begin{figure}
+\begin{figure}[!h]
     \centering
     \includegraphics[width=\linewidth]{steady-O1.pdf}
     \caption{Latency of matrix multiplication as a function their rank; executable compiled with \texttt{-O1}.}
@@ -103,7 +101,7 @@ For small $N$ we expect the sqaure law to have a large influence, as memory - ev
 \end{figure}
 
 
-\begin{figure}
+\begin{figure}[!h]
     \centering
     \includegraphics[width=\linewidth]{steady-O2.pdf}
     \caption{Latency of matrix multiplication as a function their rank; executable compiled with \texttt{-O2}.}
@@ -111,7 +109,7 @@ For small $N$ we expect the sqaure law to have a large influence, as memory - ev
 \end{figure}
 
 
-\begin{figure}
+\begin{figure}[!h]
     \centering
     \includegraphics[width=\linewidth]{steady-O3.pdf}
     \caption{Latency of matrix multiplication as a function their rank; executable compiled with \texttt{-O3}.}
@@ -121,15 +119,22 @@ For small $N$ we expect the sqaure law to have a large influence, as memory - ev
 \input{fit-results.tex}
 
 \subsection{Using perf}
-\begin{figure}
+\begin{figure}[!h]
     \centering
     \includegraphics[width=\linewidth]{perf-O0.pdf}
     \caption{Latency of matrix multiplication as a function their rank using perf; executable compiled with \texttt{-O0}.}
     \label{fig:perf0}
 \end{figure}
 
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\linewidth]{perf-O1.pdf}
+    \caption{Latency of matrix multiplication as a function their rank using perf; executable compiled with \texttt{-O0}.}
+    \label{fig:perf0}
+\end{figure}
 
-\begin{figure}
+
+\begin{figure}[!h]
     \centering
     \includegraphics[width=\linewidth]{perf-O2.pdf}
     \caption{Latency of matrix multiplication as a function their rank using perf; executable compiled with \texttt{-O2}.}
@@ -137,7 +142,7 @@ For small $N$ we expect the sqaure law to have a large influence, as memory - ev
 \end{figure}
 
 
-\begin{figure}
+\begin{figure}[!h]
     \centering
     \includegraphics[width=\linewidth]{perf-O3.pdf}
     \caption{Latency of matrix multiplication as a function their rank using perf; executable compiled with \texttt{-O3}.}
@@ -145,7 +150,6 @@ For small $N$ we expect the sqaure law to have a large influence, as memory - ev
 \end{figure}
 
 \input{fit-results-perf.tex}
-
 
 \subsection{Discussion}
 From observing the assembly 2 important details are noted:
@@ -158,9 +162,14 @@ From observing the assembly 2 important details are noted:
 The inlining makes it harder for other tools to measure performance (e.g.: it is not possible for statistical sampling of the stack frame, as there is no separate stack frame.)
 No vectorisation is unfortunate for performance reasons however it partially explains the appropriateness of the model.
 
-Overall, the expected model provided a good fit. The region where the cubic order of the FLOPs is estimated around $N_c\approx40-50$. 
+The measured GFLOP/s is significantly lower than the theoretical maximum cpu capability. This is not surprising; no concurrency, cache tuning, vectorisation and force uninling 
+means the system eventually suffers from a performance hit. 
 
-Given that the $L1d$ cache is 48 kB, it can store $(48\times 1024 )/8 = 6144$ doubles. As we require 3 matrices, it can store a matrices of 2048 doubles. this corresponds to square matrices of size $\sim 45$. This could explain the location of the peak. The variability therefore comes from other data potentially in cache. This however would not explain the relative speedup observed after this, or the very large variability around it. 
+Overall, the expected model provided a globally good fit. The data asymptotically converges to lines of gradient 3 - representing a cubic in log-log. 
+
+In the case for $O1$ with steady clock measurements, there seems to be a jump around $N=20$ where the multiplications runs faster. Across different experinments this seems to be
+reproducible. The exact reason is unknown, it could be dynamic allocations changing from regullar \texttt{malloc} to \texttt{mmap} calls, or the matrices not fitting in $L1d$ cache - however that does not
+explain a performance increase.
 
 \subsubsection{Perf}
 To use perf, we used perf record -e cpu-clock:u -F 10000 --call-graph fp. A careful balance has to be struck wehre there is enough sampling to be able to obeserve the functions
@@ -171,21 +180,20 @@ but also, many of the initial results were 0, even at O0 level. For this reason,
 \subsection{Further experiments}
 To determine the complete accuracy of the model and the claims, one should:
 \begin{itemize}
-    \item Force a function call to the matrix method and use statistical sampling of the stack frame to independently verify the time spent.
-    \item Pin the process to a core (and in this case disable the sister core) to make sure the cache is fully owned by the process.
+    \item Force a function call to the matrix method and use statistical sampling whith a very high frequency of the stack frame to independently verify the time spent.
     \item Use cache simulator (like valgrind) or different architectures to test different L1d cache sizes to observe if the fluctuation region moves accordingly.
+    \item track system calls to see if allocation/access schemes change.
 \end{itemize}
 
 \subsection{LLM Disclosure}
 Claude Sonnet 5 (medium reasoning) was used to write some standard boilerplate for the data analysis in Python (reading CSV into a pandas dataframe, scipy curvfit, matplotlib). As well as explaining some commonly used python library functions that might otherwise require looking up documentation manually. It as also used for writing shell scripts that automate data collection, generating graphs and compiling the \LaTeX.
-ChatGPT suggested the effect of the L1d cache size as the reason for the fluctuation in the region around $N\sim 40,50$
 
 \subsection{Code}
 
 \subsubsection{main source files}
 \lstinputlisting{steady.cc}
 \lstinputlisting{perf.cc}
-\lstinputlisting{gmon.cc}
+% \lstinputlisting{gmon.cc}
 
 \subsubsection{Class DyMatrix}
 \lstinputlisting{DyMatrix/matrix.hh}
@@ -203,7 +211,7 @@ ChatGPT suggested the effect of the L1d cache size as the reason for the fluctua
 \lstinputlisting{hardware-info.sh}
 \lstinputlisting{steady.sh}
 \lstinputlisting{perf.sh}
-\lstinputlisting{gmon.sh}
+% \lstinputlisting{gmon.sh}
 
 \subsubsection{Data Analysis Code}
 \lstinputlisting{analysis.py}
