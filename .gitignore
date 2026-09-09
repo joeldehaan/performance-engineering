@@ -6,6 +6,9 @@
 # temporary files
 *.tmp
 
+# pdfs
+*.pdf
+
 # images
 *.svg
 
@@ -26,4 +29,10 @@ __pycache__/
 *.so.*
 *.gch
 *.pch
+
+# Latex
+*.aux
+*.fls
+*.log
+*.fdb_latexmk
 
