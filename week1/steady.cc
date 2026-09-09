@@ -7,8 +7,8 @@ using namespace std::chrono;
 
 using namespace std;
 
-size_t const MAX_RANK = 300;
-size_t const MAX_ITER = 5;
+size_t const MAX_RANK = 100;
+size_t const MAX_ITER = 15;
 
 int main()
 {

@@ -10,11 +10,13 @@ def main():
         create_plot(olevel)
 
 def create_plot(olevel):
+    
+    NR_ITERS = 15
 
     # --- Load data ---
     df = pd.read_csv(f"steady-O{olevel}.csv")
     x = df.iloc[:, 0].to_numpy()
-    runs = df.iloc[:, 1:6].to_numpy()  # shape (n_x, 5)
+    runs = df.iloc[:, 1:1+NR_ITERS].to_numpy()  # shape (n_x, 5)
     
     def model(x, a, c):
         return a*x**3 + c
@@ -51,8 +53,10 @@ def create_plot(olevel):
     ax.set_xlabel("matrix rank (dimensionless)")
     ax.set_ylabel("latency (ns)")
     
-    plt.xscale("log")
-    plt.yscale("log")
+    ax.set_xscale("log")
+    ax.set_yscale("log")
+
+    ax.set_ylim(1e3, 1e8)
     
     ax.legend()
     

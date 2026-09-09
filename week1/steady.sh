@@ -20,6 +20,9 @@ fi
 
 for n in 0 1 2 3; do
     "$CXX" -O"${n}" ${EXTRA_FLAGS} -o "$BIN" "$SRC"
-    taskset -c "$CPU" "$BIN" > "steady-O${n}.csv.tmp"
+    taskset -c "$CPU" "$BIN" > "steady-O${n}.csv"
 done
+
+source ../.venv/bin/activate
+./analysis.py
 

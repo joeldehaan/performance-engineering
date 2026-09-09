@@ -45,12 +45,13 @@ Where $R_i$ are the rows of the matrix. This was done to preserve cache coherenc
 In order to do this, we used 2 provided clocks in the \texttt{std::chrono} library; namely \texttt{steady\_clock} and \texttt{system\_clock}.
 We expect the former to do better as we measure a time difference. 
 These tests were performed on WSL2, on the following system hardware: 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.75\linewidth]{hardware.png}
-    \caption{x86-64 hardware with 8 cores, 16 processing units. L1 and L2 is shared with 2 PU and L3 shared across all cores. There is one NUMA mode.}
-    \label{fig:lstopo}
-\end{figure}
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=0.75\linewidth]{hardware.png}
+%     \caption{x86-64 hardware with 8 cores, 16 processing units. L1 and L2 is shared with 2 PU and L3 shared across all cores. There is one NUMA mode.}
+%     \label{fig:lstopo}
+% \end{figure}
 
 Due to the virtualisation, it is not possible to pin processes to individual cores. Instead the experiment was run relying on the completely fair scheduler (CFS) and microsoft Hyper-V. This hinders system calls, but not so much the FLOPS.
 
