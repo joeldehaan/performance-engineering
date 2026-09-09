@@ -7,6 +7,7 @@
 
 source ../.venv/bin/activate
 ./analysis.py
+./perfanalysis.py
 
 latexmk -pdf main.tex
 

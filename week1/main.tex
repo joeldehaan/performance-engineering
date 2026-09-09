@@ -86,6 +86,7 @@ For small $N$ we expect the sqaure law to have a large influence, as memory - ev
 % \{this model is simplified, it takes into acount memory storage, not accesses, and treats the cache influence as one singular breakpoint, independent of L2, L3.\}
 
 \subsection{Results}
+\subsubsection{Using steady clock}
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{steady-O0.pdf}
@@ -119,7 +120,32 @@ For small $N$ we expect the sqaure law to have a large influence, as memory - ev
 
 \input{fit-results.tex}
 
-\subsection{}
+\subsection{Using perf}
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{perf-O0.pdf}
+    \caption{Latency of matrix multiplication as a function their rank; executable compiled with \texttt{-O0}.}
+    \label{fig:perf0}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{perf-O2.pdf}
+    \caption{Latency of matrix multiplication as a function their rank; executable compiled with \texttt{-O2}.}
+    \label{fig:perf2}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{perf-O3.pdf}
+    \caption{Latency of matrix multiplication as a function their rank; executable compiled with \texttt{-O3}.}
+    \label{fig:perf3}
+\end{figure}
+
+\input{fit-results-perf.tex}
+
 
 \subsection{Discussion}
 From observing the assembly 2 important details are noted:
@@ -135,6 +161,12 @@ No vectorisation is unfortunate for performance reasons however it partially exp
 Overall, the expected model provided a good fit. The region where the cubic order of the FLOPs is estimated around $N_c\approx40-50$. 
 
 Given that the $L1d$ cache is 48 kB, it can store $(48\times 1024 )/8 = 6144$ doubles. As we require 3 matrices, it can store a matrices of 2048 doubles. this corresponds to square matrices of size $\sim 45$. This could explain the location of the peak. The variability therefore comes from other data potentially in cache. This however would not explain the relative speedup observed after this, or the very large variability around it. 
+
+\subsubsection{Perf}
+To use perf, we used perf record -e cpu-clock:u -F 10000 --call-graph fp. A careful balance has to be struck wehre there is enough sampling to be able to obeserve the functions
+but not too high that information has to be deleted. in this case we chose 10000Hz. This ended up being too low, so the results are, not only worse in general, 
+but also, many of the initial results were 0, even at O0 level. For this reason, the steady clock method is significantly more representative of the acutal results.
+
 
 \subsection{Further experiments}
 To determine the complete accuracy of the model and the claims, one should:
@@ -175,7 +207,7 @@ ChatGPT suggested the effect of the L1d cache size as the reason for the fluctua
 
 \subsubsection{Data Analysis Code}
 \lstinputlisting{analysis.py}
-
+\lstinputlisting{perfanalysis.py}
 
 \end{document}
 

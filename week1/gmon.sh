@@ -42,7 +42,7 @@ for n in 1 2 3; do
     fi
 
     LINE_NUM=$(nm -C "$BIN" | grep -n "Matrix<double> operator\*<double>(Matrix<double> const&, Matrix<double> const&)" | cut -d: -f1)
-    FUNCTION="Matrix<double> operator*<double>(Matrix<double> const&, Matrix<double> const&)"
+    FUNCTION="Matrix<double> operator*"
 
     echo "# Matrix multiplication benchmark"
     echo "# Function: $FUNCTION"
