@@ -40,3 +40,6 @@ __pycache__/
 # project specific:
 fit-results.tex
 hardware-info.tex
+
+# other
+*.gz

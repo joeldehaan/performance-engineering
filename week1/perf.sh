@@ -7,11 +7,11 @@ set -euo pipefail
 # ============================================================
 
 CXX="g++"
-SRC="main.cc"
+SRC="perf.cc"
 PROG="./prog"
 
 # Optimization levels
-OPT_LEVELS=("O0" "O2" "O3")
+OPT_LEVELS=("O0" "O1" "O2" "O3")
 
 # Extra compiler flags
 CXXFLAGS=(
@@ -269,5 +269,6 @@ echo "Done."
 echo
 echo "Generated:"
 echo "  results_O0.csv"
+echo "  results_O1.csv"
 echo "  results_O2.csv"
 echo "  results_O3.csv"

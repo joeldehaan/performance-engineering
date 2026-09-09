@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 def main():
     results = []
 
-    for olevel in 0, 2, 3:
+    for olevel in 0, 1, 2, 3:
         results.append(create_plot(olevel))
     
     df = pd.DataFrame(results)
@@ -33,7 +33,7 @@ def create_plot(olevel):
     NR_ITERS = 15
 
     # --- Load data ---
-    df = pd.read_csv(f"perf-O{olevel}.csv")
+    df = pd.read_csv(f"results_O{olevel}.csv")
     x = df.iloc[:, 0].to_numpy()
     runs = df.iloc[:, 1:1+NR_ITERS].to_numpy()  # shape (n_x, 5)
     

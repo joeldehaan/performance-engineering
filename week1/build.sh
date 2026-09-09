@@ -2,10 +2,13 @@
 
 # exec > build.log 2>&1
 
+# ./perf.sh
+# ./steady.sh
+
 ./hardware-info.sh > hardware-info.tex
-./steady.sh
 
 source ../.venv/bin/activate
+
 ./analysis.py
 ./perfanalysis.py
 
