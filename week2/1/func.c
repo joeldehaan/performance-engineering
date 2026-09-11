@@ -1,4 +1,4 @@
-long x
+long x;
 
 void func()
 {

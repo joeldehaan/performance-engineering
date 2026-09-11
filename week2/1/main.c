@@ -1,12 +1,13 @@
 #include <stdio.h>
- extern long x ;
+extern long x;
 
- void func( ) ;
+void func();
 
- int main( ) {
- x = 1 ;
- func( ) ;
- x += 3 ;
+int main()
+{
+    x = 1;
+    func();
+    x += 3;
 
-printf ( ”%l d \n” , x ) ;
+    printf("%ld\n", x);
 }

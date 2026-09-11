@@ -1,0 +1,29 @@
+
+
+\section{Question 1}
+
+\begin{itemize}[label=(\\alph*)]
+    \item In principle it is possible to determine exactly what x will be at the end of the programme: \\
+    it starts at 1, then func adds 1 to it (x = 2) and then main adds 3 to it. Hence when printed it will show the value 5.
+    A good optimised code will therefore look like:
+    
+\begin{lstlisting}
+    int main()
+    {
+        printf("5\n");
+    }
+\end{lstlisting}
+
+However, when the compiler looks at func.c, it does not know the value of x, so it just produces a function that adds 1 to x. In main, something similar happens; 
+as x is a global variable, it cannot guarantee func does not change it (and in fact it does) and thus does not know the value of x after the call to func. Therefore the compiler is forced to code that adds 3
+to whatever the value of x is at that moment. In merging the 2 functions into a single file, the compiler can see both modifications, so it does know what the state of x is before the func call, knows the state after the func call and therefore knows the exact value it has to
+print at compile time, resulting in the optimised code. 
+
+
+\item After running compiling with \texttt{gcc-14 -c -O1 -fopt-info-all *.c}
+\input{1/gccrep.txt}
+
+
+
+    
+\end{itemize}
