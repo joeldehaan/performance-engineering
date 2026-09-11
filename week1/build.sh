@@ -2,8 +2,8 @@
 
 # exec > build.log 2>&1
 
-# ./perf.sh
-# ./steady.sh
+./perf.sh
+./steady.sh
 
 ./hardware-info.sh > hardware-info.tex
 
