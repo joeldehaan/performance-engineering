@@ -39,6 +39,7 @@ __pycache__/
 
 # project specific:
 fit-results.tex
+fit-results-perf.tex
 hardware-info.tex
 
 # other
