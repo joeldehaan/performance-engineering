@@ -37,9 +37,12 @@
 \subsection{Hardware Information}
 \input{2/mem-info.tex}
 
+The maximum attainable bandwidth is given by the following equation:
+
+\[B_\text{max}=N_\text{sockets}\cdot N_\text{channels/socket}\cdot v_\text{memory}\cdot W_\text{bus}\]
 
 \subsection{Results}
-For generating the results, a slightly modified version of the C version of the benchmark was used. The change consisted of a changing the name of a depricated OpenMP directve, as was immediately suggestion by GCC. The fortran version required a similar change to compile, but immediately segfaulted when we attempted to run it.
+For generating the results, a slightly modified version of the C version of the benchmark was used. The change consisted of a changing the name of a depricated OpenMP directve, as was suggested by GCC. The fortran version required a similar change to compile, but immediately segfaulted when we attempted to run it.
 
 \subsection{LLM Disclosure}
 Claude Sonnet 5 with Medium reasoning was used to write shell scripts for automation and repoducability. It was used for the benchmarking loop and converting its output to a conventient .csv format, as well as for finding and formatting hardware information into a \LaTeX table.

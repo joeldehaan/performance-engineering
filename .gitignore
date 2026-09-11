@@ -41,6 +41,7 @@ __pycache__/
 fit-results.tex
 fit-results-perf.tex
 hardware-info.tex
+mem-info.tex
 
 # other
 *.gz
