@@ -1,0 +1,3 @@
+[submodule "week2/2/stream"]
+	path = week2/2/stream
+	url = https://github.com/ghbouwman/STREAM.git
