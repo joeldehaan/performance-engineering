@@ -44,6 +44,13 @@ The maximum attainable bandwidth is given by the following equation:
 \subsection{Results}
 For generating the results, a slightly modified version of the C version of the benchmark was used. The change consisted of a changing the name of a depricated OpenMP directve, as was suggested by GCC. The fortran version required a similar change to compile, but immediately segfaulted when we attempted to run it.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{2/stream-bandwidth.pdf}
+    \caption{Stream benchmark results with added context.}
+    \label{fig:stream}
+\end{figure}
+
 \subsection{LLM Disclosure}
 Claude Sonnet 5 with Medium reasoning was used to write shell scripts for automation and repoducability. It was used for the benchmarking loop and converting its output to a conventient .csv format, as well as for finding and formatting hardware information into a \LaTeX table.
 

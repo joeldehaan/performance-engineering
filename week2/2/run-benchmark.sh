@@ -7,7 +7,7 @@ MAX_SIZE=50000000
 GROWTH_FACTOR=1.5
 
 RUNS_PER_SIZE=10
-OUT_CSV="stream_results.csv"
+OUT_CSV="stream-results.csv"
 
 echo "array_size,kernel,rate_mbps" > "$OUT_CSV"
 

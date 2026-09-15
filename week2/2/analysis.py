@@ -3,7 +3,7 @@ import csv
 from collections import defaultdict
 import matplotlib.pyplot as plt
 
-CSV_PATH = "stream_results.csv"
+CSV_PATH = "stream-results.csv"
 
 data = defaultdict(lambda: {"x": [], "y": []})
 
@@ -22,18 +22,27 @@ colors = {
 }
 
 fig, ax = plt.subplots(figsize=(8, 6))
-for kernel, points in data.items():
-    ax.scatter(points["x"], points["y"], label=kernel,
-               color=colors.get(kernel), alpha=0.7, s=20)
 
+ax.set_title("STREAM bandwidth vs array size")
 ax.set_xlabel("Array size (elements)")
 ax.set_ylabel("Rate (MB/s)")
 ax.set_xscale("log")
 ax.set_yscale("log")
-ax.set_title("STREAM bandwidth vs array size")
+
+ax.axhline(51.2e3, label="nominal memory bandwidth", c='k')
+ax.axhline(322945.58, label="measured L3 bandwidth", c='r')
+ax.axvline(8*1024**2/8/2, label="L3 cache size (Copy/Scale)")
+ax.axvline(8*1024**2/8/3, label="L3 cache size (Add/Triad)")
+
+
+for kernel, points in data.items():
+    ax.scatter(points["x"], points["y"], label=kernel,
+               color=colors.get(kernel), alpha=.4, s=2)
+
+
 ax.legend()
 ax.grid(True, which="both", linestyle="--", alpha=0.4)
 
 plt.tight_layout()
-plt.savefig("stream_bandwidth.pdf")
+plt.savefig("stream-bandwidth.pdf")
 
