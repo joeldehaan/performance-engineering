@@ -1,0 +1,13 @@
+merged.c:16:5: optimized:   Inlining printf/15 into main/25 (always_inline).
+merged.c:13:5: note: Considering inline candidate func/24.
+merged.c:13:5: optimized:  Inlining func/24 into main/25.
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:86:10: missed:   not inlinable: main/25 -> __printf_chk/26, function body not available
+Unit growth for small function inlining: 14->14 (0%)
+
+Inlined 2 calls, eliminated 0 functions
+
+merged.c:8:1: note: ***** Analysis failed with vector mode V2DI
+merged.c:8:1: note: ***** Skipping vector mode V16QI, which would repeat the analysis for V2DI
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:86:10: missed: statement clobbers memory: __printf_chk (2, "%ld\n", 5);
+merged.c:10:5: note: ***** Analysis failed with vector mode V2DI
+merged.c:10:5: note: ***** Skipping vector mode V16QI, which would repeat the analysis for V2DI

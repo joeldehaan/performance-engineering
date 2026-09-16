@@ -42,7 +42,7 @@ The maximum attainable bandwidth is given by the following equation:
 \[B_\text{max}=N_\text{sockets}\cdot N_\text{channels/socket}\cdot v_\text{memory}\cdot W_\text{bus}\]
 
 \subsection{Results}
-For generating the results, a slightly modified version of the C version of the benchmark was used. The change consisted of a changing the name of a depricated OpenMP directve, as was suggested by GCC. The fortran version required a similar change to compile, but immediately segfaulted when we attempted to run it.
+For generating the results, a slightly modified version of the C version of the benchmark was used. The change consisted of a changing the name of a depricated OpenMP directve, as was suggested by GCC. The fortran version required a similar change to compile, but immediately segfaulted when attempted to run it.
 
 \begin{figure}[H]
     \centering
@@ -51,6 +51,28 @@ For generating the results, a slightly modified version of the C version of the 
     \label{fig:stream}
 \end{figure}
 
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=\linewidth]{2/stream-bandwidth-ranges.pdf}
+    \caption{Stream benchmark results with added context.}
+    \label{fig:stream-var}
+\end{figure}
+
+\subsection{Parameter chosing}
+The stream benchmark is made to run on multiple cores, in this case it detects the number of present cores and uses that as a default.
+The array length was swept through as to pass through all cache sizes, to be able to see the roofline of this benchmark.
+10 runs per array size were performed, this is a small value that is reasonable to get reliable minimum, maximum statistics from, that still makes it fast to run.  
+
+\subsection{Analysis}
+The graph shows a linear increase until it reaches a maximum peak and then remains constant at a roofline. The reason for this is; for small values of the array size, the algorithm, which is mostly $\mathcal{O}(n)$ on floating point operations is the limiting factor. This is because values are 
+well placed in cache and the programme doesn't have to wait for accesses. However, near the size of L3 cache, a peak is attained and then a drop in performance is observed. This marks the moment when the benchmark becomes memory limited. The reason for the slow attainment of the peak is near the 
+limit size, values are not fully in cache, there are some cache misses. When the cache size is exceeded, you are guaranteed to have misses and pay the performance cost of acessing DRAM.
+The reason we expect L3 to be the limiting cache size, rather than L2 or L1, is because the algorithm is multi-threaded, so data is shared across all cores, and the only cache shared between all cores is L3. Naturally, the full theoretical memory bandwidth isn't attained but the measured throughput is 
+very close. The same holds for the theoretical L3 bandwidth, in fact, this value is surpassed. An exact reason is not clear, but most likely has to do with L1 cache data and potential pre-fetching from the kernel.
+
+Another observation is how the variance changes. Overall, in the linear region, the variance is quite high. However, when the memory limit is reached, this variance suddenly decreases. This is to be expected, when the algorithm is CPU bound, there is no guarantee of which core the operation runs, when it 
+can be stored or loaded from cache among other things. This performance issue is near the CPU. However, the memory bus of a standard computer, though slow, goes through a data bus which has more consistent bandwidth.
+
 \subsection{LLM Disclosure}
 Claude Sonnet 5 with Medium reasoning was used to write shell scripts for automation and repoducability. It was used for the benchmarking loop and converting its output to a conventient .csv format, as well as for finding and formatting hardware information into a \LaTeX table.
 
@@ -58,6 +80,7 @@ Claude Sonnet 5 with Medium reasoning was used to write shell scripts for automa
 Sources for the modified STREAM benchmarking code can be found \href{https://github.com/ghbouwman/STREAM}{here}.
 
 \includesource{2/mem-info.sh}
+\includesource{2/analysis.py}
 
 \end{document}
 
