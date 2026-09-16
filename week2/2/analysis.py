@@ -145,10 +145,10 @@ ax2.plot(Ns,
         alpha=0.6,
     )
 
-ax1.set_title("STREAM benchmark variability")
-ax1.set_xlabel("Array size (elements)")
-ax1.set_ylabel("range / median (no units)")
-ax1.set_xscale("log")
-ax1.set_yscale("log")
+ax2.set_title("STREAM benchmark variability")
+ax2.set_xlabel("Array size (elements)")
+ax2.set_ylabel("range / median (no units)")
+ax2.set_xscale("log")
+ax2.set_yscale("log")
 
-plt.savefig("stream-bandwidth-variance")
+plt.savefig("stream-bandwidth-variance.pdf")
