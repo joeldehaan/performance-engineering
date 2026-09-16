@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import csv
 from collections import defaultdict
+import numpy as np
 import matplotlib.pyplot as plt
 
 CSV_PATH = "stream-results.csv"
@@ -45,4 +46,109 @@ ax.grid(True, which="both", linestyle="--", alpha=0.4)
 
 plt.tight_layout()
 plt.savefig("stream-bandwidth.pdf")
+fig, ax1 = plt.subplots(figsize=(8, 6))
 
+# Plot median + min/max for each kernel
+for kernel, points in data.items():
+
+    # Group rates by array size
+    grouped = defaultdict(list)
+
+    for N, rate in zip(points["x"], points["y"]):
+        grouped[N].append(rate)
+
+    Ns = sorted(grouped.keys())
+
+    median = []
+    minimum = []
+    maximum = []
+
+    for N in Ns:
+        values = np.asarray(grouped[N])
+
+        median.append(np.median(values))
+        minimum.append(np.min(values))
+        maximum.append(np.max(values))
+
+    Ns = np.asarray(Ns)
+    median = np.asarray(median)
+    minimum = np.asarray(minimum)
+    maximum = np.asarray(maximum)
+
+    color = colors.get(kernel)
+
+    # Variability envelope
+    ax1.fill_between(
+        Ns,
+        minimum,
+        maximum,
+        color=color,
+        alpha=0.15,
+        linewidth=0,
+    )
+
+    # Min/max boundaries
+    ax1.plot(
+        Ns,
+        minimum,
+        color=color,
+        linestyle="--",
+        linewidth=0.8,
+        alpha=0.6,
+    )
+
+    ax1.plot(
+        Ns,
+        maximum,
+        color=color,
+        linestyle="--",
+        linewidth=0.8,
+        alpha=0.6,
+    )
+
+    # Central value
+    ax1.plot(
+        Ns,
+        median,
+        color=color,
+        linewidth=2,
+        marker="o",
+        markersize=3,
+        label=kernel,
+    )
+
+ax1.set_title("STREAM benchmark central values and variability")
+ax1.set_xlabel("Array size (elements)")
+ax1.set_ylabel("Rate (MB/s)")
+ax1.set_xscale("log")
+ax1.set_yscale("log")
+
+ax1.legend()
+ax1.grid(
+    True,
+    which="both",
+    linestyle="--",
+    alpha=0.4,
+)
+
+plt.tight_layout()
+plt.savefig("stream-bandwidth-ranges.pdf")
+
+fig, ax2 = plt.subplots(figsize=(8, 6))
+
+
+ax2.plot(Ns,
+        (maximum - minimum) / median,
+        color=color,
+        linestyle="--",
+        linewidth=0.8,
+        alpha=0.6,
+    )
+
+ax1.set_title("STREAM benchmark variability")
+ax1.set_xlabel("Array size (elements)")
+ax1.set_ylabel("range / median (no units)")
+ax1.set_xscale("log")
+ax1.set_yscale("log")
+
+plt.savefig("stream-bandwidth-variance")
