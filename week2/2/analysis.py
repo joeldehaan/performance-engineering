@@ -122,6 +122,7 @@ ax1.set_xlabel("Array size (elements)")
 ax1.set_ylabel("Rate (MB/s)")
 ax1.set_xscale("log")
 ax1.set_yscale("log")
+ax1.grid(True, which="both", linestyle="--", alpha=0.4)
 
 ax1.legend()
 ax1.grid(
@@ -150,5 +151,6 @@ ax2.set_xlabel("Array size (elements)")
 ax2.set_ylabel("range / median (no units)")
 ax2.set_xscale("log")
 ax2.set_yscale("log")
+ax2.grid(True, which="both", linestyle="--", alpha=0.4)
 
 plt.savefig("stream-bandwidth-variance.pdf")
