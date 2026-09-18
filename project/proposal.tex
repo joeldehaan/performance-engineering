@@ -1,0 +1,80 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{hyperref}
+
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  frame=single,
+  captionpos=t,
+  breaklines=true,
+  caption={\texttt{\lstname}},
+}
+
+\title{Project proposal: 2D Poisson solver}
+\author{Hans Bouwman, Joel de Haan}
+
+\begin{document}
+
+\maketitle
+
+\section{Problem}
+
+The project will start from the given Jacobi solver for the 2D Poisson equation.
+\url{https://github.com/haicgu/training/blob/main/HPC/hands-on/poisson2d/c/}
+Implemented in C.
+
+This code solves the 2D poisson equation with periodic boundary conditions. \\
+
+The objective of this project is to optimise the given code for an 8-core AMD CPU with one NUMA domain. 
+
+The given code compiles and can be benchmarked, thus the initial benchmark is given by the given code in the target architecture.
+
+\section{Initial plan}
+\begin{itemize}
+    \item Change the loop order in the first kernel as the inner for loop traverses \texttt{iy} in the inner loop as:\\
+    \texttt{ for (int iy = 1; iy < (ny-1); iy++)\\
+            \{\\
+                $\text{ }$ \hspace{0.6cm}v[nx*iy+ix] = vp[nx*iy+ix];\\
+            \}}
+    This will make the for loop access contiguously, improving cache coherence and allowing for simd instructions.
+    \item SIMD as previously mentioned, since we are iterating over a grid, we expect to be able to use SIMD instructions. Compiler reports should inform us when these instructions are used. Furthermore, inspecting the assembly should also make it visible by looking for \textt{AVX} instructinos.
+
+    \item Memory accesses: the AMD report suggests that, when using the finite difference method, a 5 point stencil is the best way to discretise the general equation. We can make use of the 4 contiguous points loaded to reduce total memory acesses.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{stencil.png}
+    \caption{Suggested stencil by the AMD repport, given a point, the 4 contiguous points also need to be accessed.}
+    \label{fig:placeholder}
+\end{figure}
+
+\item Parallelisation: OpenMP can be used to parallelise idependent points to speedup the total process. 
+    \end{itemize}
+
+
+\section{Tools}
+As this process has several independent kernels, a regular timer can be quite reliable to investigate the performance of the individual kernels. Using gprof might have a too slow frequency sampling rate. 
+Perf however, does allow for a cycles measurement and instructions per cycle which is also an important metric. 
+
+As we are running on a native linux environment, we intend to use taskset (especially for single core benchmarks) and fix the clock speed for reliable measurement.
+
+\section{The model}
+As shown in the AMD report, we expect the performance to look like a Roofline model. This can be plotted as the flops per second against arithmetic intensity.
+Given that the problem has a fixed size, we expect Amdahl's law to hold. However the exact percentage of code that is parallelisable has to be studied. However, as we expect memory bandwidth to be the larger issue, this may not hold for all problem sizes.
+
+\section{Time plan:}
+\begin{itemize}
+    \item Week 1: Prepare single-core benchmarks using the original code. 
+    \item Week 2:Fix the memory access form, order the loop, and use a data structure that allows for minimizing acesses of the grid
+    \item Week 3:Identify SIMD possibilities - and what the compiler already does. Start implementing OpenMP parallelisation
+    \item Week 4:Finish OpenMp and collect benchmarks
+    \item If time allowes: Simulate cache effects with different hypothetical cache sizes (valgrind) - this benchmarks are not as fast but do show relative performance changes and what section of the roofline is cache dependent. 
+\end{itemize}
+
+
+\end{document}
