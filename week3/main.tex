@@ -1,0 +1,41 @@
+
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{hyperref} % should always go last
+% \usepackage{enumitem}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  frame=single,
+  captionpos=t,
+  breaklines=true,
+}
+
+\newcommand{\includesource}[1]{%
+  \lstinputlisting[caption={\texttt{#1}}]{#1}%
+}
+
+\title{Performance Lab 3 - Group 8}
+\author{Hans Bouwman, Joel de Haan}
+
+\begin{document}
+
+\maketitle
+
+
+\tableofcontents
+
+\section{Arithmetic Intensity}
+\section{Semi-Analytical Performance Modelling and the Roofline Model}
+\section{Queueing Theory}
+
+We use Little's law to compute
+\[N=X\cdot R=0.4\cdot10^{9}\text{ CL/s}\cdot400\text{ ns}=160\text{ cachelines}\]
+
+
+\end{document}
