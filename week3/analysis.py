@@ -5,7 +5,7 @@ import numpy as np
 from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
 
-def AI(N: int):
+def AI(N: int) -> float:
     return N / 12
 
 def gflopss(N, time):
@@ -67,6 +67,9 @@ def create_plot_roofline(olevel):
             c="k",
             alpha=0.5,
         )
+
+    ax.plot(arithmetic_intensity, 51.2 * arithmetic_intensity, "--", color = "red", label = r"B_{mem} * AI")
+    ax.plot(arithmetic_intensity, [4 for _ in arithmetic_intensity], "--", color = "red", label = r"B_{fp}")
 
     # Median performance
     order = np.argsort(arithmetic_intensity)
