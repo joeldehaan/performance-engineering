@@ -31,11 +31,17 @@
 \tableofcontents
 
 \section{Arithmetic Intensity}
+For each value $c_{ij}$, we add the product $a_{ik}\cdot b_{kj}$ for all $N$ values of $k$, thus giving $2N$ operations per value in $C$ ($N$ for the multiplications and $N$ for the addition).
+Matrix $C$ has $N^2$ values, so we have $I_{\text{fp}}=2N^3$ total FLOP.
+
+If all matrices fit in cache, we simply move 3 matrices with $N^2$ elements of 8 bytes each only once, giving $I_{\text{mem}}=24N^2$ bytes. This would give an airthmetic intensity of $\frac{I_{\text{fp}}}{I_{\text{mem}}}=\frac{N}{12}$
+
 \section{Semi-Analytical Performance Modelling and the Roofline Model}
 \section{Queueing Theory}
 
 We use Little's law to compute
 \[N=X\cdot R=0.4\cdot10^{9}\text{ CL/s}\cdot400\text{ ns}=160\text{ cachelines}\]
-
+(Assuming that maximum bandwidth simply means maximum throughput, but expressed in terms of bytes instead of requests.)
+Thus, we conclude we need 160 concurrent requests.
 
 \end{document}
