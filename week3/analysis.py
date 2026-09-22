@@ -9,7 +9,7 @@ def AI(N: int) -> float:
     return N / 12
 
 def gflopss(N, time):
-    return (2 * N**3 / time) * 10**3
+    return (2 * N**3 / time)
 
 def main():
     results = []
