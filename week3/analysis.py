@@ -6,7 +6,7 @@ from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
 
 def AI(N: int) -> float:
-    return N / 12
+    return N / 32
 
 def gflopss(N, time):
     return (2 * N**3 / time)

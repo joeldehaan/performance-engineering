@@ -37,6 +37,36 @@ Matrix $C$ has $N^2$ values, so we have $I_{\text{fp}}=2N^3$ total FLOP.
 If all matrices fit in cache, we simply move 3 matrices with $N^2$ elements of 8 bytes each only once, giving $I_{\text{mem}}=24N^2$ bytes. This would give an airthmetic intensity of $\frac{I_{\text{fp}}}{I_{\text{mem}}}=\frac{N}{12}$
 
 \section{Semi-Analytical Performance Modelling and the Roofline Model}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{roofline-O0.pdf}
+    \caption{Performance of matrix multiplication; executable compiled with \texttt{-O0}.}
+    \label{fig:steady1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{roofline-O1.pdf}
+    \caption{Performance of matrix multiplication; executable compiled with \texttt{-O1}.}
+    \label{fig:steady1}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{roofline-O2.pdf}
+    \caption{Performance of matrix multiplication; executable compiled with \texttt{-O2}.}
+    \label{fig:steady1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{roofline-O3.pdf}
+    \caption{Performance of matrix multiplication; executable compiled with \texttt{-O3}.}
+    \label{fig:steady1}
+\end{figure}
+
 \section{Queueing Theory}
 
 We use Little's law to compute
