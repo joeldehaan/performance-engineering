@@ -67,6 +67,20 @@ If all matrices fit in cache, we simply move 3 matrices with $N^2$ elements of 8
     \label{fig:steady1}
 \end{figure}
 
+From the output assembly, we know that there is no SIMD or FMA instruction. This means that the maximum floating point bandwidth is equal to the maximum clock speed. For this system, that is 4GHz. 
+Arithmetic intensity can be calculated as $N / 12$ however, we don't expect the data to have to be loaded from RAM, rather from L1 cache (mostly). This means that the arithmetic intensity should be calculated by how many load instructions have to be done, which is approximately
+$N / (8 * 4)$. 
+
+As can be seen from the graph, these are indeed upper bounds. The benchmark does appear to reach almost the limit of the floating point operations, this suggests that the limit was less pessimistic than expected, suggesting the CPU was indeed almost at highest clock speed, the algorithm does have SIMD or FMA instructions
+that were not easily visible in the assembly. Another candidate is the pipelining of the CPU instructions, this is discussed later.
+
+The other section of the roofline model is that we expect, for low values of $N$, the trend to be bounded by $AI\cdot B_{mem}$. Where $B_{mem}$ can is the bandwidth of the RAM. This value can be taken from the \texttt{lscpu} command or from the STREAM benchmark, in our case, both agree with a value of $51.2$
+
+The reason these results are not exactly what was expected may have to do with pipelining issues. Since matrix multiplication involves the sum of elements:
+$$C_{ij} = \sum_kA_{ik}B_{kj} \implies C_{ij}^{k+1} = C^k_{ij} + A_{ik}B_{kj}$$
+
+We have that all instructions are dependent on the next. This allows for the possibility that the CPU is much faster than the pipelined instructions, this can mean that the CPU may spend time stalling than executing instructions. This reduces the reliabilty of the roofline model.
+
 \section{Queueing Theory}
 
 We use Little's law to compute
