@@ -30,6 +30,8 @@ public:
     size_t rows() const;
     size_t cols() const;
 
+    data_t const *data() const; //non-owning view of data
+
     ~Matrix();
 };
 
@@ -39,7 +41,13 @@ Matrix<data_t> operator*(Matrix<data_t> const &lhs,
 
 template <typename data_t>                //vector multiplication
 std::vector<data_t> operator*(Matrix<data_t> const &, 
-                    std::type_identity_t<std::span<data_t>> vec);
+                    const std::type_identity_t<const std::span<const data_t>> vec);
+
+template <typename data_t>
+inline data_t const *Matrix<data_t>::data() const
+{
+    return d_matrix;
+}
 
 
 template <typename data_t>
