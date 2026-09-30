@@ -1,0 +1,327 @@
+DyMatrix/fill.tcc:16:30: missed: couldn't vectorize loop
+DyMatrix/fill.tcc:16:30: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+/usr/include/c++/15/bits/random.tcc:3365:34: missed: couldn't vectorize loop
+/usr/include/c++/15/bits/random.tcc:3365:34: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+/usr/include/c++/15/bits/random.tcc:412:42: optimized: loop vectorized using 32 byte vectors
+/usr/include/c++/15/bits/random.tcc:404:32: optimized: loop vectorized using 32 byte vectors
+/usr/include/c++/15/bits/random.tcc:333:32: missed: couldn't vectorize loop
+/usr/include/c++/15/bits/random.tcc:335:14: missed: not vectorized: no vectype for stmt: __x_20 = MEM[(struct mersenne_twister_engine *)&gen]._M_x[_19];
+ scalar_type: long unsigned int
+DyMatrix/fill.tcc:4:6: note: vectorized 2 loops in function.
+DyMatrix/fill.tcc:4:6: missed: splitting region at control altering definition _17 = std::random_device::_M_getval (&rd);
+/usr/include/c++/15/bits/char_traits.h:429:49: missed: statement clobbers memory: __builtin_memcpy (&D.169380.D.50352._M_local_buf, "default", 7);
+/usr/include/c++/15/bits/random.h:1760:30: missed: not vectorized: statement can throw an exception: std::random_device::_M_init (&rd, &D.169380);
+/usr/include/c++/15/bits/new_allocator.h:172:59: missed: statement clobbers memory: operator delete (_43, _46);
+/usr/include/c++/15/bits/new_allocator.h:172:59: missed: statement clobbers memory: operator delete (_39, _42);
+/usr/include/c++/15/bits/random.h:1782:29: missed: not vectorized: statement can throw an exception: _17 = std::random_device::_M_getval (&rd);
+/usr/include/c++/15/bits/random.h:1782:29: note: ***** Analysis failed with vector mode V4DI
+/usr/include/c++/15/bits/random.h:1782:29: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+/usr/include/c++/15/bits/random.h:1782:29: missed: splitting region at dominance boundary bb12
+/usr/include/c++/15/bits/random.h:1766:14: missed: statement clobbers memory: std::random_device::_M_fini (&rd);
+/usr/include/c++/15/bits/random.h:1766:18: note: ***** Analysis failed with vector mode VOID
+/usr/include/c++/15/bits/random.h:1766:18: missed: splitting region at dominance boundary bb5
+/usr/include/c++/15/bits/random.h:1766:14: missed: statement clobbers memory: std::random_device::_M_fini (&rd);
+/usr/include/c++/15/bits/random.tcc:420:17: note: ***** Analysis succeeded with vector mode V4DI
+/usr/include/c++/15/bits/random.tcc:420:17: note: SLPing BB part
+/usr/include/c++/15/bits/random.tcc:406:14: note: Costing subgraph: 
+/usr/include/c++/15/bits/random.tcc:406:14: note: node 0x39fdb978 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:406:14: note: op template: _111 = _105 & 18446744071562067968;
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	stmt 0 _111 = _105 & 18446744071562067968;
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	stmt 1 _270 = _113 & 2147483647;
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	children 0x39fdba00 0x39fdba88
+/usr/include/c++/15/bits/random.tcc:406:14: note: node 0x39fdba00 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:406:14: note: op template: _105 = MEM[(long unsigned int *)&gen + 1792B];
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	stmt 0 _105 = MEM[(long unsigned int *)&gen + 1792B];
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	[l] stmt 1 _113 = gen._M_x[225];
+/usr/include/c++/15/bits/random.tcc:406:14: note: node (constant) 0x39fdba88 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	{ 18446744071562067968, 2147483647 }
+/usr/include/c++/15/bits/random.tcc:406:14: note: Cost model analysis: 
+/usr/include/c++/15/bits/random.tcc:406:14: note: Cost model analysis for part in loop 3:
+  Vector cost: 52
+  Scalar cost: 36
+/usr/include/c++/15/bits/random.tcc:406:14: missed: not vectorized: vectorization is not profitable.
+/usr/include/c++/15/bits/random.tcc:406:14: note: Costing subgraph: 
+/usr/include/c++/15/bits/random.tcc:406:14: note: node 0x39fdbb98 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:406:14: note: op template: _126 = _113 & 18446744071562067968;
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	stmt 0 _126 = _113 & 18446744071562067968;
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	stmt 1 _321 = _128 & 2147483647;
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	children 0x39fdbca8 0x39fdbd30
+/usr/include/c++/15/bits/random.tcc:406:14: note: node (external) 0x39fdbca8 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	{ _113, _128 }
+/usr/include/c++/15/bits/random.tcc:406:14: note: node (constant) 0x39fdbd30 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	{ 18446744071562067968, 2147483647 }
+/usr/include/c++/15/bits/random.tcc:406:14: note: Cost model analysis: 
+/usr/include/c++/15/bits/random.tcc:406:14: note: Cost model analysis for part in loop 3:
+  Vector cost: 36
+  Scalar cost: 12
+/usr/include/c++/15/bits/random.tcc:406:14: missed: not vectorized: vectorization is not profitable.
+/usr/include/c++/15/bits/random.tcc:406:14: note: Costing subgraph: 
+/usr/include/c++/15/bits/random.tcc:406:14: note: node 0x39fdbe40 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:406:14: note: op template: _240 = _128 & 18446744071562067968;
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	stmt 0 _240 = _128 & 18446744071562067968;
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	stmt 1 _237 = _238 & 2147483647;
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	children 0x39fdbf50 0x39fdbfd8
+/usr/include/c++/15/bits/random.tcc:406:14: note: node (external) 0x39fdbf50 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	{ _128, _238 }
+/usr/include/c++/15/bits/random.tcc:406:14: note: node (constant) 0x39fdbfd8 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	{ 18446744071562067968, 2147483647 }
+/usr/include/c++/15/bits/random.tcc:406:14: note: Cost model analysis: 
+/usr/include/c++/15/bits/random.tcc:406:14: note: Cost model analysis for part in loop 3:
+  Vector cost: 36
+  Scalar cost: 12
+/usr/include/c++/15/bits/random.tcc:406:14: missed: not vectorized: vectorization is not profitable.
+/usr/include/c++/15/bits/random.tcc:420:17: note: Costing subgraph: 
+/usr/include/c++/15/bits/random.tcc:420:17: note: node 0x39fdc0e8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:420:17: note: op template: _132 = _131 & 18446744071562067968;
+/usr/include/c++/15/bits/random.tcc:420:17: note: 	stmt 0 _132 = _131 & 18446744071562067968;
+/usr/include/c++/15/bits/random.tcc:420:17: note: 	stmt 1 _134 = _133 & 2147483647;
+/usr/include/c++/15/bits/random.tcc:420:17: note: 	children 0x39fdc170 0x39fdc1f8
+/usr/include/c++/15/bits/random.tcc:420:17: note: node 0x39fdc170 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:420:17: note: op template: _131 = gen._M_x[623];
+/usr/include/c++/15/bits/random.tcc:420:17: note: 	stmt 0 _131 = gen._M_x[623];
+/usr/include/c++/15/bits/random.tcc:420:17: note: 	stmt 1 _133 = gen._M_x[0];
+/usr/include/c++/15/bits/random.tcc:420:17: note: 	load permutation { 623 0 }
+/usr/include/c++/15/bits/random.tcc:420:17: note: node (constant) 0x39fdc1f8 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:420:17: note: 	{ 18446744071562067968, 2147483647 }
+/usr/include/c++/15/bits/random.tcc:420:17: note: Cost model analysis: 
+/usr/include/c++/15/bits/random.tcc:420:17: note: Cost model analysis for part in loop 3:
+  Vector cost: 5032
+  Scalar cost: 24
+/usr/include/c++/15/bits/random.tcc:420:17: missed: not vectorized: vectorization is not profitable.
+/usr/include/c++/15/bits/random.tcc:420:17: note: ***** The result for vector mode V32QI would be the same
+/usr/include/c++/15/bits/random.tcc:420:17: note: ***** Re-trying analysis with vector mode V16QI
+/usr/include/c++/15/bits/random.tcc:420:17: note: ***** Analysis succeeded with vector mode V16QI
+/usr/include/c++/15/bits/random.tcc:420:17: note: SLPing BB part
+/usr/include/c++/15/bits/random.tcc:406:14: note: Costing subgraph: 
+/usr/include/c++/15/bits/random.tcc:406:14: note: node 0x39fdc170 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:406:14: note: op template: _111 = _105 & 18446744071562067968;
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	stmt 0 _111 = _105 & 18446744071562067968;
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	stmt 1 _270 = _113 & 2147483647;
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	children 0x39fdbe40 0x39fdbfd8
+/usr/include/c++/15/bits/random.tcc:406:14: note: node 0x39fdbe40 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:406:14: note: op template: _105 = MEM[(long unsigned int *)&gen + 1792B];
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	stmt 0 _105 = MEM[(long unsigned int *)&gen + 1792B];
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	[l] stmt 1 _113 = gen._M_x[225];
+/usr/include/c++/15/bits/random.tcc:406:14: note: node (constant) 0x39fdbfd8 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	{ 18446744071562067968, 2147483647 }
+/usr/include/c++/15/bits/random.tcc:406:14: note: Cost model analysis: 
+/usr/include/c++/15/bits/random.tcc:406:14: note: Cost model analysis for part in loop 3:
+  Vector cost: 52
+  Scalar cost: 36
+/usr/include/c++/15/bits/random.tcc:406:14: missed: not vectorized: vectorization is not profitable.
+/usr/include/c++/15/bits/random.tcc:406:14: note: Costing subgraph: 
+/usr/include/c++/15/bits/random.tcc:406:14: note: node 0x39fdbb98 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:406:14: note: op template: _126 = _113 & 18446744071562067968;
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	stmt 0 _126 = _113 & 18446744071562067968;
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	stmt 1 _321 = _128 & 2147483647;
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	children 0x39fdbca8 0x39fdb978
+/usr/include/c++/15/bits/random.tcc:406:14: note: node (external) 0x39fdbca8 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	{ _113, _128 }
+/usr/include/c++/15/bits/random.tcc:406:14: note: node (constant) 0x39fdb978 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	{ 18446744071562067968, 2147483647 }
+/usr/include/c++/15/bits/random.tcc:406:14: note: Cost model analysis: 
+/usr/include/c++/15/bits/random.tcc:406:14: note: Cost model analysis for part in loop 3:
+  Vector cost: 36
+  Scalar cost: 12
+/usr/include/c++/15/bits/random.tcc:406:14: missed: not vectorized: vectorization is not profitable.
+/usr/include/c++/15/bits/random.tcc:406:14: note: Costing subgraph: 
+/usr/include/c++/15/bits/random.tcc:406:14: note: node 0x39fdba00 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:406:14: note: op template: _240 = _128 & 18446744071562067968;
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	stmt 0 _240 = _128 & 18446744071562067968;
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	stmt 1 _237 = _238 & 2147483647;
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	children 0x39fdc390 0x39fdb868
+/usr/include/c++/15/bits/random.tcc:406:14: note: node (external) 0x39fdc390 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	{ _128, _238 }
+/usr/include/c++/15/bits/random.tcc:406:14: note: node (constant) 0x39fdb868 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:406:14: note: 	{ 18446744071562067968, 2147483647 }
+/usr/include/c++/15/bits/random.tcc:406:14: note: Cost model analysis: 
+/usr/include/c++/15/bits/random.tcc:406:14: note: Cost model analysis for part in loop 3:
+  Vector cost: 36
+  Scalar cost: 12
+/usr/include/c++/15/bits/random.tcc:406:14: missed: not vectorized: vectorization is not profitable.
+/usr/include/c++/15/bits/random.tcc:420:17: note: Costing subgraph: 
+/usr/include/c++/15/bits/random.tcc:420:17: note: node 0x39fdbdb8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:420:17: note: op template: _132 = _131 & 18446744071562067968;
+/usr/include/c++/15/bits/random.tcc:420:17: note: 	stmt 0 _132 = _131 & 18446744071562067968;
+/usr/include/c++/15/bits/random.tcc:420:17: note: 	stmt 1 _134 = _133 & 2147483647;
+/usr/include/c++/15/bits/random.tcc:420:17: note: 	children 0x39fdc528 0x39fdc308
+/usr/include/c++/15/bits/random.tcc:420:17: note: node 0x39fdc528 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:420:17: note: op template: _131 = gen._M_x[623];
+/usr/include/c++/15/bits/random.tcc:420:17: note: 	stmt 0 _131 = gen._M_x[623];
+/usr/include/c++/15/bits/random.tcc:420:17: note: 	stmt 1 _133 = gen._M_x[0];
+/usr/include/c++/15/bits/random.tcc:420:17: note: 	load permutation { 623 0 }
+/usr/include/c++/15/bits/random.tcc:420:17: note: node (constant) 0x39fdc308 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+/usr/include/c++/15/bits/random.tcc:420:17: note: 	{ 18446744071562067968, 2147483647 }
+/usr/include/c++/15/bits/random.tcc:420:17: note: Cost model analysis: 
+/usr/include/c++/15/bits/random.tcc:420:17: note: Cost model analysis for part in loop 3:
+  Vector cost: 5032
+  Scalar cost: 24
+/usr/include/c++/15/bits/random.tcc:420:17: missed: not vectorized: vectorization is not profitable.
+/usr/include/c++/15/bits/random.tcc:420:17: note: ***** Re-trying analysis with vector mode V8QI
+/usr/include/c++/15/bits/random.tcc:420:17: note: ***** Analysis failed with vector mode V8QI
+/usr/include/c++/15/bits/random.tcc:420:17: note: ***** Re-trying analysis with vector mode V4QI
+/usr/include/c++/15/bits/random.tcc:3367:10: note: ***** Analysis failed with vector mode V4QI
+/usr/include/c++/15/bits/basic_string.h:283:29: note: ***** Analysis failed with vector mode VOID
+DyMatrix/vecmult.tcc:14:30: missed: couldn't vectorize loop
+DyMatrix/idx.tcc:12:38: missed: not vectorized: complicated access pattern.
+DyMatrix/vecmult.tcc:17:34: optimized: loop vectorized using 32 byte vectors
+DyMatrix/vecmult.tcc:17:34: optimized: loop vectorized using 16 byte vectors
+DyMatrix/vecmult.tcc:3:21: note: vectorized 1 loops in function.
+/usr/include/c++/15/bits/new_allocator.h:151:66: missed: statement clobbers memory: _55 = operator new (_54);
+/usr/include/c++/15/bits/stl_construct.h:133:7: missed: statement clobbers memory: __builtin_memset (_55, 0, _79);
+/usr/include/c++/15/bits/stl_vector.h:2216:24: missed: statement clobbers memory: std::__throw_length_error ("cannot create std::vector larger than max_size()");
+DyMatrix/vecmult.tcc:10:9: missed: statement clobbers memory: _27 = __cxa_allocate_exception (16);
+DyMatrix/vecmult.tcc:10:9: missed: not vectorized: statement can throw an exception: std::runtime_error::runtime_error (_27, "matrix sizes don\'t match");
+DyMatrix/vecmult.tcc:10:9: missed: statement clobbers memory: __cxa_throw (_27, &_ZTISt13runtime_error, __dt_comp );
+DyMatrix/vecmult.tcc:10:9: missed: statement clobbers memory: __cxa_free_exception (_27);
+DyMatrix/vecmult.tcc:18:17: note: ***** Analysis failed with vector mode V4DI
+DyMatrix/vecmult.tcc:18:17: note: ***** The result for vector mode V32QI would be the same
+DyMatrix/vecmult.tcc:18:17: note: ***** Re-trying analysis with vector mode V16QI
+DyMatrix/vecmult.tcc:18:17: note: ***** Analysis failed with vector mode V16QI
+DyMatrix/vecmult.tcc:18:17: note: ***** Re-trying analysis with vector mode V8QI
+DyMatrix/vecmult.tcc:18:17: note: ***** Analysis failed with vector mode V8QI
+DyMatrix/vecmult.tcc:18:17: note: ***** Re-trying analysis with vector mode V4QI
+DyMatrix/vecmult.tcc:18:17: note: ***** Analysis failed with vector mode V4QI
+main.cc:15:30: missed: couldn't vectorize loop
+main.cc:17:22: missed: not vectorized: no vectype for stmt: .MASK_STORE (_6, 64B, _223, _7);
+ scalar_type: double
+main.cc:5:5: note: vectorized 0 loops in function.
+main.cc:5:5: missed: splitting region at control altering definition _177 = operator new (_109);
+/usr/include/c++/15/bits/char_traits.h:393:25: missed: statement clobbers memory: _127 = __builtin_strlen (_1);
+/usr/include/c++/15/bits/new_allocator.h:151:66: missed: statement clobbers memory: _146 = operator new (_141);
+/usr/include/c++/15/bits/char_traits.h:429:49: missed: statement clobbers memory: __builtin_memcpy (_159, _1, _127);
+/usr/include/c++/15/ext/string_conversions.h:84:34: missed: statement clobbers memory: _120 = strtoul (_39, &__endptr, 10);
+/usr/include/c++/15/bits/new_allocator.h:172:59: missed: statement clobbers memory: operator delete (_40, _43);
+/usr/include/c++/15/bits/new_allocator.h:151:66: missed: not vectorized: statement can throw an exception: _177 = operator new (_109);
+/usr/include/c++/15/bits/new_allocator.h:151:66: note: ***** Analysis failed with vector mode V4DI
+/usr/include/c++/15/bits/new_allocator.h:151:66: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+/usr/include/c++/15/bits/new_allocator.h:151:66: missed: splitting region at dominance boundary bb30
+/usr/include/c++/15/bits/new_allocator.h:151:66: note: ***** Analysis failed with vector mode VOID
+/usr/include/c++/15/bits/new_allocator.h:151:66: missed: splitting region at dominance boundary bb31
+/usr/include/c++/15/bits/vector.tcc:98:61: note: ***** Analysis failed with vector mode VOID
+/usr/include/c++/15/bits/vector.tcc:98:61: missed: splitting region at control altering definition _24 = operator new [] (_109);
+main.cc:13:34: missed: not vectorized: statement can throw an exception: _24 = operator new [] (_109);
+main.cc:13:34: note: ***** Analysis failed with vector mode VOID
+main.cc:13:34: missed: splitting region at control altering definition _180 = operator new [] (iftmp.32_179);
+DyMatrix/ctor.tcc:7:14: missed: not vectorized: statement can throw an exception: __cxa_throw_bad_array_new_length ();
+DyMatrix/ctor.tcc:7:14: missed: not vectorized: statement can throw an exception: _180 = operator new [] (iftmp.32_179);
+DyMatrix/ctor.tcc:5:5: note: ***** Analysis succeeded with vector mode V4DI
+DyMatrix/ctor.tcc:5:5: note: SLPing BB part
+DyMatrix/ctor.tcc:5:5: note: Costing subgraph: 
+DyMatrix/ctor.tcc:5:5: note: node 0x3a06c8e8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+DyMatrix/ctor.tcc:5:5: note: op template: mat.nRows = 0;
+DyMatrix/ctor.tcc:5:5: note: 	stmt 0 mat.nRows = 0;
+DyMatrix/ctor.tcc:5:5: note: 	stmt 1 mat.nCols = 0;
+DyMatrix/ctor.tcc:5:5: note: 	children 0x3a06c970
+DyMatrix/ctor.tcc:5:5: note: node (constant) 0x3a06c970 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+DyMatrix/ctor.tcc:5:5: note: 	{ 0, 0 }
+DyMatrix/ctor.tcc:5:5: note: Cost model analysis: 
+DyMatrix/ctor.tcc:5:5: note: Cost model analysis for part in loop 0:
+  Vector cost: 32
+  Scalar cost: 32
+DyMatrix/ctor.tcc:5:5: note: Costing subgraph: 
+DyMatrix/ctor.tcc:5:5: note: node 0x3a06c9f8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+DyMatrix/ctor.tcc:5:5: note: op template: mat.nRows = _120;
+DyMatrix/ctor.tcc:5:5: note: 	stmt 0 mat.nRows = _120;
+DyMatrix/ctor.tcc:5:5: note: 	stmt 1 mat.nCols = _120;
+DyMatrix/ctor.tcc:5:5: note: 	children 0x3a06ca80
+DyMatrix/ctor.tcc:5:5: note: node (external) 0x3a06ca80 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+DyMatrix/ctor.tcc:5:5: note: 	{ _120, _120 }
+DyMatrix/ctor.tcc:5:5: note: Cost model analysis: 
+DyMatrix/ctor.tcc:5:5: note: Cost model analysis for part in loop 0:
+  Vector cost: 26
+  Scalar cost: 32
+DyMatrix/ctor.tcc:5:5: note: Basic block will be vectorized using SLP
+DyMatrix/ctor.tcc:5:5: optimized: basic block part vectorized using 16 byte vectors
+DyMatrix/ctor.tcc:5:5: note: Vectorizing SLP tree:
+DyMatrix/ctor.tcc:5:5: note: node 0x3a06c8e8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+DyMatrix/ctor.tcc:5:5: note: op template: mat.nRows = 0;
+DyMatrix/ctor.tcc:5:5: note: 	stmt 0 mat.nRows = 0;
+DyMatrix/ctor.tcc:5:5: note: 	stmt 1 mat.nCols = 0;
+DyMatrix/ctor.tcc:5:5: note: 	children 0x3a06c970
+DyMatrix/ctor.tcc:5:5: note: node (constant) 0x3a06c970 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+DyMatrix/ctor.tcc:5:5: note: 	{ 0, 0 }
+DyMatrix/ctor.tcc:5:5: note: ------>vectorizing SLP node starting from: mat.nRows = 0;
+DyMatrix/ctor.tcc:5:5: note: vect_is_simple_use: operand 0, type of def: constant
+DyMatrix/ctor.tcc:5:5: note: transform store. ncopies = 1
+DyMatrix/ctor.tcc:5:5: note: create vector_type-pointer variable to type: vector(2) long unsigned int  vectorizing a pointer ref: mat.nRows
+DyMatrix/ctor.tcc:5:5: note: created &mat
+DyMatrix/ctor.tcc:5:5: note: add new stmt: MEM <vector(2) long unsigned int> [(long unsigned int *)&mat] = { 0, 0 };
+DyMatrix/ctor.tcc:5:5: note: vectorizing stmts using SLP.
+DyMatrix/ctor.tcc:5:5: optimized: basic block part vectorized using 16 byte vectors
+DyMatrix/ctor.tcc:5:5: note: Vectorizing SLP tree:
+DyMatrix/ctor.tcc:5:5: note: node 0x3a06c9f8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+DyMatrix/ctor.tcc:5:5: note: op template: mat.nRows = _120;
+DyMatrix/ctor.tcc:5:5: note: 	stmt 0 mat.nRows = _120;
+DyMatrix/ctor.tcc:5:5: note: 	stmt 1 mat.nCols = _120;
+DyMatrix/ctor.tcc:5:5: note: 	children 0x3a06ca80
+DyMatrix/ctor.tcc:5:5: note: node (external) 0x3a06ca80 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+DyMatrix/ctor.tcc:5:5: note: 	{ _120, _120 }
+DyMatrix/ctor.tcc:5:5: note: ------>vectorizing SLP node starting from: mat.nRows = _120;
+DyMatrix/ctor.tcc:5:5: note: vect_is_simple_use: operand strtoul (_39, &__endptr, 10), type of def: external
+DyMatrix/ctor.tcc:5:5: note: transform store. ncopies = 1
+DyMatrix/ctor.tcc:5:5: note: create vector_type-pointer variable to type: vector(2) long unsigned int  vectorizing a pointer ref: mat.nRows
+DyMatrix/ctor.tcc:5:5: note: created &mat
+DyMatrix/ctor.tcc:5:5: note: add new stmt: MEM <vector(2) long unsigned int> [(long unsigned int *)&mat] = _221;
+DyMatrix/ctor.tcc:5:5: note: vectorizing stmts using SLP.
+DyMatrix/ctor.tcc:5:5: note: ***** The result for vector mode V32QI would be the same
+DyMatrix/ctor.tcc:5:5: missed: splitting region at dominance boundary bb42
+DyMatrix/ctor.tcc:5:5: note: ***** Analysis failed with vector mode VOID
+DyMatrix/ctor.tcc:5:5: missed: splitting region at control altering definition ret = operator*<double> (&mat, D.125838); [return slot optimization]
+main.cc:20:13: missed: not vectorized: statement can throw an exception: Matrix<double>::fill (&mat);
+main.cc:22:22: missed: not vectorized: statement can throw an exception: ret = operator*<double> (&mat, D.125838); [return slot optimization]
+main.cc:22:22: note: ***** Analysis failed with vector mode V4DI
+main.cc:22:22: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+main.cc:22:22: missed: splitting region at control altering definition ret2 = operator*<double> (&mat, D.127517); [return slot optimization]
+main.cc:26:24: missed: not vectorized: statement can throw an exception: ret2 = operator*<double> (&mat, D.127517); [return slot optimization]
+main.cc:26:24: note: ***** Analysis failed with vector mode V4DI
+main.cc:26:24: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+main.cc:26:24: missed: splitting region at dominance boundary bb59
+main.cc:28:14: missed: statement clobbers memory: operator delete [] (_24);
+/usr/include/c++/15/bits/new_allocator.h:172:59: missed: statement clobbers memory: operator delete (_63, _65);
+/usr/include/c++/15/bits/new_allocator.h:172:59: missed: statement clobbers memory: operator delete (ret$_M_impl$D74850$_M_start_94, _61);
+DyMatrix/dtor.tcc:5:5: missed: statement clobbers memory: operator delete [] (_180);
+/usr/include/c++/15/bits/new_allocator.h:172:59: missed: statement clobbers memory: operator delete (vec$D75606$_M_impl$D74850$_M_start_143, _56);
+main.cc:29:1: note: ***** Analysis failed with vector mode V4DI
+main.cc:29:1: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+main.cc:29:1: missed: splitting region at dominance boundary bb46
+/usr/include/c++/15/bits/new_allocator.h:172:59: missed: statement clobbers memory: operator delete (ret$_M_impl$D74850$_M_start_94, _74);
+main.cc:5:5: missed: not vectorized: statement can throw an exception: resx 14
+/usr/include/c++/15/bits/stl_vector.h:805:7: note: ***** Analysis failed with vector mode VOID
+/usr/include/c++/15/bits/stl_vector.h:805:7: missed: splitting region at dominance boundary bb63
+/usr/include/c++/15/bits/stl_vector.h:805:7: note: ***** Analysis failed with vector mode VOID
+/usr/include/c++/15/bits/stl_vector.h:805:7: missed: splitting region at dominance boundary bb64
+/usr/include/c++/15/bits/stl_vector.h:805:7: note: ***** Analysis failed with vector mode VOID
+/usr/include/c++/15/bits/stl_vector.h:805:7: missed: splitting region at dominance boundary bb32
+DyMatrix/dtor.tcc:5:5: missed: statement clobbers memory: operator delete [] (_180);
+main.cc:5:5: missed: not vectorized: statement can throw an exception: resx 11
+DyMatrix/dtor.tcc:6:1: note: ***** Analysis failed with vector mode VOID
+DyMatrix/dtor.tcc:6:1: missed: splitting region at dominance boundary bb72
+DyMatrix/dtor.tcc:6:1: note: ***** Analysis failed with vector mode VOID
+DyMatrix/dtor.tcc:6:1: missed: splitting region at dominance boundary bb26
+DyMatrix/dtor.tcc:6:1: note: ***** Analysis failed with vector mode VOID
+DyMatrix/dtor.tcc:6:1: missed: splitting region at dominance boundary bb71
+/usr/include/c++/15/bits/vector.tcc:71:22: missed: not vectorized: statement can throw an exception: std::__throw_length_error ("vector::reserve");
+/usr/include/c++/15/bits/vector.tcc:71:22: note: ***** Analysis failed with vector mode VOID
+/usr/include/c++/15/bits/vector.tcc:71:22: missed: splitting region at dominance boundary bb67
+/usr/include/c++/15/bits/vector.tcc:71:22: note: ***** Analysis failed with vector mode VOID
+/usr/include/c++/15/bits/vector.tcc:71:22: missed: splitting region at dominance boundary bb13
+/usr/include/c++/15/bits/new_allocator.h:172:59: missed: statement clobbers memory: operator delete (vec$D75606$_M_impl$D74850$_M_start_8, _79);
+/usr/include/c++/15/bits/new_allocator.h:172:59: note: ***** Analysis failed with vector mode VOID
+/usr/include/c++/15/bits/new_allocator.h:172:59: missed: splitting region at dominance boundary bb11
+/usr/include/c++/15/ext/string_conversions.h:90:27: missed: not vectorized: statement can throw an exception: std::__throw_out_of_range ("stoul");
+/usr/include/c++/15/ext/string_conversions.h:90:27: note: ***** Analysis failed with vector mode VOID
+/usr/include/c++/15/ext/string_conversions.h:90:27: missed: splitting region at dominance boundary bb19
+/usr/include/c++/15/ext/string_conversions.h:87:31: missed: not vectorized: statement can throw an exception: std::__throw_invalid_argument ("stoul");
+/usr/include/c++/15/ext/string_conversions.h:87:31: note: ***** Analysis failed with vector mode VOID
+/usr/include/c++/15/ext/string_conversions.h:87:31: missed: splitting region at dominance boundary bb23
+main.cc:5:5: missed: not vectorized: statement can throw an exception: resx 22
+/usr/include/c++/15/bits/new_allocator.h:172:59: missed: statement clobbers memory: operator delete (_66, _70);
+/usr/include/c++/15/bits/basic_string.h:896:23: note: ***** Analysis failed with vector mode V8SI
+/usr/include/c++/15/bits/basic_string.h:896:23: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+/usr/include/c++/15/bits/basic_string.h:896:23: missed: splitting region at dominance boundary bb3
+/usr/include/c++/15/bits/basic_string.h:283:29: note: ***** Analysis failed with vector mode VOID
+/usr/include/c++/15/bits/basic_string.h:711:28: missed: statement clobbers memory: std::__throw_logic_error ("basic_string: construction from null is not valid");
+/usr/include/c++/15/bits/basic_string.h:711:28: note: ***** Analysis failed with vector mode VOID
+/usr/bin/ld: cannot find 2: No such file or directory
+collect2: error: ld returned 1 exit status

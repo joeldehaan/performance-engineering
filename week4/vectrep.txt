@@ -1,0 +1,16 @@
+DyMatrix/vecmult.tcc:14:30: missed: couldn't vectorize loop
+DyMatrix/vecmult.tcc:17:34: optimized: loop vectorized using 32 byte vectors
+DyMatrix/vecmult.tcc:17:34: optimized: loop vectorized using 16 byte vectors
+DyMatrix/vecmult.tcc:3:21: note: vectorized 1 loops in function.
+DyMatrix/vecmult.tcc:10:9: missed: statement clobbers memory: _27 = __cxa_allocate_exception (16);
+DyMatrix/vecmult.tcc:10:9: missed: not vectorized: statement can throw an exception: std::runtime_error::runtime_error (_27, "matrix sizes don\'t match");
+DyMatrix/vecmult.tcc:10:9: missed: statement clobbers memory: __cxa_throw (_27, &_ZTISt13runtime_error, __dt_comp );
+DyMatrix/vecmult.tcc:10:9: missed: statement clobbers memory: __cxa_free_exception (_27);
+DyMatrix/vecmult.tcc:18:17: note: ***** Analysis failed with vector mode V4DI
+DyMatrix/vecmult.tcc:18:17: note: ***** The result for vector mode V32QI would be the same
+DyMatrix/vecmult.tcc:18:17: note: ***** Re-trying analysis with vector mode V16QI
+DyMatrix/vecmult.tcc:18:17: note: ***** Analysis failed with vector mode V16QI
+DyMatrix/vecmult.tcc:18:17: note: ***** Re-trying analysis with vector mode V8QI
+DyMatrix/vecmult.tcc:18:17: note: ***** Analysis failed with vector mode V8QI
+DyMatrix/vecmult.tcc:18:17: note: ***** Re-trying analysis with vector mode V4QI
+DyMatrix/vecmult.tcc:18:17: note: ***** Analysis failed with vector mode V4QI

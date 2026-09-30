@@ -9,29 +9,16 @@ std::vector<data_t> operator*(Matrix<data_t> const &mat, const std::type_identit
     if (vec.size() != mat.cols())
         throw std::runtime_error("matrix sizes don't match"); 
 
-    std::vector<data_t> ret;
-    ret.reserve(cols);
-
+                        //allocate with sufficient capacity
+    std::vector<data_t> ret(rows, data_t{}); 
 
     for (size_t row = 0; row != vec.size(); ++row)
-    for (size_t col = 0; col != mat.cols(); ++col)
-        ret[row] += mat[row, col] * vec[col];
-/*
-
-    data_t const *__restrict mp = mat.data();
-    data_t const *__restrict vp = vec.data();
-    data_t *__restrict rp = ret.data();     //forcing restrict: g++
-
-
-    for (size_t row = 0; row < rows; ++row) 
-    {
-        data_t const *__restrict mrow = mp + row * cols;
-        data_t sum = 0;     //prevent constant access
-
-        for (size_t col = 0; col < cols; ++col)
-            sum += mrow[col] * vp[col];
-        rp[row] = sum;
+    {                   //assuming integral-like types
+        data_t sum = 0;                     
+        for (size_t col = 0; col != mat.cols(); ++col)
+            sum += mat[row, col] * vec[col];
+        ret[row] = sum;
     }
-*/
+
     return ret;
 }

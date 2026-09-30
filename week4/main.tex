@@ -1,0 +1,55 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{hyperref} % should always go last
+% \usepackage{enumitem}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  frame=single,
+  captionpos=t,
+  breaklines=true,
+}
+
+\newcommand{\includesource}[1]{%
+  \lstinputlisting[caption={\texttt{#1}}]{#1}%
+}
+
+\title{Performance Lab 3 - Group 8}
+\author{Hans Bouwman, Joel de Haan}
+
+\begin{document}
+
+\maketitle
+
+
+\tableofcontents
+
+\section{Vectorisation:}
+We chose to extend the multiplication to allow vector multiplication by defining an operator: \texttt{vector<data\_t> operator*(Matrix<data\_t> const &, const type\_identity\_t<const span<const data\_t>> vec);
+}. The reason to use span is it allows to use any container with contiguous storage, in particular, in main we test both using vector and a C-style array.
+
+C++ does not have a built in restrict keyword (except \_\_restrict which is allowed for MSVC and g++ or built-in restrict from other libraries), however, this operator takes both types as const data types
+meaning that the compiler can see that these are const and thus cannot be modified. This means that, even if these do alias, there is no different behaviour.
+The only problem could be from ret aliasing to either the matrix or vector location. 
+
+The first attempt at vectorising the loop involved using \texttt{ret[row] += ...} however, the compiler did not vectorise this. The reason is because of the loop carried depencency of loading ret multiple times or because, since ret is not const, altering its data could alias to vector or matrix data.
+The latter would be strange since the compiler can see it is newly allocated in this function, however solving this issue is done by using a local variable and then assign \textttt{ret[row]} to this variable. 
+
+The final solution is
+\includesource{DyMatrix/vecmult.tcc}
+
+The \texttt{[[assume]]} statement is there to prevent the compiler for making multiple branches when vec is empty, since we generally wouldn't use this function for empty vectors. The reason we don't assume > 1 (which is still a reasonable assumption) is because the compiler has to generate this anyway for cases where
+the value of $N$ is not a multiple of the number of SIMD lanes.
+
+The compiler report (after compiling with \texttt{g++ -O3 -ffast-math -march=native -std=c++26}) shows the following:
+\includesource{vectrep.txt}
+
+And the assembly instruction for the inner loop is:
+\includesource{vectasm.s}
+
+\end{document}

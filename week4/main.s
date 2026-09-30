@@ -6,10 +6,10 @@
 	.weak	_ZN6MatrixIdE4fillEv
 	.type	_ZN6MatrixIdE4fillEv, @function
 _ZN6MatrixIdE4fillEv:
-.LFB6994:
+.LFB7006:
 	.cfi_startproc
 	.cfi_personality 0x9b,DW.ref.__gxx_personality_v0
-	.cfi_lsda 0x1b,.LLSDA6994
+	.cfi_lsda 0x1b,.LLSDA7006
 	endbr64
 	pushq	%rbp
 	.cfi_def_cfa_offset 16
@@ -215,30 +215,30 @@ _ZN6MatrixIdE4fillEv:
 	.p2align 4,,10
 	.p2align 3
 .L12:
-	vpand	(%rax), %ymm3, %ymm0      
-	vpand	8(%rax), %ymm4, %ymm11      
-	addq	$32, %rax      
-	vpor	%ymm0, %ymm11, %ymm11      
-	vpsrlq	$1, %ymm11, %ymm1      
-	vpand	%ymm2, %ymm11, %ymm11      
-	vpxor	-1848(%rax), %ymm1, %ymm1      
-	vpsllq	$3, %ymm11, %ymm0      
-	vpaddq	%ymm11, %ymm0, %ymm0      
-	vpsllq	$9, %ymm0, %ymm0      
-	vpaddq	%ymm11, %ymm0, %ymm0      
-	vpsllq	$5, %ymm0, %ymm0      
-	vpaddq	%ymm11, %ymm0, %ymm0      
-	vpsllq	$2, %ymm0, %ymm0      
-	vpsubq	%ymm11, %ymm0, %ymm0      
-	vpsllq	$3, %ymm0, %ymm0      
-	vpsubq	%ymm11, %ymm0, %ymm0      
-	vpsllq	$4, %ymm0, %ymm12      
-	vpaddq	%ymm12, %ymm0, %ymm0      
-	vpsllq	$5, %ymm0, %ymm0      
-	vpsubq	%ymm11, %ymm0, %ymm0      
-	vpxor	%ymm0, %ymm1, %ymm1      
-	vmovdqu	%ymm1, -32(%rax)      
-	cmpq	%rdx, %rax      
+	vpand	(%rax), %ymm3, %ymm0
+	vpand	8(%rax), %ymm4, %ymm11
+	addq	$32, %rax
+	vpor	%ymm0, %ymm11, %ymm11
+	vpsrlq	$1, %ymm11, %ymm1
+	vpand	%ymm2, %ymm11, %ymm11
+	vpxor	-1848(%rax), %ymm1, %ymm1
+	vpsllq	$3, %ymm11, %ymm0
+	vpaddq	%ymm11, %ymm0, %ymm0
+	vpsllq	$9, %ymm0, %ymm0
+	vpaddq	%ymm11, %ymm0, %ymm0
+	vpsllq	$5, %ymm0, %ymm0
+	vpaddq	%ymm11, %ymm0, %ymm0
+	vpsllq	$2, %ymm0, %ymm0
+	vpsubq	%ymm11, %ymm0, %ymm0
+	vpsllq	$3, %ymm0, %ymm0
+	vpsubq	%ymm11, %ymm0, %ymm0
+	vpsllq	$4, %ymm0, %ymm12
+	vpaddq	%ymm12, %ymm0, %ymm0
+	vpsllq	$5, %ymm0, %ymm0
+	vpsubq	%ymm11, %ymm0, %ymm0
+	vpxor	%ymm0, %ymm1, %ymm1
+	vmovdqu	%ymm1, -32(%rax)
+	cmpq	%rdx, %rax
 	jne	.L12
 	movq	(%rsp), %r9
 	movq	4984(%rsp), %rax
@@ -314,155 +314,194 @@ _ZN6MatrixIdE4fillEv:
 	call	_Unwind_Resume@PLT
 .LEHE2:
 	.cfi_endproc
-.LFE6994:
+.LFE7006:
 	.section	.gcc_except_table._ZN6MatrixIdE4fillEv,"aG",@progbits,_ZN6MatrixIdE4fillEv,comdat
-.LLSDA6994:
+.LLSDA7006:
 	.byte	0xff
 	.byte	0xff
 	.byte	0x1
-	.uleb128 .LLSDACSE6994-.LLSDACSB6994
-.LLSDACSB6994:
-	.uleb128 .LEHB0-.LFB6994
+	.uleb128 .LLSDACSE7006-.LLSDACSB7006
+.LLSDACSB7006:
+	.uleb128 .LEHB0-.LFB7006
 	.uleb128 .LEHE0-.LEHB0
-	.uleb128 .L24-.LFB6994
+	.uleb128 .L24-.LFB7006
 	.uleb128 0
-	.uleb128 .LEHB1-.LFB6994
+	.uleb128 .LEHB1-.LFB7006
 	.uleb128 .LEHE1-.LEHB1
-	.uleb128 .L23-.LFB6994
+	.uleb128 .L23-.LFB7006
 	.uleb128 0
-	.uleb128 .LEHB2-.LFB6994
+	.uleb128 .LEHB2-.LFB7006
 	.uleb128 .LEHE2-.LEHB2
 	.uleb128 0
 	.uleb128 0
-.LLSDACSE6994:
+.LLSDACSE7006:
 	.section	.text._ZN6MatrixIdE4fillEv,"axG",@progbits,_ZN6MatrixIdE4fillEv,comdat
 	.size	_ZN6MatrixIdE4fillEv, .-_ZN6MatrixIdE4fillEv
-	.section	.rodata._ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityISt4spanIS1_Lm18446744073709551615EEE4typeE.str1.1,"aMS",@progbits,1
+	.section	.rodata._ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityIKSt4spanIKS1_Lm18446744073709551615EEE4typeE.str1.1,"aMS",@progbits,1
 .LC10:
 	.string	"matrix sizes don't match"
+	.section	.rodata._ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityIKSt4spanIKS1_Lm18446744073709551615EEE4typeE.str1.8,"aMS",@progbits,1
+	.align 8
 .LC11:
-	.string	"vector::reserve"
-	.section	.text._ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityISt4spanIS1_Lm18446744073709551615EEE4typeE,"axG",@progbits,_ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityISt4spanIS1_Lm18446744073709551615EEE4typeE,comdat
+	.string	"cannot create std::vector larger than max_size()"
+	.section	.text._ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityIKSt4spanIKS1_Lm18446744073709551615EEE4typeE,"axG",@progbits,_ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityIKSt4spanIKS1_Lm18446744073709551615EEE4typeE,comdat
 	.p2align 4
-	.weak	_ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityISt4spanIS1_Lm18446744073709551615EEE4typeE
-	.type	_ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityISt4spanIS1_Lm18446744073709551615EEE4typeE, @function
-_ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityISt4spanIS1_Lm18446744073709551615EEE4typeE:
-.LFB6997:
+	.weak	_ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityIKSt4spanIKS1_Lm18446744073709551615EEE4typeE
+	.type	_ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityIKSt4spanIKS1_Lm18446744073709551615EEE4typeE, @function
+_ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityIKSt4spanIKS1_Lm18446744073709551615EEE4typeE:
+.LFB7009:
 	.cfi_startproc
 	.cfi_personality 0x9b,DW.ref.__gxx_personality_v0
-	.cfi_lsda 0x1b,.LLSDA6997
+	.cfi_lsda 0x1b,.LLSDA7009
 	endbr64
-	pushq	%r12
-	.cfi_def_cfa_offset 16
-	.cfi_offset 12, -16
 	pushq	%rbp
-	.cfi_def_cfa_offset 24
-	.cfi_offset 6, -24
-	pushq	%rbx
-	.cfi_def_cfa_offset 32
-	.cfi_offset 3, -32
-	subq	$16, %rsp
-	.cfi_def_cfa_offset 48
-	cmpq	%rcx, 8(%rsi)
-	jne	.L64
-	movq	%rcx, %rax
-	vpxor	%xmm0, %xmm0, %xmm0
-	movq	$0, 16(%rdi)
-	movq	%rdi, %rbx
-	shrq	$60, %rax
-	vmovdqu	%xmm0, (%rdi)
-	jne	.L65
-	testq	%rcx, %rcx
-	jne	.L44
-#APP
-# 12 "DyMatrix/vecmult.tcc" 1
-	start mat * vector
-# 0 "" 2
-#NO_APP
-.L41:
-	addq	$16, %rsp
-	.cfi_remember_state
-	.cfi_def_cfa_offset 32
-	movq	%rbx, %rax
-	popq	%rbx
-	.cfi_def_cfa_offset 24
-	popq	%rbp
 	.cfi_def_cfa_offset 16
-	popq	%r12
-	.cfi_def_cfa_offset 8
-	ret
-.L44:
-	.cfi_restore_state
-	leaq	0(,%rcx,8), %r10
-	movq	%rdx, 8(%rsp)
-	movq	%rsi, %rbp
-	movq	%r10, %rdi
-	movq	%r10, (%rsp)
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	pushq	%r15
+	pushq	%r14
+	pushq	%r13
+	pushq	%r12
+	pushq	%rbx
+	andq	$-32, %rsp
+	subq	$32, %rsp
+	.cfi_offset 15, -24
+	.cfi_offset 14, -32
+	.cfi_offset 13, -40
+	.cfi_offset 12, -48
+	.cfi_offset 3, -56
+	movq	8(%rsi), %r13
+	movq	(%rsi), %rax
+	cmpq	%rcx, %r13
+	jne	.L68
+	movq	%rsi, %r8
+	movq	%rax, %rsi
+	shrq	$60, %rsi
+	jne	.L69
+	testq	%rax, %rax
+	movq	%rdi, %r12
+	movq	%rdx, %rbx
+	movq	%rcx, %r15
+	je	.L70
+	leaq	0(,%rax,8), %r14
+	movq	%r8, 16(%rsp)
+	movq	%r14, %rdi
 .LEHB3:
 	call	_Znwm@PLT
-	movq	(%rsp), %r10
-	vmovq	%rax, %xmm2
-	vpunpcklqdq	%xmm2, %xmm2, %xmm0
-	addq	%r10, %rax
-	vmovdqu	%xmm0, (%rbx)
-	movq	%rax, 16(%rbx)
-#APP
-# 12 "DyMatrix/vecmult.tcc" 1
-	start mat * vector
-# 0 "" 2
-#NO_APP
-	movq	8(%rbp), %rsi
-	testq	%rsi, %rsi
-	je	.L41
-	movq	16(%rbp), %rbp
-	movq	(%rbx), %r11
-	xorl	%r9d, %r9d
+	movq	%r14, %rdx
+	xorl	%esi, %esi
+	leaq	(%rax,%r14), %r9
+	movq	%rax, (%r12)
+	movq	%rax, %rdi
+	movq	%r9, 16(%r12)
+	movq	%r9, 24(%rsp)
+	call	memset@PLT
+	movq	24(%rsp), %r9
+	movq	16(%rsp), %r8
+	movq	%rax, %rcx
+.L45:
+	movq	%r9, 8(%r12)
+	movq	%rcx, %rsi
+	leaq	(%rcx,%r15,8), %r9
+	movq	%r13, %rcx
+	shrq	$2, %rcx
+	movq	16(%r8), %r8
+	leaq	-1(%r13), %r10
 	xorl	%edi, %edi
-	movq	8(%rsp), %r8
-	leaq	0(,%rsi,8), %r12
+	salq	$5, %rcx
 	.p2align 4,,10
 	.p2align 3
-.L47:
-	leaq	(%r11,%rdi), %rdx
+.L46:
+	cmpq	$2, %r10
+	jbe	.L56
+.L48:
+	leaq	(%r8,%rdi,8), %rdx
 	xorl	%eax, %eax
-	leaq	0(%rbp,%r9), %rcx
-	vmovsd	(%rdx), %xmm1
+	vxorpd	%xmm1, %xmm1, %xmm1
 	.p2align 5
 	.p2align 4,,10
 	.p2align 3
-.L48:
-	vmovsd	(%rcx,%rax,8), %xmm0
-	vmulsd	(%r8,%rax,8), %xmm0, %xmm0
-	addq	$1, %rax
-	cmpq	%rsi, %rax
-	vaddsd	%xmm0, %xmm1, %xmm1
-	vmovsd	%xmm1, (%rdx)
-	jne	.L48
-	addq	$8, %rdi
-	addq	%r12, %r9
-	cmpq	%rdi, %r10
-	jne	.L47
-	addq	$16, %rsp
-	.cfi_remember_state
-	.cfi_def_cfa_offset 32
-	movq	%rbx, %rax
+.L52:
+	vmovupd	(%rbx,%rax), %ymm0
+	vmulpd	(%rdx,%rax), %ymm0, %ymm0
+	addq	$32, %rax
+	cmpq	%rax, %rcx
+	vaddpd	%ymm0, %ymm1, %ymm1
+	jne	.L52
+	vextractf128	$0x1, %ymm1, %xmm0
+	testb	$3, %r13b
+	vaddpd	%xmm1, %xmm0, %xmm0
+	vunpckhpd	%xmm0, %xmm0, %xmm1
+	vaddpd	%xmm0, %xmm1, %xmm1
+	je	.L71
+	movq	%r13, %rax
+	andq	$-4, %rax
+.L54:
+	movq	%r13, %rdx
+	subq	%rax, %rdx
+	cmpq	$1, %rdx
+	je	.L50
+	leaq	(%rdi,%rax), %r11
+	vmovupd	(%rbx,%rax,8), %xmm2
+	testb	$1, %dl
+	vfmadd231pd	(%r8,%r11,8), %xmm2, %xmm0
+	vunpckhpd	%xmm0, %xmm0, %xmm1
+	vaddpd	%xmm0, %xmm1, %xmm1
+	je	.L51
+	andq	$-2, %rdx
+	addq	%rdx, %rax
+.L50:
+	leaq	(%rdi,%rax), %rdx
+	vmovsd	(%r8,%rdx,8), %xmm3
+	vfmadd231sd	(%rbx,%rax,8), %xmm3, %xmm1
+.L51:
+	vmovsd	%xmm1, (%rsi)
+	addq	$8, %rsi
+	addq	%r13, %rdi
+	cmpq	%r9, %rsi
+	jne	.L46
+.L41:
+	vzeroupper
+	leaq	-40(%rbp), %rsp
+	movq	%r12, %rax
 	popq	%rbx
-	.cfi_def_cfa_offset 24
-	popq	%rbp
-	.cfi_def_cfa_offset 16
 	popq	%r12
-	.cfi_def_cfa_offset 8
+	popq	%r13
+	popq	%r14
+	popq	%r15
+	popq	%rbp
+	.cfi_remember_state
+	.cfi_def_cfa 7, 8
 	ret
-.L53:
+	.p2align 4,,10
+	.p2align 3
+.L71:
 	.cfi_restore_state
-	endbr64
-	movq	%rax, %rbp
-	jmp	.L50
-.L65:
+	vmovsd	%xmm1, (%rsi)
+	addq	$8, %rsi
+	addq	%r13, %rdi
+	cmpq	%r9, %rsi
+	jne	.L48
+	jmp	.L41
+	.p2align 4,,10
+	.p2align 3
+.L56:
+	vxorpd	%xmm0, %xmm0, %xmm0
+	xorl	%eax, %eax
+	vxorpd	%xmm1, %xmm1, %xmm1
+	jmp	.L54
+.L70:
+	movq	$0, (%rdi)
+	xorl	%ecx, %ecx
+	xorl	%r9d, %r9d
+	movq	$0, 16(%rdi)
+	jmp	.L45
+.L69:
 	leaq	.LC11(%rip), %rdi
 	call	_ZSt20__throw_length_errorPKc@PLT
 .LEHE3:
-.L64:
+.L68:
 	movl	$16, %edi
 	call	__cxa_allocate_exception@PLT
 	leaq	.LC10(%rip), %rsi
@@ -476,55 +515,40 @@ _ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityISt4spanIS1_Lm1844674
 	movq	%rbx, %rdi
 .LEHB5:
 	call	__cxa_throw@PLT
-.L50:
-	movq	(%rbx), %rdi
-	testq	%rdi, %rdi
-	jne	.L66
-	vzeroupper
-.L51:
-	movq	%rbp, %rdi
-	call	_Unwind_Resume@PLT
-.L52:
+.L57:
 	endbr64
-	movq	%rax, %rbp
-	jmp	.L49
-.L66:
-	movq	16(%rbx), %rsi
-	subq	%rdi, %rsi
-	vzeroupper
-	call	_ZdlPvm@PLT
-	jmp	.L51
-.L49:
+	movq	%rax, %r12
+.L55:
 	movq	%rbx, %rdi
 	vzeroupper
 	call	__cxa_free_exception@PLT
-	movq	%rbp, %rdi
+	movq	%r12, %rdi
 	call	_Unwind_Resume@PLT
 .LEHE5:
 	.cfi_endproc
-.LFE6997:
-	.section	.gcc_except_table._ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityISt4spanIS1_Lm18446744073709551615EEE4typeE,"aG",@progbits,_ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityISt4spanIS1_Lm18446744073709551615EEE4typeE,comdat
-.LLSDA6997:
+.LFE7009:
+	.section	.gcc_except_table._ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityIKSt4spanIKS1_Lm18446744073709551615EEE4typeE,"aG",@progbits,_ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityIKSt4spanIKS1_Lm18446744073709551615EEE4typeE,comdat
+.LLSDA7009:
 	.byte	0xff
 	.byte	0xff
 	.byte	0x1
-	.uleb128 .LLSDACSE6997-.LLSDACSB6997
-.LLSDACSB6997:
-	.uleb128 .LEHB3-.LFB6997
+	.uleb128 .LLSDACSE7009-.LLSDACSB7009
+.LLSDACSB7009:
+	.uleb128 .LEHB3-.LFB7009
 	.uleb128 .LEHE3-.LEHB3
-	.uleb128 .L53-.LFB6997
 	.uleb128 0
-	.uleb128 .LEHB4-.LFB6997
+	.uleb128 0
+	.uleb128 .LEHB4-.LFB7009
 	.uleb128 .LEHE4-.LEHB4
-	.uleb128 .L52-.LFB6997
+	.uleb128 .L57-.LFB7009
 	.uleb128 0
-	.uleb128 .LEHB5-.LFB6997
+	.uleb128 .LEHB5-.LFB7009
 	.uleb128 .LEHE5-.LEHB5
 	.uleb128 0
 	.uleb128 0
-.LLSDACSE6997:
-	.section	.text._ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityISt4spanIS1_Lm18446744073709551615EEE4typeE,"axG",@progbits,_ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityISt4spanIS1_Lm18446744073709551615EEE4typeE,comdat
-	.size	_ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityISt4spanIS1_Lm18446744073709551615EEE4typeE, .-_ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityISt4spanIS1_Lm18446744073709551615EEE4typeE
+.LLSDACSE7009:
+	.section	.text._ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityIKSt4spanIKS1_Lm18446744073709551615EEE4typeE,"axG",@progbits,_ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityIKSt4spanIKS1_Lm18446744073709551615EEE4typeE,comdat
+	.size	_ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityIKSt4spanIKS1_Lm18446744073709551615EEE4typeE, .-_ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityIKSt4spanIKS1_Lm18446744073709551615EEE4typeE
 	.section	.rodata.str1.8,"aMS",@progbits,1
 	.align 8
 .LC12:
@@ -532,18 +556,20 @@ _ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityISt4spanIS1_Lm1844674
 	.section	.rodata.str1.1,"aMS",@progbits,1
 .LC13:
 	.string	"stoul"
+.LC14:
+	.string	"vector::reserve"
 	.section	.text.unlikely,"ax",@progbits
-.LCOLDB14:
+.LCOLDB15:
 	.section	.text.startup,"ax",@progbits
-.LHOTB14:
+.LHOTB15:
 	.p2align 4
 	.globl	main
 	.type	main, @function
 main:
-.LFB6460:
+.LFB6461:
 	.cfi_startproc
 	.cfi_personality 0x9b,DW.ref.__gxx_personality_v0
-	.cfi_lsda 0x1b,.LLSDA6460
+	.cfi_lsda 0x1b,.LLSDA6461
 	endbr64
 	pushq	%r15
 	.cfi_def_cfa_offset 16
@@ -571,17 +597,17 @@ main:
 	leaq	144(%rsp), %r12
 	movq	%r12, 128(%rsp)
 	testq	%rbp, %rbp
-	je	.L133
+	je	.L138
 	movq	%rbp, %rdi
 	call	strlen@PLT
 	cmpq	$15, %rax
 	movq	%rax, %rbx
-	ja	.L143
+	ja	.L148
 	cmpq	$1, %rax
-	je	.L144
+	je	.L149
 	testq	%rax, %rax
-	jne	.L145
-.L73:
+	jne	.L150
+.L78:
 	movq	128(%rsp), %rax
 	movq	%rbx, 136(%rsp)
 	movb	$0, (%rax,%rbx)
@@ -598,26 +624,26 @@ main:
 	call	__isoc23_strtoul@PLT
 	cmpq	96(%rsp), %r13
 	movq	%rax, %r15
-	je	.L134
+	je	.L139
 	movl	(%rbx), %eax
 	cmpl	$34, %eax
-	je	.L135
+	je	.L140
 	testl	%eax, %eax
-	jne	.L78
+	jne	.L83
 	movl	%ebp, (%rbx)
-.L78:
+.L83:
 	movq	128(%rsp), %rdi
 	cmpq	%r12, %rdi
-	je	.L79
+	je	.L84
 	movq	144(%rsp), %rax
 	leaq	1(%rax), %rsi
 	call	_ZdlPvm@PLT
-.L79:
+.L84:
 	movq	%r15, %rax
 	shrq	$60, %rax
-	jne	.L136
+	jne	.L141
 	testq	%r15, %r15
-	jne	.L87
+	jne	.L92
 	xorl	%edi, %edi
 .LEHB6:
 	call	_Znam@PLT
@@ -629,7 +655,7 @@ main:
 	movq	%rax, 24(%rsp)
 	xorl	%ebp, %ebp
 	vmovdqa	%xmm0, 32(%rsp)
-.L91:
+.L96:
 	salq	$3, %rdi
 .LEHB7:
 	call	_Znam@PLT
@@ -644,7 +670,7 @@ main:
 	leaq	32(%rsp), %rsi
 	movq	%rdx, %rcx
 	movq	%rbp, %rdx
-	call	_ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityISt4spanIS1_Lm18446744073709551615EEE4typeE
+	call	_ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityIKSt4spanIKS1_Lm18446744073709551615EEE4typeE
 .LEHE8:
 	movq	80(%rsp), %rax
 	movq	8(%rsp), %rdi
@@ -654,36 +680,36 @@ main:
 	movq	64(%rsp), %r13
 	movq	%rax, 16(%rsp)
 .LEHB9:
-	call	_ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityISt4spanIS1_Lm18446744073709551615EEE4typeE
+	call	_ZmlIdESt6vectorIT_SaIS1_EERK6MatrixIS1_ENSt13type_identityIKSt4spanIKS1_Lm18446744073709551615EEE4typeE
 .LEHE9:
 	movq	%rbx, %rdi
 	call	_ZdaPv@PLT
 	movq	96(%rsp), %rdi
 	testq	%rdi, %rdi
-	je	.L97
+	je	.L102
 	movq	112(%rsp), %rsi
 	subq	%rdi, %rsi
 	call	_ZdlPvm@PLT
-.L97:
+.L102:
 	testq	%r13, %r13
-	je	.L98
+	je	.L103
 	movq	16(%rsp), %rsi
 	movq	%r13, %rdi
 	subq	%r13, %rsi
 	call	_ZdlPvm@PLT
-.L98:
+.L103:
 	movq	%r14, %rdi
 	call	_ZdaPv@PLT
 	testq	%rbp, %rbp
-	je	.L99
+	je	.L104
 	movq	24(%rsp), %rsi
 	movq	%rbp, %rdi
 	subq	%rbp, %rsi
 	call	_ZdlPvm@PLT
-.L99:
+.L104:
 	movq	168(%rsp), %rax
 	subq	%fs:40, %rax
-	jne	.L146
+	jne	.L151
 	addq	$184, %rsp
 	.cfi_remember_state
 	.cfi_def_cfa_offset 56
@@ -701,12 +727,12 @@ main:
 	popq	%r15
 	.cfi_def_cfa_offset 8
 	ret
-.L144:
+.L149:
 	.cfi_restore_state
 	movzbl	0(%rbp), %eax
 	movb	%al, 144(%rsp)
-	jmp	.L73
-.L87:
+	jmp	.L78
+.L92:
 	leaq	0(,%r15,8), %rbx
 	movq	%rbx, %rdi
 .LEHB10:
@@ -730,29 +756,29 @@ main:
 	.p2align 6
 	.p2align 4,,10
 	.p2align 3
-.L93:
+.L98:
 	xorl	%edx, %edx
 	movq	%rcx, %rax
 	divq	%rsi
 	testq	%rdx, %rdx
-	jne	.L92
+	jne	.L97
 	movq	%rcx, %rax
 	mulq	%rdi
 	shrq	$2, %rdx
 	vcvtsi2sdq	%rdx, %xmm1, %xmm0
 	vmovlpd	%xmm0, (%rbx,%rcx,8)
-.L92:
+.L97:
 	addq	$1, %rcx
 	cmpq	%rcx, %r15
-	jne	.L93
+	jne	.L98
 	movq	%r15, %rdi
 	vmovdqa	%xmm2, 32(%rsp)
 	imulq	%r15, %rdi
 	movq	%rdi, %rax
 	shrq	$60, %rax
-	je	.L91
-	jmp	.L94
-.L143:
+	je	.L96
+	jmp	.L99
+.L148:
 	leaq	1(%rax), %rdi
 .LEHB12:
 	call	_Znwm@PLT
@@ -760,81 +786,81 @@ main:
 	movq	%rbx, 144(%rsp)
 	movq	%rax, 128(%rsp)
 	movq	%rax, %rdi
-.L71:
+.L76:
 	movq	%rbx, %rdx
 	movq	%rbp, %rsi
 	call	memcpy@PLT
-	jmp	.L73
-.L145:
+	jmp	.L78
+.L150:
 	movq	%r12, %rdi
-	jmp	.L71
-.L146:
+	jmp	.L76
+.L151:
 	call	__stack_chk_fail@PLT
-.L108:
-	endbr64
-	movq	%rax, %rbx
-	vzeroupper
-	jmp	.L103
 .L113:
 	endbr64
 	movq	%rax, %rbx
 	vzeroupper
-	jmp	.L104
-.L112:
+	jmp	.L108
+.L118:
 	endbr64
 	movq	%rax, %rbx
 	vzeroupper
-	jmp	.L90
-.L109:
+	jmp	.L109
+.L117:
 	endbr64
 	movq	%rax, %rbx
-	jmp	.L101
+	vzeroupper
+	jmp	.L95
+.L114:
+	endbr64
+	movq	%rax, %rbx
+	jmp	.L106
 	.section	.gcc_except_table,"a",@progbits
-.LLSDA6460:
+.LLSDA6461:
 	.byte	0xff
 	.byte	0xff
 	.byte	0x1
-	.uleb128 .LLSDACSE6460-.LLSDACSB6460
-.LLSDACSB6460:
-	.uleb128 .LEHB6-.LFB6460
+	.uleb128 .LLSDACSE6461-.LLSDACSB6461
+.LLSDACSB6461:
+	.uleb128 .LEHB6-.LFB6461
 	.uleb128 .LEHE6-.LEHB6
-	.uleb128 .L113-.LFB6460
+	.uleb128 .L118-.LFB6461
 	.uleb128 0
-	.uleb128 .LEHB7-.LFB6460
+	.uleb128 .LEHB7-.LFB6461
 	.uleb128 .LEHE7-.LEHB7
-	.uleb128 .L112-.LFB6460
+	.uleb128 .L117-.LFB6461
 	.uleb128 0
-	.uleb128 .LEHB8-.LFB6460
+	.uleb128 .LEHB8-.LFB6461
 	.uleb128 .LEHE8-.LEHB8
-	.uleb128 .L108-.LFB6460
+	.uleb128 .L113-.LFB6461
 	.uleb128 0
-	.uleb128 .LEHB9-.LFB6460
+	.uleb128 .LEHB9-.LFB6461
 	.uleb128 .LEHE9-.LEHB9
-	.uleb128 .L109-.LFB6460
+	.uleb128 .L114-.LFB6461
 	.uleb128 0
-	.uleb128 .LEHB10-.LFB6460
+	.uleb128 .LEHB10-.LFB6461
 	.uleb128 .LEHE10-.LEHB10
 	.uleb128 0
 	.uleb128 0
-	.uleb128 .LEHB11-.LFB6460
+	.uleb128 .LEHB11-.LFB6461
 	.uleb128 .LEHE11-.LEHB11
-	.uleb128 .L112-.LFB6460
+	.uleb128 .L117-.LFB6461
 	.uleb128 0
-	.uleb128 .LEHB12-.LFB6460
+	.uleb128 .LEHB12-.LFB6461
 	.uleb128 .LEHE12-.LEHB12
 	.uleb128 0
 	.uleb128 0
-.LLSDACSE6460:
+.LLSDACSE6461:
 	.section	.text.startup
 	.cfi_endproc
 	.section	.text.unlikely
 	.cfi_startproc
 	.cfi_personality 0x9b,DW.ref.__gxx_personality_v0
-	.cfi_lsda 0x1b,.LLSDAC6460
+	.cfi_lsda 0x1b,.LLSDAC6461
 	.type	main.cold, @function
 main.cold:
-.LFSB6460:
-.L134:
+.LFSB6461:
+.L139:
 	.cfi_def_cfa_offset 240
 	.cfi_offset 3, -56
 	.cfi_offset 6, -48
@@ -844,144 +870,144 @@ main.cold:
 	.cfi_offset 15, -16
 	movq	168(%rsp), %rax
 	subq	%fs:40, %rax
-	jne	.L147
+	jne	.L152
 	leaq	.LC13(%rip), %rdi
 .LEHB13:
 	call	_ZSt24__throw_invalid_argumentPKc@PLT
-.L135:
+.L140:
 	movq	168(%rsp), %rax
 	subq	%fs:40, %rax
-	jne	.L148
+	jne	.L153
 	leaq	.LC13(%rip), %rdi
 	call	_ZSt20__throw_out_of_rangePKc@PLT
 .LEHE13:
-.L136:
+.L141:
 	movq	168(%rsp), %rax
 	subq	%fs:40, %rax
-	jne	.L149
-	leaq	.LC11(%rip), %rdi
+	jne	.L154
+	leaq	.LC14(%rip), %rdi
 .LEHB14:
 	call	_ZSt20__throw_length_errorPKc@PLT
-.L148:
+.L153:
 	call	__stack_chk_fail@PLT
-.L149:
+.L154:
 	call	__stack_chk_fail@PLT
-.L110:
+.L115:
 	endbr64
 	cmpl	$0, (%rbx)
 	movq	%rax, %r13
-	jne	.L82
+	jne	.L87
 	movl	%ebp, (%rbx)
-.L82:
+.L87:
 	movq	128(%rsp), %rdi
 	cmpq	%r12, %rdi
-	je	.L150
+	je	.L155
 	movq	144(%rsp), %rax
 	leaq	1(%rax), %rsi
 	vzeroupper
 	call	_ZdlPvm@PLT
-.L83:
+.L88:
 	movq	168(%rsp), %rax
 	subq	%fs:40, %rax
-	jne	.L151
+	jne	.L156
 	movq	%r13, %rdi
 	call	_Unwind_Resume@PLT
 .LEHE14:
-.L94:
+.L99:
 	movq	168(%rsp), %rax
 	subq	%fs:40, %rax
-	jne	.L152
+	jne	.L157
 .LEHB15:
 	call	__cxa_throw_bad_array_new_length@PLT
 .LEHE15:
-.L101:
+.L106:
 	testq	%r13, %r13
-	je	.L141
+	je	.L146
 	movq	16(%rsp), %rsi
 	movq	%r13, %rdi
 	subq	%r13, %rsi
 	vzeroupper
 	call	_ZdlPvm@PLT
-.L103:
+.L108:
 	movq	%r14, %rdi
 	call	_ZdaPv@PLT
-.L90:
+.L95:
 	testq	%rbp, %rbp
-	je	.L104
-.L105:
+	je	.L109
+.L110:
 	movq	24(%rsp), %rsi
 	movq	%rbp, %rdi
 	subq	%rbp, %rsi
 	call	_ZdlPvm@PLT
-.L104:
+.L109:
 	movq	168(%rsp), %rax
 	subq	%fs:40, %rax
-	jne	.L153
+	jne	.L158
 	movq	%rbx, %rdi
 .LEHB16:
 	call	_Unwind_Resume@PLT
-.L152:
+.L157:
 	call	__stack_chk_fail@PLT
-.L111:
+.L116:
 	endbr64
 	movq	%rax, %rbx
 	vzeroupper
-	jmp	.L105
-.L153:
+	jmp	.L110
+.L158:
 	call	__stack_chk_fail@PLT
-.L147:
+.L152:
 	call	__stack_chk_fail@PLT
-.L133:
+.L138:
 	movq	168(%rsp), %rax
 	subq	%fs:40, %rax
-	jne	.L154
+	jne	.L159
 	leaq	.LC12(%rip), %rdi
 	call	_ZSt19__throw_logic_errorPKc@PLT
 .LEHE16:
-.L154:
+.L159:
 	call	__stack_chk_fail@PLT
-.L150:
+.L155:
 	vzeroupper
-	jmp	.L83
-.L151:
+	jmp	.L88
+.L156:
 	call	__stack_chk_fail@PLT
-.L141:
+.L146:
 	vzeroupper
-	jmp	.L103
+	jmp	.L108
 	.cfi_endproc
-.LFE6460:
+.LFE6461:
 	.section	.gcc_except_table
-.LLSDAC6460:
+.LLSDAC6461:
 	.byte	0xff
 	.byte	0xff
 	.byte	0x1
-	.uleb128 .LLSDACSEC6460-.LLSDACSBC6460
-.LLSDACSBC6460:
-	.uleb128 .LEHB13-.LCOLDB14
+	.uleb128 .LLSDACSEC6461-.LLSDACSBC6461
+.LLSDACSBC6461:
+	.uleb128 .LEHB13-.LCOLDB15
 	.uleb128 .LEHE13-.LEHB13
-	.uleb128 .L110-.LCOLDB14
+	.uleb128 .L115-.LCOLDB15
 	.uleb128 0
-	.uleb128 .LEHB14-.LCOLDB14
+	.uleb128 .LEHB14-.LCOLDB15
 	.uleb128 .LEHE14-.LEHB14
 	.uleb128 0
 	.uleb128 0
-	.uleb128 .LEHB15-.LCOLDB14
+	.uleb128 .LEHB15-.LCOLDB15
 	.uleb128 .LEHE15-.LEHB15
-	.uleb128 .L111-.LCOLDB14
+	.uleb128 .L116-.LCOLDB15
 	.uleb128 0
-	.uleb128 .LEHB16-.LCOLDB14
+	.uleb128 .LEHB16-.LCOLDB15
 	.uleb128 .LEHE16-.LEHB16
 	.uleb128 0
 	.uleb128 0
-.LLSDACSEC6460:
+.LLSDACSEC6461:
 	.section	.text.unlikely
 	.section	.text.startup
 	.size	main, .-main
 	.section	.text.unlikely
 	.size	main.cold, .-main.cold
-.LCOLDE14:
+.LCOLDE15:
 	.section	.text.startup
-.LHOTE14:
+.LHOTE15:
 	.section	.rodata.cst8,"aM",@progbits,8
 	.align 8
 .LC1:
