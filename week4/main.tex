@@ -19,7 +19,7 @@
   \lstinputlisting[caption={\texttt{#1}}]{#1}%
 }
 
-\title{Performance Lab 3 - Group 8}
+\title{Performance Lab 4 - Group 8}
 \author{Hans Bouwman, Joel de Haan}
 
 \begin{document}
@@ -29,16 +29,66 @@
 
 \tableofcontents
 
-\section{Vectorisation:}
-We chose to extend the multiplication to allow vector multiplication by defining an operator: \texttt{vector<data\_t> operator*(Matrix<data\_t> const &, const type\_identity\_t<const span<const data\_t>> vec);
-}. The reason to use span is it allows to use any container with contiguous storage, in particular, in main we test both using vector and a C-style array.
+\newpage
+
+\section{Squared Sums}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{1/unrolling_results.pdf}
+  \caption{CPU cycles taken per element as a function of the unrolling factor; with and without FMA. (lower is better)}
+  \label{fig:plot}
+\end{figure}
+
+The optimal unrolling factor is the lowest unrolling factor that saturates the pipeline.
+Picking a higher unrolling factor would be pointless if not actively harmful, because we can run out of registers for all the new accumulators we define.
+As can be seen in both plots in Figure \ref{fig:plot}, the optimal value is at the knee of the model: 6 and 10 for add-multiply and FMA respectively.
+These values are obtained by multiplying the latency of the operation with the number of pipelines.
+The latency can be determined from the y-value at an unrolling factor of one (3 and 5 for non-FMA and FMA respectively),
+whereas the number of pipelines is two for our hardware; this can also gives the minimal y-value of 1/2.
+
+Emperically, the optimal unrolling factor is 4 without FMA and 9 with FMA.
+
+As the number of cycles per element is lower for the optimal value using FMA than without (around 0.6 rather than 0.75), we can empirically see that FMA instructions are valueable to use from the graphs.
+
+Sizes of the arrays in the benchmark were picked to ensure values fit within L1d (see Table \ref{tab:system-properties}.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{ll}
+        \toprule
+        Property & Value \\
+        \midrule
+        Model name       & AMD Ryzen 5 4500U with Radeon Graphics \\
+        Peak clock (GHz) & 4.000 \\
+        L1d cache        & 192 KiB (6 instances) \\
+        L2 cache         & 3 MiB (6 instances) \\
+        L3 cache         & 8 MiB (2 instances) \\
+        \bottomrule
+    \end{tabular}
+    \caption{System properties}
+    \label{tab:system-properties}
+\end{table}
+
+
+
+
+
+
+\section{Vectorisation}
+We chose to extend the multiplication to allow vector multiplication by defining an operator: 
+\begin{lstlisting}[language=C++, breaklines=true, basicstyle=\ttfamily\small]
+Matrix<data_t> operator*(Matrix<data_t> const &,
+                         const type_identity_t<const span<const data_t>> vec);
+\end{lstlisting}
+The reason to use span is it allows to use any container with contiguous storage, in particular, in main we test both using vector and a C-style array.
 
 C++ does not have a built in restrict keyword (except \_\_restrict which is allowed for MSVC and g++ or built-in restrict from other libraries), however, this operator takes both types as const data types
 meaning that the compiler can see that these are const and thus cannot be modified. This means that, even if these do alias, there is no different behaviour.
 The only problem could be from ret aliasing to either the matrix or vector location. 
 
 The first attempt at vectorising the loop involved using \texttt{ret[row] += ...} however, the compiler did not vectorise this. The reason is because of the loop carried depencency of loading ret multiple times or because, since ret is not const, altering its data could alias to vector or matrix data.
-The latter would be strange since the compiler can see it is newly allocated in this function, however solving this issue is done by using a local variable and then assign \textttt{ret[row]} to this variable. 
+The latter would be strange since the compiler can see it is newly allocated in this function, however solving this issue is done by using a local variable and then assign \texttt{ret[row]} to this variable. 
 
 The final solution is
 \includesource{DyMatrix/vecmult.tcc}
@@ -51,5 +101,10 @@ The compiler report (after compiling with \texttt{g++ -O3 -ffast-math -march=nat
 
 And the assembly instruction for the inner loop is:
 \includesource{vectasm.s}
+
+\section{Code Appendix}
+\includesource{1/sqsum.cpp}
+\includesource{1/run.sh}
+\includesource{1/plot\_results.py}
 
 \end{document}

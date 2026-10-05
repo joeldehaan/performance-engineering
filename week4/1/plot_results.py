@@ -71,7 +71,7 @@ def draw(ax, fma, title, latency):
 
     ax.legend(fontsize=8)
 
-fig, axes = plt.subplots(1, 2, figsize=(13, 5))
+fig, axes = plt.subplots(2, 1, figsize=(8, 10))
 
 draw(axes[0], 0, "Without FMA", LATENCY_ADD)
 draw(axes[1], 1, "With FMA", LATENCY_FMA)
@@ -80,10 +80,3 @@ fig.suptitle("Benchmark Results")
 fig.tight_layout()
 fig.savefig(pdf_file)
 
-'''
-The number of cycles per instruction is 
-
-
-The optimal unrolling factor
-
-'''

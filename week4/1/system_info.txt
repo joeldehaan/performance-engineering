@@ -1,0 +1,15 @@
+Date: wo 30 sep 2026 16:18:31 CEST
+g++ (GCC) 16.2.1 20260819 (Red Hat 16.2.1-2)
+CPU(s):                                  6
+On-line CPU(s) list:                     0-5
+Model name:                              AMD Ryzen 5 4500U with Radeon Graphics
+CPU(s) scaling MHz:                      43%
+CPU max MHz:                             4000,0000
+CPU min MHz:                             1400,0000
+L1d cache:                               192 KiB (6 instances)
+L2 cache:                                3 MiB (6 instances)
+L3 cache:                                8 MiB (2 instances)
+NUMA node0 CPU(s):                       0-5
+Governor: schedutil
+Flags: -std=c++26 -O2 -fno-tree-vectorize -ffp-contract=off -march=native
+N=2048 CALLS=500000 REPS=5 pinned to core 2
