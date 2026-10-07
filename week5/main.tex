@@ -32,7 +32,26 @@
 \newpage
 
 \section{Information Exchange}
+
+Note that all elements of $A$ are used exactly once, that means we can ignore it when it comes to caching: the $N^2$ loads are inevitable. The elements of $x$, however, get reused for every index in $y$.
+Let's say we have the first $B$ elements of $x$ loaded, then we can compute the first $B$ elements of $y$ with one $B^2$ block from $A$.
+We can now either load every other block of $x$ to finish computing the first $B$ elements of $y$ while they are in cache, or keep the first $B$ elements of $x$ in cache, partially computing all elements of $y$.
+Either way, we keep a $B$ sized block in cache and have to load an entire vector. Since we do this $N/B$ times, the information exchange for just the vectors is $\frac{N}{B}(N+B)=\frac{N^2}{B}+N$ loads.
+Adding that all elements of $A$ are loaded once, and multiplying by the size of a double yields
+\[
+        I_\text{mem}=8\left(\frac{N^2}{B}+N+N^2\right)\text{ bytes}
+\]
+Collecting terms, for large $N$ that gives
+\[
+        I_\text{mem}\approx8\left(1+\frac{1}{B}\right)N^2\text{ bytes}
+\]
+As $1\leq B< \infty$, the gain from introducing cache-blocking is at best a 50\% reduction in exchanged memory.
+
 \section{Cachegrind}
 \section{Allocation Overhead}
+
+The following code gives an estimate for allocating memory through new/delete and directly using \texttt{mmap}. Running showed that loop and stack overhead is 1 nanosecond per iteration, new/delete is around 20, and an actual syscall using mmap has an overhead of about 5500 nanoseconds. The conclusion is that the majority of the overhead from allocating and freeing is due to syscalls, and new/delete can be quite fast when the same size of memory is allocated and freed sequentially.
+
+\includesource{3/main.cc}
 
 \end{document}
