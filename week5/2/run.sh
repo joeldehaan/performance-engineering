@@ -10,7 +10,7 @@ MAX_B=32768      # 2^15
 OUT="table.csv"
 
 # L1D model: 32 KB, 8-way, 64-byte lines. Change to match your machine.
-D1="196608,8,64"
+D1="196608,12,64"
 
 tmpdir="$(mktemp -d)"
 trap 'rm -rf "$tmpdir"' EXIT
@@ -23,7 +23,7 @@ while (( B <= MAX_B )); do
     cgout="$tmpdir/cg_B${B}.out"
 
     echo "B=$B: compiling..." >&2
-    g++ -O2 -g -DBLOCK_SIZE="$B" -DN="$N" "$SRC" -o "$exe"
+    g++ -O2 -g -DBLOCK_SIZE="$B" "$SRC" -o "$exe" -std=c++26 -ffast-math
 
     echo "B=$B: running cachegrind..." >&2
     valgrind --tool=cachegrind --cache-sim=yes --D1="$D1" \
