@@ -4,8 +4,8 @@
 #include <iostream>
 using namespace std;
 
-#define BLOCK_SIZE (1 << 8)
-static constexpr size_t MatrixSize = (1 << 16);
+#define BLOCK_SIZE (1 << 4)
+static constexpr size_t MatrixSize = (1 << 8);
 
 int main()
 {
