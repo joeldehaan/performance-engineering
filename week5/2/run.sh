@@ -5,11 +5,15 @@
 set -euo pipefail
 
 SRC="main.cc"
+
+# MAX_B should be equal to or less than N, N should be bigger than the cache set in D1
 N=32768          # 2^15, fixed
 MAX_B=32768      # 2^15
 OUT="table.csv"
 
 # L1D model: 32 KB, 8-way, 64-byte lines. Change to match your machine.
+# you can additionally lower this so you don't run out of memory
+# you might need to change the second number such that the first divided by the second number is a power of 2
 D1="196608,12,64"
 
 tmpdir="$(mktemp -d)"
