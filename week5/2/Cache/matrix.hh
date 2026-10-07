@@ -4,11 +4,12 @@
 #include <random>
 #include <ostream>
 #include <type_traits>
+#include <memory>
 
 template <size_t nRows, size_t nCols, typename data_t = double>
 class Matrix
 {
-    data_t *d_matrix;
+    std::unique_ptr<data_t[]> d_matrix;
 
 public:
     Matrix();
@@ -16,14 +17,19 @@ public:
     void clear();   //zeros all values
 
     [[gnu::always_inline]] inline data_t &operator[](size_t row, size_t col);
-    [[gnu::always_inline]] inline data_t operator[](size_t row, size_t col) const;
+    [[gnu::always_inline]] inline data_t const &operator[](size_t row, size_t col) const;
     
     template <size_t nrows, size_t ncols, typename datat>       //print
     friend std::ostream &operator<<(std::ostream &, Matrix<nrows, ncols, datat> const &);
 
     data_t *data();
 
-    ~Matrix();
+    Matrix(Matrix const &) = delete;
+    Matrix &operator=(Matrix const &) = delete;
+
+    Matrix(Matrix &&) noexcept = default;
+    Matrix &operator=(Matrix &&) noexcept = default;
+    //~Matrix();
 };
 
 template <size_t nRows, size_t nCols, typename data_t>
@@ -48,7 +54,7 @@ template<size_t size, typename data_t = double>     //alias for square matrices
 using sqrMatrix = Matrix<size, size, data_t>;
 
 #include "ctor.tcc"
-#include "dtor.tcc"
+//#include "dtor.tcc"
 //#include "fill.tcc"
 #include "vectmult.tcc"
 #include "clear.tcc"
