@@ -39,12 +39,18 @@ Matrix<nRows, nCols, data_t> operator*(Matrix<nRows, commonSz, data_t> const &lh
 template <size_t nRows, size_t nCols, typename data_t>          //matrix vector multiplication
 std::vector<data_t> operator*(Matrix<nRows, nCols, data_t> const &mat, const std::type_identity_t<const std::span<const data_t>> vec);
 
+/*
+template <size_t nRows, size_t nCols, typename mat_data_t, typename data_t = double>
+std::vector<data_t> operator*(Matrix<nRows, nCols, mat_data_t> const &mat, const std::type_identity_t<const std::span<const data_t>> vec);
+*/
+
 template<size_t size, typename data_t = double>     //alias for square matrices
 using sqrMatrix = Matrix<size, size, data_t>;
 
 #include "ctor.tcc"
 #include "dtor.tcc"
 //#include "fill.tcc"
+#include "vectmult.tcc"
 #include "clear.tcc"
 #include "idx.tcc"
 #include "multopt.tcc"

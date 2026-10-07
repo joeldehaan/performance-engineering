@@ -38,7 +38,7 @@ public:
 template <typename data_t = double>        //ignoring type conversions...
 Matrix<data_t> operator*(Matrix<data_t> const &lhs, 
                                Matrix<data_t> const &rhs);
-
+co
 template <typename data_t>                //vector multiplication
 std::vector<data_t> operator*(Matrix<data_t> const &, 
                     const std::type_identity_t<const std::span<const data_t>> vec);
