@@ -48,6 +48,18 @@ Collecting terms, for large $N$ that gives
 As $1\leq B< \infty$, the gain from introducing cache-blocking is at best a 50\% reduction in exchanged memory.
 
 \section{Cachegrind}
+
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{2/plot.png}
+  \caption{Plot of the number of cache misses as a function of the block size (lower is better).}
+  \label{fig:plot}
+\end{figure}
+
+See Figure \ref{fig:plot}
+
 \section{Allocation Overhead}
 
 The following code gives an estimate for allocating memory through new/delete and directly using \texttt{mmap}. Running showed that loop and stack overhead is 1 nanosecond per iteration, new/delete is around 20, and an actual syscall using mmap has an overhead of about 5500 nanoseconds. The conclusion is that the majority of the overhead from allocating and freeing is due to syscalls, and new/delete can be quite fast when the same size of memory is allocated and freed sequentially.
