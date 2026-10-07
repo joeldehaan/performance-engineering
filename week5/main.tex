@@ -52,6 +52,8 @@ As $1\leq B< \infty$, the gain from introducing cache-blocking is at best a 50\%
 
 The following code gives an estimate for allocating memory through new/delete and directly using \texttt{mmap}. Running showed that loop and stack overhead is 1 nanosecond per iteration, new/delete is around 20, and an actual syscall using mmap has an overhead of about 5500 nanoseconds. The conclusion is that the majority of the overhead from allocating and freeing is due to syscalls, and new/delete can be quite fast when the same size of memory is allocated and freed sequentially.
 
+We created three different loops to isolate different aspects of allocation, and used loops to make sure we obtain average behaviour, as a single run may be unlucky or have startup/shutdown overhead, or overhead from the timing itself.
+
 \includesource{3/main.cc}
 
 \end{document}
