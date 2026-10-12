@@ -1,0 +1,21 @@
+Converged after 95133 iterations (nx=1024, ny=16, e=1.00e-05)
+
+ Performance counter stats for './main':
+
+                 0      context-switches:u               #      0,0 cs/sec  cs_per_second     
+                 0      cpu-migrations:u                 #      0,0 migrations/sec  migrations_per_second
+               242      page-faults:u                    #    299,0 faults/sec  page_faults_per_second
+            809,24 msec task-clock:u                     #      nan CPUs  CPUs_utilized       
+         3.403.505      branch-misses:u                  #      0,5 %  branch_miss_rate         (50,02%)
+       706.871.355      branches:u                       #    873,5 M/sec  branch_frequency     (49,98%)
+     3.145.567.626      cpu-cycles:u                     #      3,9 GHz  cycles_frequency       (66,66%)
+     7.127.450.953      instructions:u                   #      2,3 instructions  insn_per_cycle  (49,98%)
+        73.253.466      stalled-cycles-frontend:u        #     0,02 frontend_cycles_idle        (50,02%)
+
+       0,810420012 seconds time elapsed
+
+       0,806747000 seconds user
+       0,002999000 seconds sys
+
+
+

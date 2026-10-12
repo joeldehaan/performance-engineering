@@ -32,4 +32,34 @@
 \newpage
 
 
+
+
+There are two obvious low-hanging fruits when it comes to improving performance. Consider the following loop in the solver:
+
+\begin{lstlisting}
+for (int ix = 1; ix < (nx-1); ix++)
+{
+    for (int iy = 1; iy < (ny-1); iy++)
+    {
+        v[nx*iy+ix] = vp[nx*iy+ix];
+        w += fabs(v[nx*iy+ix]);
+    }
+}
+\end{lstlisting}
+
+Firstly, the loops should be swapped to make access contiguous, as this improves cache coherence. Secondly, \texttt{vp} is not read before being written to again in the next iteration.
+As such, copying the array is completely superfluous and we can simply swap the pointers. As such we suggest the following code change:
+
+\begin{lstlisting}
+swap(v, vp);
+for (int iy = 1; iy < (ny-1); iy++)
+{
+    for (int ix = 1; ix < (nx-1); ix++)
+    {
+        w += fabs(v[nx*iy+ix]);
+    }
+}
+\end{lstlisting}
+
+
 \end{document}
