@@ -30,6 +30,7 @@ __pycache__/
 *.so.*
 *.gch
 *.pch
+*.dep
 
 # Latex
 *.aux
