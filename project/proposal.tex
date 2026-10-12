@@ -43,15 +43,15 @@ The given code compiles and can be benchmarked, thus the initial benchmark is gi
                 $\text{ }$ \hspace{0.6cm}v[nx*iy+ix] = vp[nx*iy+ix];\\
             \}}
     This will make the for loop access contiguously, improving cache coherence and allowing for simd instructions.
-    \item SIMD as previously mentioned, since we are iterating over a grid, we expect to be able to use SIMD instructions. Compiler reports should inform us when these instructions are used. Furthermore, inspecting the assembly should also make it visible by looking for \textt{AVX} instructinos.
+    \item SIMD as previously mentioned, since we are iterating over a grid, we expect to be able to use SIMD instructions. Compiler reports should inform us when these instructions are used. Furthermore, inspecting the assembly should also make it visible by looking for \texttt{AVX} instructinos.
 
     \item Memory accesses: the AMD report suggests that, when using the finite difference method, a 5 point stencil is the best way to discretise the general equation. We can make use of the 4 contiguous points loaded to reduce total memory acesses.
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\linewidth]{stencil.png}
-    \caption{Suggested stencil by the AMD repport, given a point, the 4 contiguous points also need to be accessed.}
-    \label{fig:placeholder}
-\end{figure}
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=0.5\linewidth]{stencil.png}
+%     \caption{Suggested stencil by the AMD repport, given a point, the 4 contiguous points also need to be accessed.}
+%     \label{fig:placeholder}
+% \end{figure}
 
 \item Parallelisation: OpenMP can be used to parallelise idependent points to speedup the total process. 
     \end{itemize}
