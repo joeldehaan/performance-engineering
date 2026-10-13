@@ -5,9 +5,9 @@
 #include <array>
 #include <print>
 #include <memory>
+#include <algorithm>
 
 using namespace std;
-
 
 template <size_t nx, size_t ny>
 using Grid = array<array<double, nx>, ny>;
@@ -32,12 +32,11 @@ void solver(unique_ptr<Grid<nx, ny>> v, unique_ptr<Grid<nx, ny>> const f, double
                      (*v)[iy+1][ix] + (*v)[iy-1][ix]));
 
                 diff = fabs((*vp)[iy][ix] - (*v)[iy][ix]);
-                residual = (diff > residual) ? diff : residual; // max
+                residual = max(diff, residual);
             }
         }
 
         // Update v and compute error as well as error weight factor
-
         double weight = 0.0;
 
 
