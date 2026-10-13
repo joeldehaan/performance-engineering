@@ -13,7 +13,7 @@ template <size_t nx, size_t ny>
 using Grid = array<array<double, nx>, ny>;
 
 template <size_t nx, size_t ny>
-void solver(unique_ptr<Grid<nx, ny>> v, unique_ptr<Grid<nx, ny>> const f, double const eps, size_t const maxIter)
+void solver(unique_ptr<Grid<nx, ny>> v, unique_ptr<Grid<nx, ny>> const f, double const tolerance, size_t const maxIter)
 {
     auto vp = make_unique<Grid<nx, ny>>();
 
@@ -67,7 +67,7 @@ void solver(unique_ptr<Grid<nx, ny>> v, unique_ptr<Grid<nx, ny>> const f, double
         weight /= (nx * ny);
         residual /= weight;
 
-        if (residual < eps)
+        if (residual < tolerance)
         {
             println("Converged after {} iterations (nx={}, ny={}, residual={})", iter, nx, ny, residual);
             return;
@@ -106,3 +106,4 @@ int main()
 
     solver(move(v), move(f), EPS, NMAX);
 }
+
