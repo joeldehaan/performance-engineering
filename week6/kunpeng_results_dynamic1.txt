@@ -1,0 +1,29 @@
+==========================================
+----- Compiling N = 2^10 = 1024 -----
+----- Running N = 1024, threads=100 -----
+>>> N = 1024  |  wall time = 0.165 s
+
+----- Compiling N = 2^11 = 2048 -----
+----- Running N = 2048, threads=100 -----
+>>> N = 2048  |  wall time = 0.578 s
+
+----- Compiling N = 2^12 = 4096 -----
+----- Running N = 4096, threads=100 -----
+>>> N = 4096  |  wall time = 2.680 s
+
+----- Compiling N = 2^13 = 8192 -----
+----- Running N = 8192, threads=100 -----
+>>> N = 8192  |  wall time = 9.202 s
+
+----- Compiling N = 2^14 = 16384 -----
+----- Running N = 16384, threads=100 -----
+>>> N = 16384  |  wall time = 42.931 s
+
+----- Compiling N = 2^15 = 32768 -----
+----- Running N = 32768, threads=100 -----
+>>> N = 32768  |  wall time = 148.469 s
+
+----- Compiling N = 2^16 = 65536 -----
+----- Running N = 65536, threads=100 -----
+>>> N = 65536  |  wall time = 0.341 s
+

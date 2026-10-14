@@ -1,0 +1,7 @@
+With OpenMP the 3 scheduling policies are
+ 	-static: assign work at compile time, threads know what they have to do. Advantage: work allocation doesn't happen at runtime. Disadvantage: if a thread stalls (goes slower than the rest) other threads in the pool can't help and just wait idle
+	-dynamic: assign each piece of work to a queue, the threads take the jobs from the queue. Advantage: minimises the chance of an idle thread. Disadvantage: while the queue can be made at compile time, popping tasks and assignation hapens at runtime
+	-guided: assign larger blocks of work at compile time. but still make threads take this pieces of work. In theory the best of both worlds but still has the overhead of a dynamical queue and stalling is still possible.
+
+The choice depends strongly on the regularity of the workload. In this case, we are paralellising a row * column operation. Each iteration has exactly the same amount of operations (and most likely) a similar amount of memory acesses. 
+This is the most optimal kind of loop to allocate work statically.
