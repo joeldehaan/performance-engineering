@@ -1,0 +1,78 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{hyperref} % should always go last
+% \usepackage{enumitem}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  frame=single,
+  captionpos=t,
+  breaklines=true,
+}
+
+\newcommand{\includesource}[1]{%
+  \lstinputlisting[caption={\texttt{#1}}]{#1}%
+}
+
+\title{Performance Lab 6 - Group 8}
+\author{Hans Bouwman, Joel de Haan}
+
+\begin{document}
+
+\maketitle
+
+
+\tableofcontents
+
+\newpage
+
+\section{}
+
+\section{Matrix-vector parallelisation}
+To parallelise this routine a \texttt{\#pragma omp parallel schedule(static)}
+
+With OpenMP the 3 scheduling policies are
+\begin{itemize}
+  \item static: assign work at compile time, threads know what they have to do. Advantage: work allocation doesn't happen at runtime. Disadvantage: if a thread stalls (goes slower than the rest) other threads in the pool can't help and just wait idle
+  \item dynamic: assign each piece of work to a queue, the threads take the jobs from the queue. Advantage: minimises the chance of an idle thread. Disadvantage: while the queue can be made at compile time, popping tasks and assignation hapens at runtime
+  \item guided: assign larger blocks of work at compile time. but still make threads take this pieces of work. In theory the best of both worlds but still has the overhead of a dynamical queue and stalling is still possible.
+\end{itemize}
+
+The choice depends strongly on the regularity of the workload. In this case, we are paralellising a row * column operation. Each iteration has exactly the same amount of operations (and most likely) a similar amount of memory acesses.
+This is the most optimal kind of loop to allocate work statically.
+
+After running a few runs in the cluster with the Kunpeng 920 nodes, the following results were obtained
+
+Serial parallelisation:
+    \begin{tabular}{|c|c}
+          $N$ & time \\
+         \hline
+          1024 & 0.165 s \\
+          2048 & 0.578 s \\
+          4096 &  2.680 s \\
+         8192 &  9.202 s  \\
+         16384 & 42.931 s \\
+         32768 & 138.412 s  \\
+    \end{tabular}
+
+Dynamic parallelisation:
+    \begin{tabular}{|c|c}
+          $N$ & time \\
+         \hline
+          1024 & 0.150 s \\
+          2048 & 0.592 s \\
+          4096 &  2.355 s \\
+         8192 &  10.266 s  \\
+         16384 & 39.884 s \\
+         32768 &  155.946 s  \\
+    \end{tabular}
+
+The results were run on 100 cores. While it does show that the serial parallelisation is faster on the serial case for larger matrices/vectors
+the results are, in general, very close to each other. This contradicts the fact that serial parallelisation has significantly less overhead.
+
+\end{document}
