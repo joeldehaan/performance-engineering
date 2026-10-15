@@ -133,19 +133,33 @@ void solver_split(unique_ptr<Grid<nx, ny>> v, unique_ptr<Grid<nx, ny>> const f, 
                 (*vpEven)[iy][2*ix+1] = -0.25 * ((*fEven)[iy][2*ix+1] -
                     ((*vOdd)[iy][2*ix] + (*vOdd)[iy][2*ix+1] +
                      (*vOdd)[iy][2*ix+2] + (*vOdd)[iy+1][2*ix+1]));
+            }
+        }
+        for (size_t iy = 0; iy < ny/2-1; iy++)
+        {
+            for (size_t ix = 0; ix < nx/2-1; ix++ )
+            {
+                double diff;
+                diff = fabs((*vpEven)[iy][2*ix+1] - (*vEven)[iy][2*ix+1]);
+                residual = max(diff, residual);
+            }
+        }
 
+        for (size_t iy = 0; iy < ny/2-1; iy++)
+        {
+            for (size_t ix = 0; ix < nx/2-1; ix++ )
+            {
                 (*vpEven)[iy+1][2*ix+2] = -0.25 * ((*fEven)[iy+1][2*ix+2] -
                     ((*vOdd)[iy+1][2*ix+1] + (*vOdd)[iy+1][2*ix+2] +
                      (*vOdd)[iy+1][2*ix+3] + (*vOdd)[iy][2*ix+2]));
             }
         }
-
-        for (size_t iy = 0; iy < ny/2; iy++)
+        for (size_t iy = 0; iy < ny/2-1; iy++)
         {
-            for (size_t ix = 1; ix < (nx-1); ix++ )
+            for (size_t ix = 0; ix < nx/2-1; ix++ )
             {
                 double diff;
-                diff = fabs((*vpEven)[iy][ix] - (*vEven)[iy][ix]);
+                diff = fabs((*vpEven)[iy+1][2*ix+2] - (*vEven)[iy+1][2*ix+2]);
                 residual = max(diff, residual);
             }
         }
@@ -154,23 +168,35 @@ void solver_split(unique_ptr<Grid<nx, ny>> v, unique_ptr<Grid<nx, ny>> const f, 
         {
             for (size_t ix = 0; ix < (nx/2-1); ix++ )
             {
-
                 (*vpOdd)[iy][2*ix+2] = -0.25 * ((*fOdd)[iy][2*ix+2] -
                     ((*vEven)[iy][2*ix+1] + (*vEven)[iy][2*ix+2] +
                      (*vEven)[iy][2*ix+3] + (*vEven)[iy+1][2*ix+2]));
-
+            }
+        }
+        for (size_t iy = 0; iy < (ny/2-1); iy++)
+        {
+            for (size_t ix = 0; ix < (nx/2-1); ix++ )
+            {
+                double diff;
+                diff = fabs((*vpOdd)[iy][2*ix+2] - (*vOdd)[iy][2*ix+2]);
+                residual = max(diff, residual);
+            }
+        }
+        for (size_t iy = 0; iy < (ny/2-1); iy++)
+        {
+            for (size_t ix = 0; ix < (nx/2-1); ix++ )
+            {
                 (*vpOdd)[iy+1][2*ix+1] = -0.25 * ((*fOdd)[iy+1][2*ix+1] -
                     ((*vEven)[iy+1][2*ix] + (*vEven)[iy+1][2*ix+1] +
                      (*vEven)[iy+1][2*ix+2] + (*vEven)[iy][2*ix+1]));
             }
         }
-
-        for (size_t iy = 1; iy < (ny/2-1); iy++)
+        for (size_t iy = 0; iy < (ny/2-1); iy++)
         {
-            for (size_t ix = 1; ix < (nx-1); ix++ )
+            for (size_t ix = 0; ix < (nx/2-1); ix++ )
             {
                 double diff;
-                diff = fabs((*vpOdd)[iy][ix] - (*vOdd)[iy][ix]);
+                diff = fabs((*vpOdd)[iy+1][2*ix+1] - (*vOdd)[iy+1][2*ix+1]);
                 residual = max(diff, residual);
             }
         }
