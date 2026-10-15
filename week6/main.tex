@@ -6,7 +6,8 @@
 \usepackage{booktabs}
 \usepackage{float}
 \usepackage{hyperref} % should always go last
-% \usepackage{enumitem}
+
+\renewcommand{\labelenumi}{\alph{enumi})}
 
 \lstset{
   basicstyle=\ttfamily\footnotesize,
@@ -19,6 +20,8 @@
   \lstinputlisting[caption={\texttt{#1}}]{#1}%
 }
 
+\graphicspath{{1/}}   % the four PDFs live in the folder "1"
+
 \title{Performance Lab 6 - Group 8}
 \author{Hans Bouwman, Joel de Haan}
 
@@ -26,12 +29,66 @@
 
 \maketitle
 
+\section{Parallelized memory access}
 
-\tableofcontents
+\textbf{(a)}
+The STREAM benchmark task is embarrassingly parallel, so we expect more threads to speed it up (for example under linear scaling).
+For $N = 2^{25}$ (Figure~\ref{fig:threads-2e25}) this holds for the first few threads, but then the bandwidth saturates because we run into the memory bandwidth bottleneck between RAM and the CPU.
+For $N = 1024$ (Figure~\ref{fig:threads-1024}) we see a decrease instead, because the amount of work is so small that the thread overhead dominates runtime.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{omp-threads-N1024.pdf}
+    \caption{STREAM bandwidth versus number of threads for $N = 1024$
+    (all three arrays fit in L1D). Dots show the individual runs, lines the
+    median per thread count; the black line is the nominal memory bandwidth.}
+    \label{fig:threads-1024}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{omp-threads-N33554432.pdf}
+    \caption{STREAM bandwidth versus number of threads for $N = 2^{25}$
+    (the arrays are far larger than the last-level cache). Dots show the
+    individual runs, lines the median per thread count; the black line is the
+    nominal memory bandwidth.}
+    \label{fig:threads-2e25}
+\end{figure}
+
+\textbf{(b)}
+We use 6 threads (\texttt{OMP\_PLACES=cores}) and compare five settings of \texttt{OMP\_PROC\_BIND}:
+\begin{itemize}
+    \item \texttt{false}: threads are not bound to a specific core, so the OS may migrate them: this is flexible, but a migrated thread might lose its cached data.
+    \item \texttt{true}: threads are bound to a core and never migrate: threads won't lose cached data, but the OS cannot move a thread away from a busy core.
+    \item \texttt{close}: threads are placed close to the master core: this is good for threads that share chached data in L2 or L3.
+    \item \texttt{spread}: threads are spread as evenly over cores: this maximises the use of hardware, but can separate threads that share data.
+    \item \texttt{master}: all threads are placed on the master thread's core: this is only useful when the threads share a lot of data.
+\end{itemize}
+For both array sizes (Figures~\ref{fig:affinity-1024} and~\ref{fig:affinity-2e25}), \texttt{true}, \texttt{false}, \texttt{close} and \texttt{spread} perform about the same, because the number of threads is equal to the number of cores, each, there will be a one-to-one correspondence between cores and threads in all these cases.
+\texttt{master} is the exception because here all threads share one core, thus, it cannot use the bandwidth of the other cores.
+As such, we see a slight drop at $N = 2^{25}$, but at $N = 1024$ the drop is more severe, because additional to the waiting, the thread overhead is relatively large compared to the task size, as also stated in (a).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{omp-affinity-N1024.pdf}
+    \caption{STREAM bandwidth for the different settings of
+    \texttt{OMP\_PROC\_BIND} at $N = 1024$, using all available cores
+    (\texttt{OMP\_PLACES=cores}). Bars show the median, error bars the minimum
+    and maximum over the runs; note the logarithmic $y$-axis.}
+    \label{fig:affinity-1024}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{omp-affinity-N33554432.pdf}
+    \caption{STREAM bandwidth for the different settings of
+    \texttt{OMP\_PROC\_BIND} at $N = 2^{25}$, using all available cores
+    (\texttt{OMP\_PLACES=cores}). Bars show the median, error bars the minimum
+    and maximum over the runs; note the logarithmic $y$-axis.}
+    \label{fig:affinity-2e25}
+\end{figure}
 
 \newpage
-
-\section{}
 
 \section{Matrix-vector parallelisation}
 To parallelise this routine a \texttt{\#pragma omp parallel schedule(static)}
