@@ -1,39 +1,4 @@
-\documentclass{article}
-\usepackage{graphicx} % Required for inserting images
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{listings}
-\usepackage{booktabs}
-\usepackage{float}
-\usepackage{hyperref} % should always go last
-% \usepackage{enumitem}
-
-\lstset{
-  basicstyle=\ttfamily\footnotesize,
-  frame=single,
-  captionpos=t,
-  breaklines=true,
-}
-
-\newcommand{\includesource}[1]{%
-  \lstinputlisting[caption={\texttt{#1}}]{#1}%
-}
-
-\title{Project Report - Group 8}
-\author{Hans Bouwman, Joel de Haan}
-
-\begin{document}
-
-\maketitle
-
-
-\tableofcontents
-
-\newpage
-
-
-
-
+\section{First changes}
 There are two obvious low-hanging fruits when it comes to improving performance. Consider the following loop in the solver:
 
 \begin{lstlisting}
@@ -61,5 +26,3 @@ for (int iy = 1; iy < (ny-1); iy++)
 }
 \end{lstlisting}
 
-
-\end{document}
