@@ -1,0 +1,42 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{hyperref} % should always go last
+% \usepackage{enumitem}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  frame=single,
+  captionpos=t,
+  breaklines=true,
+}
+
+\newcommand{\includesource}[1]{%
+  \lstinputlisting[caption={\texttt{#1}}]{#1}%
+}
+
+\title{Project Report - Group 8}
+\author{Hans Bouwman, Joel de Haan}
+
+\begin{document}
+
+\maketitle
+\include{repsections/abstract}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\input{repsections/intro.tex}
+
+
+
+
+
+\end{document}
