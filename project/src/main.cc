@@ -39,15 +39,13 @@ void solver(unique_ptr<Grid<nx, ny>> v, unique_ptr<Grid<nx, ny>> const f, double
         // Update v and compute error as well as error weight factor
         double weight = 0.0;
 
-
         swap(v, vp); // identical since vp is immediately written to next loop cycle
 
         for (size_t iy = 1; iy < (ny-1); iy++)
         {
-            for (size_t ix = 1; ix < (nx-1); ix++)
-            {
-                weight += fabs((*v)[iy][ix]);
-            }
+            (*v)[iy][0] = (*v)[iy][nx-2];
+            (*v)[iy][nx-1] = (*v)[iy][1];
+            weight += fabs((*v)[iy][0]) + fabs((*v)[iy][nx-1]);
         }
 
         for (size_t ix = 1; ix < (nx-1); ix++)
@@ -57,15 +55,30 @@ void solver(unique_ptr<Grid<nx, ny>> v, unique_ptr<Grid<nx, ny>> const f, double
             weight += fabs((*v)[0][ix]) + fabs((*v)[ny-1][ix]);
         }
 
+        // print debug
+        /*
+        for (size_t iy = 0; iy < ny; iy++)
+        {
+            for (size_t ix = 0; ix < nx; ix++)
+            {
+                print("{}, ", (*v)[iy][ix]);
+            }
+            println();
+        }
+        */
+
         for (size_t iy = 1; iy < (ny-1); iy++)
         {
-            (*v)[iy][0] = (*v)[iy][nx-2];
-            (*v)[iy][nx-1] = (*v)[iy][1];
-            weight += fabs((*v)[iy][0]) + fabs((*v)[iy][nx-1]);
+            for (size_t ix = 1; ix < (nx-1); ix++)
+            {
+                weight += fabs((*v)[iy][ix]);
+            }
         }
 
         weight /= (nx * ny);
         residual /= weight;
+
+        // println("{}, {}", iter, residual);
 
         if (residual < tolerance)
         {
@@ -120,13 +133,14 @@ void solver_split(unique_ptr<Grid<nx, ny>> v, unique_ptr<Grid<nx, ny>> const f, 
                 (*vpEven)[iy][2*ix+1] = -0.25 * ((*fEven)[iy][2*ix+1] -
                     ((*vOdd)[iy][2*ix] + (*vOdd)[iy][2*ix+1] +
                      (*vOdd)[iy][2*ix+2] + (*vOdd)[iy+1][2*ix+1]));
+
                 (*vpEven)[iy+1][2*ix+2] = -0.25 * ((*fEven)[iy+1][2*ix+2] -
                     ((*vOdd)[iy+1][2*ix+1] + (*vOdd)[iy+1][2*ix+2] +
-                     (*vOdd)[iy+1][2*ix+3] + (*vOdd)[iy][2*ix+1]));
+                     (*vOdd)[iy+1][2*ix+3] + (*vOdd)[iy][2*ix+2]));
             }
         }
 
-        for (size_t iy = 1; iy < (ny/2-1); iy++)
+        for (size_t iy = 0; iy < ny/2; iy++)
         {
             for (size_t ix = 1; ix < (nx-1); ix++ )
             {
@@ -140,9 +154,11 @@ void solver_split(unique_ptr<Grid<nx, ny>> v, unique_ptr<Grid<nx, ny>> const f, 
         {
             for (size_t ix = 0; ix < (nx/2-1); ix++ )
             {
+
                 (*vpOdd)[iy][2*ix+2] = -0.25 * ((*fOdd)[iy][2*ix+2] -
                     ((*vEven)[iy][2*ix+1] + (*vEven)[iy][2*ix+2] +
                      (*vEven)[iy][2*ix+3] + (*vEven)[iy+1][2*ix+2]));
+
                 (*vpOdd)[iy+1][2*ix+1] = -0.25 * ((*fOdd)[iy+1][2*ix+1] -
                     ((*vEven)[iy+1][2*ix] + (*vEven)[iy+1][2*ix+1] +
                      (*vEven)[iy+1][2*ix+2] + (*vEven)[iy][2*ix+1]));
@@ -166,7 +182,6 @@ void solver_split(unique_ptr<Grid<nx, ny>> v, unique_ptr<Grid<nx, ny>> const f, 
         swap(vOdd, vpOdd);
 
 
-
         for (size_t iy = 0; iy < ny/2; iy++)
         {
             (*vEven)[iy][0] = (*vEven)[iy][nx-2];
@@ -184,22 +199,39 @@ void solver_split(unique_ptr<Grid<nx, ny>> v, unique_ptr<Grid<nx, ny>> const f, 
             (*vOdd)[ny/2-1][2*ix] = (*vOdd)[0][2*ix];
             (*vOdd)[0][2*ix+1] = (*vOdd)[ny/2-1][2*ix+1];
         }
+        
+        (*vEven)[0][0] = 0;
+        (*vEven)[ny/2-1][nx-1] = 0;
+        (*vOdd)[0][nx-1] = 0;
+        (*vOdd)[ny/2-1][0] = 0;
 
-
-        for (size_t iy = 0; iy < (ny/2-1); iy++)
+        // print debug
+        /*
+        println("{}", (*vOdd)[0][nx-2]);
+        for (size_t iy = 0; iy < ny; iy++)
         {
-            for (size_t ix = 0; ix < (nx-1); ix++)
+            for (size_t ix = 0; ix < nx; ix++)
             {
-                if (not ((ix == 0 and iy == 0) or (ix == nx-1 and iy == ny/2-1)))
-                    weight += fabs((*vEven)[iy][ix]);
-
-                if (not ((ix == 0 and iy == ny/2-1) or (ix == nx-1 and iy == 0)))
-                    weight += fabs((*vOdd)[iy][ix]);
+                bool const odd = ((ix + iy) % 2);
+                print("{}, ", (odd ? *vOdd : *vEven)[iy / 2][ix]);
+            }
+            println();
+        }
+        */
+        
+        for (size_t iy = 0; iy < ny/2; iy++)
+        {
+            for (size_t ix = 0; ix < nx; ix++)
+            {
+                weight += fabs((*vEven)[iy][ix]);
+                weight += fabs((*vOdd)[iy][ix]);
             }
         }
 
         weight /= (nx * ny);
         residual /= weight;
+
+        // println("{}, {}", iter, residual);
 
         if (residual < tolerance)
         {
