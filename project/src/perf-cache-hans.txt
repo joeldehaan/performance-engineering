@@ -1,0 +1,65 @@
+Converged after 95132 iterations (nx=1024, ny=16, residual=9.99989730823154e-06)
+
+ Performance counter stats for './main':
+
+         1.589.989      cache-misses:u                                                        
+       893.697.870      cache-references:u                                                    
+
+       0,627389385 seconds time elapsed
+
+       0,626034000 seconds user
+       0,001001000 seconds sys
+
+
+Converged after 95132 iterations (nx=1024, ny=16, residual=9.99989730823154e-06)
+
+ Performance counter stats for './main':
+
+         7.805.534      cache-misses:u                                                        
+     1.009.172.564      cache-references:u                                                    
+
+       0,639723550 seconds time elapsed
+
+       0,636666000 seconds user
+       0,002993000 seconds sys
+
+
+Converged after 95132 iterations (nx=1024, ny=16, residual=9.99989730823154e-06)
+
+ Performance counter stats for './main':
+
+         3.617.023      cache-misses:u                                                        
+       931.607.493      cache-references:u                                                    
+
+       0,647860395 seconds time elapsed
+
+       0,646663000 seconds user
+       0,000999000 seconds sys
+
+
+Converged after 95132 iterations (nx=1024, ny=16, residual=9.99989730823154e-06)
+
+ Performance counter stats for './main':
+
+         5.238.062      cache-misses:u                                                        
+       970.611.617      cache-references:u                                                    
+
+       0,642303108 seconds time elapsed
+
+       0,638315000 seconds user
+       0,004001000 seconds sys
+
+
+Converged after 95132 iterations (nx=1024, ny=16, residual=9.99989730823154e-06)
+
+ Performance counter stats for './main':
+
+         2.241.852      cache-misses:u                                                        
+       916.014.264      cache-references:u                                                    
+
+       0,645404528 seconds time elapsed
+
+       0,644118000 seconds user
+       0,001000000 seconds sys
+
+

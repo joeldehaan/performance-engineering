@@ -1,0 +1,39 @@
+Converged after 95132 iterations (nx=1024, ny=16, residual=9.999897306318892e-06)
+
+ Performance counter stats for './main':
+
+        15.799.319      cache-misses:u                                                        
+     1.261.544.737      cache-references:u                                                    
+
+       0,776105246 seconds time elapsed
+
+       0,772891000 seconds user
+       0,003003000 seconds sys
+
+
+Converged after 95132 iterations (nx=1024, ny=16, residual=9.999897306318892e-06)
+
+ Performance counter stats for './main':
+
+        10.703.788      cache-misses:u                                                        
+     1.222.290.642      cache-references:u                                                    
+
+       0,780731326 seconds time elapsed
+
+       0,779698000 seconds user
+       0,001000000 seconds sys
+
+
+Converged after 95132 iterations (nx=1024, ny=16, residual=9.999897306318892e-06)
+
+ Performance counter stats for './main':
+
+         6.817.874      cache-misses:u                                                        
+     1.140.442.657      cache-references:u                                                    
+
+       0,775202114 seconds time elapsed
+
+       0,771870000 seconds user
+       0,002999000 seconds sys
+
+
