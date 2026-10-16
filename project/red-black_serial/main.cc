@@ -347,15 +347,11 @@ Totals updateRow(SplitFields<nx, ny> &fields, size_t const row)
     return total;
 }
 
-#pragma omp declare reduction(+ : Totals : omp_out += omp_in) \
-    initializer(omp_priv = Totals{})
-
 template <size_t nx, size_t ny>
 Totals updateAllRows(SplitFields<nx, ny> &fields)
 {
     Totals total;
 
-    #pragma omp parallel for schedule(static) reduction(+:total)
     for (size_t row = 1; row < ny - 1; ++row)
     {
         Totals const rowTotal = updateRow(fields, row);
@@ -408,7 +404,7 @@ void solver_split(unique_ptr<Grid<nx, ny>> solution, unique_ptr<Grid<nx, ny>> co
 #ifndef NY
 #define NY 16
 #endif
-#define NMAX 50000
+#define NMAX 200000
 #define EPS 1e-5
 
 int main()
