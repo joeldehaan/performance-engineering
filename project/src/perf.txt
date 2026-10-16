@@ -1,0 +1,63 @@
+Converged after 95132 iterations (nx=1024, ny=16, residual=9.999897306318892e-06)
+total 1.343 s | update+residual 0.000 s | boundary+swap 0.000 s | weight 0.000 s
+
+ Performance counter stats for './main 2':
+
+                 0      context-switches:u               #      0,0 cs/sec  cs_per_second     
+                 0      cpu-migrations:u                 #      0,0 migrations/sec  migrations_per_second
+               238      page-faults:u                    #    176,8 faults/sec  page_faults_per_second
+          1.346,30 msec task-clock:u                     #      nan CPUs  CPUs_utilized       
+         2.957.095      branch-misses:u                  #      0,4 %  branch_miss_rate         (49,91%)
+       706.942.070      branches:u                       #    525,1 M/sec  branch_frequency     (49,98%)
+     3.142.806.080      cpu-cycles:u                     #      2,3 GHz  cycles_frequency       (66,68%)
+     7.125.850.558      instructions:u                   #      2,3 instructions  insn_per_cycle  (50,09%)
+        37.724.959      stalled-cycles-frontend:u        #     0,01 frontend_cycles_idle        (50,02%)
+
+       1,347634432 seconds time elapsed
+
+       1,343177000 seconds user
+       0,003997000 seconds sys
+
+
+Converged after 95132 iterations (nx=1024, ny=16, residual=9.999897306318892e-06)
+total 1.315 s | update+residual 0.000 s | boundary+swap 0.000 s | weight 0.000 s
+
+ Performance counter stats for './main 2':
+
+                 0      context-switches:u               #      0,0 cs/sec  cs_per_second     
+                 0      cpu-migrations:u                 #      0,0 migrations/sec  migrations_per_second
+               238      page-faults:u                    #    180,5 faults/sec  page_faults_per_second
+          1.318,42 msec task-clock:u                     #      nan CPUs  CPUs_utilized       
+         2.953.672      branch-misses:u                  #      0,4 %  branch_miss_rate         (49,96%)
+       705.743.936      branches:u                       #    535,3 M/sec  branch_frequency     (49,97%)
+     3.081.868.089      cpu-cycles:u                     #      2,3 GHz  cycles_frequency       (66,65%)
+     7.139.954.293      instructions:u                   #      2,3 instructions  insn_per_cycle  (50,04%)
+        45.289.582      stalled-cycles-frontend:u        #     0,01 frontend_cycles_idle        (50,03%)
+
+       1,320082098 seconds time elapsed
+
+       1,315541000 seconds user
+       0,003998000 seconds sys
+
+
+Converged after 95132 iterations (nx=1024, ny=16, residual=9.999897306318892e-06)
+total 1.326 s | update+residual 0.000 s | boundary+swap 0.000 s | weight 0.000 s
+
+ Performance counter stats for './main 2':
+
+                 0      context-switches:u               #      0,0 cs/sec  cs_per_second     
+                 0      cpu-migrations:u                 #      0,0 migrations/sec  migrations_per_second
+               242      page-faults:u                    #    182,1 faults/sec  page_faults_per_second
+          1.329,01 msec task-clock:u                     #      nan CPUs  CPUs_utilized       
+         2.954.976      branch-misses:u                  #      0,4 %  branch_miss_rate         (49,92%)
+       707.360.053      branches:u                       #    532,2 M/sec  branch_frequency     (49,99%)
+     3.121.279.802      cpu-cycles:u                     #      2,3 GHz  cycles_frequency       (66,70%)
+     7.132.998.462      instructions:u                   #      2,3 instructions  insn_per_cycle  (50,08%)
+        39.459.697      stalled-cycles-frontend:u        #     0,01 frontend_cycles_idle        (50,01%)
+
+       1,330044576 seconds time elapsed
+
+       1,326967000 seconds user
+       0,002999000 seconds sys
+
+
