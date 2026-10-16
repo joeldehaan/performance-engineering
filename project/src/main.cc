@@ -5,9 +5,18 @@
 #include <array>
 #include <print>
 #include <memory>
+#include <chrono>
 #include <algorithm>
 
 using namespace std;
+
+struct ScopedTimer
+{
+    double& acc;
+    chrono::steady_clock::time_point const t0 = chrono::steady_clock::now();
+    ~ScopedTimer() { acc += chrono::duration<double>(chrono::steady_clock::now() - t0).count(); }
+};
+static double tUpdate = 0.0, tBoundary = 0.0, tWeight = 0.0;
 
 template <size_t nx, size_t ny>
 using Grid = array<array<double, nx>, ny>;
@@ -126,6 +135,7 @@ void solver_split(unique_ptr<Grid<nx, ny>> v, unique_ptr<Grid<nx, ny>> const f, 
         double residual = 0.0;
         
         // updating step
+        { ScopedTimer t{tUpdate};
         for (size_t iy = 0; iy < ny/2-1; iy++)
         {
             for (size_t ix = 0; ix < nx/2-1; ix++ )
@@ -133,15 +143,6 @@ void solver_split(unique_ptr<Grid<nx, ny>> v, unique_ptr<Grid<nx, ny>> const f, 
                 (*vpEven)[iy][2*ix+1] = -0.25 * ((*fEven)[iy][2*ix+1] -
                     ((*vOdd)[iy][2*ix] + (*vOdd)[iy][2*ix+1] +
                      (*vOdd)[iy][2*ix+2] + (*vOdd)[iy+1][2*ix+1]));
-            }
-        }
-        for (size_t iy = 0; iy < ny/2-1; iy++)
-        {
-            for (size_t ix = 0; ix < nx/2-1; ix++ )
-            {
-                double diff;
-                diff = fabs((*vpEven)[iy][2*ix+1] - (*vEven)[iy][2*ix+1]);
-                residual = max(diff, residual);
             }
         }
 
@@ -156,10 +157,10 @@ void solver_split(unique_ptr<Grid<nx, ny>> v, unique_ptr<Grid<nx, ny>> const f, 
         }
         for (size_t iy = 0; iy < ny/2-1; iy++)
         {
-            for (size_t ix = 0; ix < nx/2-1; ix++ )
+            for (size_t ix = 0; ix < nx-1; ix++)
             {
                 double diff;
-                diff = fabs((*vpEven)[iy+1][2*ix+2] - (*vEven)[iy+1][2*ix+2]);
+                diff = fabs((*vpEven)[iy][ix] - (*vEven)[iy][ix]);
                 residual = max(diff, residual);
             }
         }
@@ -177,15 +178,6 @@ void solver_split(unique_ptr<Grid<nx, ny>> v, unique_ptr<Grid<nx, ny>> const f, 
         {
             for (size_t ix = 0; ix < (nx/2-1); ix++ )
             {
-                double diff;
-                diff = fabs((*vpOdd)[iy][2*ix+2] - (*vOdd)[iy][2*ix+2]);
-                residual = max(diff, residual);
-            }
-        }
-        for (size_t iy = 0; iy < (ny/2-1); iy++)
-        {
-            for (size_t ix = 0; ix < (nx/2-1); ix++ )
-            {
                 (*vpOdd)[iy+1][2*ix+1] = -0.25 * ((*fOdd)[iy+1][2*ix+1] -
                     ((*vEven)[iy+1][2*ix] + (*vEven)[iy+1][2*ix+1] +
                      (*vEven)[iy+1][2*ix+2] + (*vEven)[iy][2*ix+1]));
@@ -193,17 +185,19 @@ void solver_split(unique_ptr<Grid<nx, ny>> v, unique_ptr<Grid<nx, ny>> const f, 
         }
         for (size_t iy = 0; iy < (ny/2-1); iy++)
         {
-            for (size_t ix = 0; ix < (nx/2-1); ix++ )
+            for (size_t ix = 0; ix < (nx-1); ix++ )
             {
                 double diff;
-                diff = fabs((*vpOdd)[iy+1][2*ix+1] - (*vOdd)[iy+1][2*ix+1]);
+                diff = fabs((*vpOdd)[iy][ix] - (*vOdd)[iy][ix]);
                 residual = max(diff, residual);
             }
+        }
         }
 
         // swap v and compute error as well as error weight factor
         double weight = 0.0;
 
+        { ScopedTimer t{tBoundary};
         swap(vEven, vpEven);
         swap(vOdd, vpOdd);
 
@@ -230,6 +224,7 @@ void solver_split(unique_ptr<Grid<nx, ny>> v, unique_ptr<Grid<nx, ny>> const f, 
         (*vEven)[ny/2-1][nx-1] = 0;
         (*vOdd)[0][nx-1] = 0;
         (*vOdd)[ny/2-1][0] = 0;
+        }
 
         // print debug
         /*
@@ -245,6 +240,7 @@ void solver_split(unique_ptr<Grid<nx, ny>> v, unique_ptr<Grid<nx, ny>> const f, 
         }
         */
         
+        { ScopedTimer t{tWeight};
         for (size_t iy = 0; iy < ny/2; iy++)
         {
             for (size_t ix = 0; ix < nx; ix++)
@@ -252,6 +248,7 @@ void solver_split(unique_ptr<Grid<nx, ny>> v, unique_ptr<Grid<nx, ny>> const f, 
                 weight += fabs((*vEven)[iy][ix]);
                 weight += fabs((*vOdd)[iy][ix]);
             }
+        }
         }
 
         weight /= (nx * ny);
@@ -296,6 +293,10 @@ int main()
         }
     }
 
-    solver_split(move(v), move(f), EPS, NMAX);
+    auto const t0 = chrono::steady_clock::now();
+    solver(move(v), move(f), EPS, NMAX);
+    double const tTotal = chrono::duration<double>(chrono::steady_clock::now() - t0).count();
+    println("total {:.3f} s | update+residual {:.3f} s | boundary+swap {:.3f} s | weight {:.3f} s",
+            tTotal, tUpdate, tBoundary, tWeight);
 }
 
