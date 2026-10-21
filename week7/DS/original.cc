@@ -3,15 +3,19 @@
 #include <iostream>
 #include <vector>
 
-int const elementCount = 16384;
+using namespace std;
 
-struct Small {
+size_t const elementCount = (1 << 14);
+
+struct Small
+{
     char flg1;
     double x[7];
     char flg2;
 };
 
-struct Big {
+struct Big
+{
     int rank;
     double x[elementCount];
 };
@@ -28,23 +32,23 @@ bool sortBigByRank(Big const &first, Big const &second)
 
 int main()
 {
-    std::vector<Small> vsmall(elementCount);
-    std::vector<Big> vbig(elementCount);
+    vector<Small> vsmall(elementCount);
+    vector<Big> vbig(elementCount);
 
-    for (int index = 0; index < elementCount; ++index) {
+    for (size_t index = 0; index < elementCount; ++index)
+    {
         vsmall[index].x[0] = elementCount - index;
     }
 
-    for (int index = 0; index < elementCount; ++index) {
+    for (size_t index = 0; index < elementCount; ++index)
+    {
         vbig[index].rank = elementCount - index;
-        std::memset(vbig[index].x, 0, sizeof(vbig[index].x));
+        memset(vbig[index].x, 0, sizeof(vbig[index].x));
     }
 
-    std::sort(vsmall.begin(), vsmall.end(), sortSmallByX0);
+    sort(vsmall.begin(), vsmall.end(), sortSmallByX0);
 
-    std::sort(vbig.begin(), vbig.end(), sortBigByRank);
-
-    return 0;
+    sort(vbig.begin(), vbig.end(), sortBigByRank);
 }
 
 

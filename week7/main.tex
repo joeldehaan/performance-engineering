@@ -1,0 +1,77 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{hyperref} % should always go last
+
+\renewcommand{\labelenumi}{\alph{enumi})}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  frame=single,
+  captionpos=t,
+  breaklines=true,
+}
+
+\newcommand{\includesource}[1]{%
+  \lstinputlisting[caption={\texttt{#1}}]{#1}%
+}
+
+\graphicspath{{1/}}   % the four PDFs live in the folder "1"
+
+\title{Performance Lab 7 - Group 8}
+\author{Hans Bouwman, Joel de Haan}
+
+\begin{document}
+
+\maketitle
+
+\section{Data Structure Optimisation}
+
+For \texttt{Small}, padding causes its size to be 72 bytes, moving \texttt{flg2} before the array reduces its size to 64 bytes, which combined with an alignas makes sure it fits snugly in a cacheline. Packing would only destroy the cache alignment and would only reduce the size to 56, which is probably not worth it.
+
+For \texttt{Big}, reversing the order would give the same size and packing would only save 4 bytes relative to $2^14$. Similarly, the data is very large so padding could not help the structure fit into a cache line. The only optimisation is to split the rank from the array: this way we can sort on the ranks (introduced with a new index fields) and implicitly access elements of the array.
+
+Thus we propose the following optimised data structure:
+
+\begin{lstlisting}
+struct alignas(64) Small
+{
+    char flg1;
+    char flg2;
+    double x[7];
+};
+
+struct BigMeta
+{
+    int rank;
+    int arrayIndex;
+};
+
+struct BigArray
+{
+    double x[elementCount];
+};
+\end{lstlisting}
+
+
+As seen in table \ref{tab:perf-small}, there is a 21\% reduction in loads because of the reduced size and a 13\% reduction in load misses due to better cache alignment, which lines up very well with the 14\% reduction in total time taken (cache misses are of course a major source of slowdown).
+
+In table \ref{tab:perf-big}, we see an enormous reduction in loads, as is expected from splitting, and similarly a 20 fold reduction in cache miss rate, likely due to the fact that multiple vector elements now fit in one cache line.
+
+
+
+\input{DS/table.tex}
+
+\newpage
+
+\section{MPI Benchmark}
+
+\input{MPI/bandwidth.tex}
+
+
+
+\end{document}

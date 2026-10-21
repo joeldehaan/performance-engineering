@@ -1,25 +1,28 @@
-The bandwith is given by 
+The bandwith is given by
 $$\frac{2N R}{T} \text{Bytes/s}$$
 where $N$ is the message size (in Bytes) and $R$ the number of repetitions.
 
 The experiment was performed incrementing N in powers of 2 from 128 to 4096 and 1000 repetitions.
-For the single node this give the following values:
-7.746e+07
-1.26484e+08
-2.34318e+08
-4.17738e+08
-6.58821e+08
-1.00676e+09
+For the single node this give the values in the second column of Table~\ref{tab:bandwidth},
+which have an average of $4.20264 \cdot 10^{8}$.
 
-which have an average of 4.20264e+08.
+\begin{table}[htbp]
+  \centering
+  \caption{Bandwidth for each message size $N$, with $R = 1000$ repetitions.}
+  \label{tab:bandwidth}
+  \begin{tabular}{rcc}
+    \toprule
+    $N$ (Bytes) & Single node (Bytes/s) & 2 nodes (Bytes/s) \\
+    \midrule
+    128  & $7.746   \cdot 10^{7}$ & $5.88728 \cdot 10^{8}$ \\
+    256  & $1.26484 \cdot 10^{8}$ & $9.95685 \cdot 10^{8}$ \\
+    512  & $2.34318 \cdot 10^{8}$ & $1.66794 \cdot 10^{9}$ \\
+    1024 & $4.17738 \cdot 10^{8}$ & $2.08036 \cdot 10^{9}$ \\
+    2048 & $6.58821 \cdot 10^{8}$ & $3.12324 \cdot 10^{9}$ \\
+    4096 & $1.00676 \cdot 10^{9}$ & $4.3928  \cdot 10^{9}$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
-
-For the 2 nodes the values are:
-5.88728e+08
-9.95685e+08
-1.66794e+09
-2.08036e+09
-3.12324e+09
-4.3928e+09
-
-where it can be seen that the volatility is higher and has an average of 2.14146e+09.
+For the 2 nodes the values are given in the third column of Table~\ref{tab:bandwidth},
+where it can be seen that the volatility is higher and has an average of $2.14146 \cdot 10^{9}$.

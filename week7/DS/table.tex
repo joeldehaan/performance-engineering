@@ -1,0 +1,37 @@
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lrrr}
+\toprule
+Counter & Original & Optimized & Original/Optimized \\
+\midrule
+Time per sort (ms) & 0.187 & 0.163 & 1.14 \\
+Cycles & $6.79\cdot10^{5}$ & $5.98\cdot10^{5}$ & 1.13 \\
+Instructions & $1.73\cdot10^{6}$ & $1.62\cdot10^{6}$ & 1.07 \\
+Branch misses & 843 & 841 & 1 \\
+L1d loads & $8.30\cdot10^{5}$ & $6.84\cdot10^{5}$ & 1.21 \\
+L1d load misses & $1.18\cdot10^{5}$ & $1.04\cdot10^{5}$ & 1.13 \\
+L1d miss rate (\%) & 14.2 & 15.2 & 0.933 \\
+\bottomrule
+\end{tabular}
+\caption{Small: perf counters per sort, original layout versus reordered fields and \texttt{alignas(64)} ($2^{14}$ elements). Means over 3 runs with counters enabled only during the sorts (perf \texttt{--control}).}
+\label{tab:perf-small}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lrrr}
+\toprule
+Counter & Original & Optimized & Original/Optimized \\
+\midrule
+Time per sort (ms) & 153 & 0.048 & $3.18\cdot10^{3}$ \\
+Cycles & $5.88\cdot10^{8}$ & $1.42\cdot10^{5}$ & $4.13\cdot10^{3}$ \\
+Instructions & $2.34\cdot10^{8}$ & $5.30\cdot10^{5}$ & 443 \\
+Branch misses & $4.00\cdot10^{4}$ & 404 & 99.1 \\
+L1d loads & $2.30\cdot10^{8}$ & $1.57\cdot10^{5}$ & $1.47\cdot10^{3}$ \\
+L1d load misses & $7.59\cdot10^{7}$ & $2.64\cdot10^{3}$ & $2.87\cdot10^{4}$ \\
+L1d miss rate (\%) & 33 & 1.69 & 19.5 \\
+\bottomrule
+\end{tabular}
+\caption{Big: perf counters per sort, original layout versus split into \texttt{BigMeta} and \texttt{BigArray} ($2^{13}$ elements of $2^{13}$ doubles). Means over 3 runs with counters enabled only during the sorts (perf \texttt{--control}).}
+\label{tab:perf-big}
+\end{table}

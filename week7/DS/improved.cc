@@ -3,16 +3,25 @@
 #include <iostream>
 #include <vector>
 
-int const elementCount = 16384;
+using namespace std;
 
-struct Small {
+size_t const elementCount = (1 << 14);
+
+struct alignas(64) Small
+{
     char flg1;
-    double x[7];
     char flg2;
+    double x[7];
 };
 
-struct Big {
+struct BigMeta
+{
     int rank;
+    int arrayIndex;
+};
+
+struct BigArray
+{
     double x[elementCount];
 };
 
@@ -21,31 +30,30 @@ bool sortSmallByX0(Small const &first, Small const &second)
     return first.x[0] < second.x[0];
 }
 
-bool sortBigByRank(Big const &first, Big const &second)
+bool sortBigMetaByRank(BigMeta const &first, BigMeta const &second)
 {
     return first.rank < second.rank;
 }
 
 int main()
 {
-    std::vector<Small> vsmall(elementCount);
-    std::vector<Big> vbig(elementCount);
+    vector<Small> vsmall(elementCount);
+    vector<BigMeta> vbigMeta(elementCount);
+    vector<BigArray> vbigArray(elementCount);
 
-    for (int index = 0; index < elementCount; ++index) {
+    for (size_t index = 0; index < elementCount; ++index)
+    {
         vsmall[index].x[0] = elementCount - index;
     }
 
-    for (int index = 0; index < elementCount; ++index) {
-        vbig[index].rank = elementCount - index;
-        std::memset(vbig[index].x, 0, sizeof(vbig[index].x));
+    for (size_t index = 0; index < elementCount; ++index)
+    {
+        vbigMeta[index].rank = elementCount - index;
+        vbigMeta[index].arrayIndex = index;
+        memset(vbigArray[index].x, 0, sizeof(vbigArray[index].x));
     }
 
-    std::sort(vsmall.begin(), vsmall.end(), sortSmallByX0);
+    sort(vsmall.begin(), vsmall.end(), sortSmallByX0);
 
-    std::sort(vbig.begin(), vbig.end(), sortBigByRank);
-
-    return 0;
+    sort(vbigMeta.begin(), vbigMeta.end(), sortBigMetaByRank);
 }
-
-
-
