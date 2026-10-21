@@ -36,8 +36,10 @@ int main(int argc, char **argv)
     }
 
 
-    size_t const src = (rank - 1 + size) % size;
+    size_t const src = (rank - 1 + size) % size;    //to make sure it is positive (for case 0)
     size_t const dst = (rank + 1) % size;
+
+    double t0 = MPI_Wtime();
 
     for (size_t i = 0; i < REPEATS; ++i) {
         MPI_Recv(msg.data(), NUM_BYTES, MPI_UNSIGNED_CHAR, src,
@@ -46,9 +48,10 @@ int main(int argc, char **argv)
         MPI_Send(msg.data(), NUM_BYTES, MPI_UNSIGNED_CHAR, dst,
                  tag, MPI_COMM_WORLD);
 
-        if (rank == 0)
-            cerr << "Completed iteration " << i + 1 << '\n';
     }
+    double t1 = MPI_Wtime();
+
+    cout << "Time elapsed on rank " << rank << " is: " << t1 - t0 << '\n';
 
     MPI_Finalize();
 
