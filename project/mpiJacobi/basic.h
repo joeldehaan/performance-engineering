@@ -1,9 +1,3 @@
-/*
- * Basic functions for MPI parallel jacobi solver
- * API:
- * grid_alloc: allocates a grid of rowx x colums
- */
-
 #ifndef BASIC_MPI_JACOBI
 #define BASIC_MPI_JACOBI
 
@@ -17,6 +11,7 @@
 #ifndef NY
 #define NY 16
 #endif
+/* guarded so that the benchmark script can set them with -DNMAX=... -DEPS=... */
 #ifndef NMAX
 #define NMAX 200000
 #endif
@@ -24,6 +19,8 @@
 #define EPS 1e-5
 #endif
 
+/* static inline: a plain function in a header would be defined in every .c file
+ * that includes it (duplicate symbol at link time) */
 static inline size_t IDX(size_t ix, size_t iy, size_t nx)
 { // to acess components of the grid
     return (iy * nx + ix);
