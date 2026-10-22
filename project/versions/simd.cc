@@ -15,93 +15,6 @@ using namespace std;
 template <size_t nx, size_t ny>
 using Grid = array<array<double, nx>, ny>;
 
-template <size_t nx, size_t ny>
-void solver(unique_ptr<Grid<nx, ny>> v, unique_ptr<Grid<nx, ny>> const f, double const tolerance, size_t const maxIter)
-{
-    auto vp = make_unique<Grid<nx, ny>>();
-
-    for (size_t iter = 0; iter < maxIter; ++iter)
-    {
-        double residual = 0.0;
-
-        for (size_t iy = 1; iy < (ny-1); iy++)
-        {
-            for (size_t ix = 1; ix < (nx-1); ix++ )
-            {
-                double diff;
-
-                (*vp)[iy][ix] = -0.25 * ((*f)[iy][ix] -
-                    ((*v)[iy][ix+1] + (*v)[iy][ix-1] +
-                     (*v)[iy+1][ix] + (*v)[iy-1][ix]));
-
-                diff = fabs((*vp)[iy][ix] - (*v)[iy][ix]);
-                residual = max(diff, residual);
-            }
-        }
-
-        // Update v and compute error as well as error weight factor
-        double weight = 0.0;
-
-        swap(v, vp); // identical since vp is immediately written to next loop cycle
-
-        for (size_t iy = 1; iy < (ny-1); iy++)
-        {
-            (*v)[iy][0] = (*v)[iy][nx-2];
-            (*v)[iy][nx-1] = (*v)[iy][1];
-            weight += fabs((*v)[iy][0]) + fabs((*v)[iy][nx-1]);
-        }
-
-        for (size_t ix = 1; ix < (nx-1); ix++)
-        {
-            (*v)[0][ix] = (*v)[ny-2][ix];
-            (*v)[ny-1][ix] = (*v)[1][ix];
-            weight += fabs((*v)[0][ix]) + fabs((*v)[ny-1][ix]);
-        }
-
-        // print debug
-        /*
-        for (size_t iy = 0; iy < ny; iy++)
-        {
-            for (size_t ix = 0; ix < nx; ix++)
-            {
-                print("{}, ", (*v)[iy][ix]);
-            }
-            println();
-        }
-        */
-
-        for (size_t iy = 1; iy < (ny-1); iy++)
-        {
-            for (size_t ix = 1; ix < (nx-1); ix++)
-            {
-                weight += fabs((*v)[iy][ix]);
-            }
-        }
-
-        weight /= (nx * ny);
-        residual /= weight;
-
-        // println("{}, {}", iter, residual);
-
-        if (residual < tolerance)
-        {
-            println("Converged after {} iterations (nx={}, ny={}, residual={})", iter, nx, ny, residual);
-            return;
-        }
-    }
-
-    println("ERROR: Failed to converge");
-}
-
-// Red-black (checkerboard) Jacobi solver with a packed, unit-stride layout.
-//
-// A grid point (ix, iy) has colour (ix + iy) % 2. Within one row a colour owns every
-// second column, so its values are stored contiguously: grid[color][iy][ix / 2].
-// The point of colour c in row iy sits at ix = 2 * packed + columnParity(c, iy), and
-// all four neighbours (colour opposite(c)) are plain shifted loads from the packed
-// rows iy - 1, iy and iy + 1. Periodic rows wrap around by index; the periodic ghost
-// column costs one scalar copy per row and colour.
-
 namespace
 {
 
@@ -376,7 +289,7 @@ double relativeResidual(Totals const &total)
 }  // namespace
 
 template <size_t nx, size_t ny>
-void solver_split(unique_ptr<Grid<nx, ny>> solution, unique_ptr<Grid<nx, ny>> const source, double const tolerance, size_t const maxIter)
+void solver(unique_ptr<Grid<nx, ny>> solution, unique_ptr<Grid<nx, ny>> const source, double const tolerance, size_t const maxIter)
 {
     static_assert(nx % 2 == 0 && ny % 2 == 0 && ny >= 4, "red-black split needs even nx, ny (ny >= 4)");
 
@@ -424,5 +337,5 @@ int main()
             (*f)[iy][ix] = sin(x + y);
         }
     }
-    solver_split(move(v), move(f), EPS, NMAX);
+    solver(move(v), move(f), EPS, NMAX);
 }
