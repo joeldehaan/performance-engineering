@@ -1,0 +1,14 @@
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lcccc}
+        \hline
+        Program & none & \texttt{-march=native} & \texttt{-ffast-math} & both \\
+        \hline
+        original & $2.78 \pm 0.03$ & $2.773 \pm 0.007$ & $1.56 \pm 0.02$ & $0.91 \pm 0.01$ \\
+        refactor & $2.539 \pm 0.005$ & $2.51 \pm 0.03$ & $1.369 \pm 0.008$ & $0.768 \pm 0.007$ \\
+        red-black & $1.770 \pm 0.008$ & $1.76 \pm 0.02$ & $1.078 \pm 0.003$ & $0.631 \pm 0.004$ \\
+        simd & $1.31 \pm 0.03$ & $0.62 \pm 0.02$ & $1.261 \pm 0.004$ & $0.64 \pm 0.01$ \\
+        \hline
+    \end{tabular}
+    \caption{Median run time in seconds over 5 runs, with the maximum deviation from the median.}
+\end{table}
